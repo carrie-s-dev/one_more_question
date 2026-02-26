@@ -34,6 +34,32 @@
             background-attachment: fixed;
         }
 
+        /* Navigation row */
+        .nav-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
         /* Main card container */
         .card {
             background: rgba(255, 255, 255, 0.95);
@@ -1337,6 +1363,11 @@
 </head>
 
 <body>
+    <div class="nav-row">
+        <a href="index.html" class="nav-btn">🔄 Start Over</a>
+        <a href="index.html" class="nav-btn">⬅️ Back</a>
+    </div>
+
     <!-- Friend Axolotls Container -->
     <div class="friends-container" id="friendsContainer"></div>
 
