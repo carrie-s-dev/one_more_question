@@ -27,11 +27,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+            border-radius: 20px;
             padding: 12px 20px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255,255,255,0.8);
         }
 
         .header-left {
@@ -60,42 +61,54 @@
 
         .header-axolotls {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            align-items: center;
         }
 
         .header-axolotl {
-            width: 40px;
-            height: 45px;
+            width: 50px;
+            height: 55px;
             position: relative;
+            animation: headerBounce 2s ease-in-out infinite;
+        }
+
+        .header-axolotl:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes headerBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
         .header-axolotl .ha-body {
-            width: 32px;
-            height: 24px;
-            border-radius: 16px 16px 12px 12px;
+            width: 40px;
+            height: 30px;
+            border-radius: 20px 20px 14px 14px;
             position: absolute;
             bottom: 0;
-            left: 4px;
+            left: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
         }
 
         .header-axolotl .ha-head {
-            width: 28px;
-            height: 24px;
+            width: 34px;
+            height: 30px;
             border-radius: 50%;
             position: absolute;
             top: 5px;
-            left: 6px;
+            left: 8px;
             z-index: 2;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 8px;
+            font-size: 10px;
         }
 
         .header-axolotl .ha-gills {
             position: absolute;
             top: 2px;
-            font-size: 10px;
+            font-size: 12px;
             z-index: 1;
         }
 
@@ -123,15 +136,16 @@
             align-items: center;
             gap: 6px;
             background: linear-gradient(135deg, #ffecd2, #fcb69f);
-            padding: 8px 14px;
-            border-radius: 20px;
+            padding: 10px 16px;
+            border-radius: 22px;
             font-weight: 700;
             color: #e17055;
-            font-size: 0.95em;
+            font-size: 1em;
+            box-shadow: 0 3px 10px rgba(225, 112, 85, 0.25);
         }
 
         .header-gems .gem-icon {
-            font-size: 1.1em;
+            font-size: 1.15em;
         }
 
         .card {
