@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Helper</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', Arial, sans-serif;
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #6c5ce7 100%);
+            background-attachment: fixed;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-weight: 800;
+            text-align: center;
+            margin: 0 0 10px 0;
+            background: linear-gradient(135deg, #0984e3, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        /* Navigation */
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Section styling */
+        .section {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #0984e3;
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Question styling */
+        .question-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .fraction-question {
+            font-size: 1.8em;
+            font-weight: 700;
+            text-align: center;
+            color: #333;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+        }
+
+        .blank {
+            display: inline-block;
+            width: 50px;
+            border-bottom: 3px solid #0984e3;
+            margin: 0 10px;
+        }
+
+        /* Answer buttons */
+        .answer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .answer-btn {
+            width: 70px;
+            height: 70px;
+            font-size: 2em;
+            font-weight: 700;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            box-shadow: 0 4px 12px rgba(9, 132, 227, 0.3);
+        }
+
+        .answer-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(9, 132, 227, 0.4);
+        }
+
+        .answer-btn:active {
+            transform: scale(0.95);
+        }
+
+        .answer-btn.selected {
+            background: linear-gradient(135deg, #00b894, #55efc4);
+            box-shadow: 0 4px 12px rgba(0, 184, 148, 0.4);
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Feedback */
+        .feedback {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 700;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 10px;
+            min-height: 45px;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+        }
+
+        .feedback.tryagain {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            color: #856404;
+        }
+
+        /* Multiple choice for pizza problem */
+        .choice-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .choice-btn:hover {
+            border-color: #0984e3;
+            background: #f0f7ff;
+        }
+
+        .choice-btn.selected {
+            border-color: #00b894;
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        }
+
+        .choice-btn.incorrect {
+            border-color: #e17055;
+            background: #fff3cd;
+            animation: shake 0.5s ease;
+        }
+
+        /* Word problem styling */
+        .word-problem {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #333;
+            padding: 15px;
+            background: #fff;
+            border-radius: 10px;
+            border-left: 4px solid #0984e3;
+            margin-bottom: 20px;
+        }
+
+        /* Pizza visual */
+        .pizza-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .pizza-visual {
+            text-align: center;
+        }
+
+        .pizza-label {
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .pizza {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #ffeaa7;
+            border: 3px solid #fdcb6e;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pizza-slice {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background: #e17055;
+            transform-origin: 100% 100%;
+        }
+
+        /* Number line */
+        .number-line-container {
+            margin-top: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .number-line-container.show {
+            display: block;
+        }
+
+        .number-line {
+            position: relative;
+            height: 40px;
+            background: linear-gradient(to right, #74b9ff, #0984e3);
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .number-line-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .number-marker {
+            position: absolute;
+            top: -25px;
+            transform: translateX(-50%);
+            font-weight: 700;
+            font-size: 0.9em;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            border: 2px solid;
+        }
+
+        /* Reminder */
+        .reminder {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #fff4e6, #ffe8cc);
+            border-radius: 12px;
+            font-weight: 600;
+            color: #cc6600;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        /* Completed section styling */
+        .question-box.completed {
+            border-color: #00b894;
+            background: #f0fff4;
+        }
+
+        .checkmark {
+            display: none;
+            color: #00b894;
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+
+        .question-box.completed .checkmark {
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="nav-btn">🏠 Back to One More Question</a>
+
+    <div class="card">
+        <h1>📘 Homework Helper</h1>
+        <p class="subtitle">Let's make math fun! ✨</p>
+
+        <!-- Section 1: Compare the Fractions -->
+        <div class="section">
+            <h2 class="section-title">📊 Section 1: Compare the Fractions</h2>
+            
+            <!-- Question 1 -->
+            <div class="question-box" id="q1Box">
+                <div class="fraction-question">
+                    3/6 <span class="blank"></span> 2/6 <span class="checkmark">✓</span>
+                </div>
+                <div class="answer-buttons">
+                    <button class="answer-btn" onclick="checkAnswer('q1', '<')">&lt;</button>
+                    <button class="answer-btn" onclick="checkAnswer('q1', '=')">=</button>
+                    <button class="answer-btn" onclick="checkAnswer('q1', '>')">&gt;</button>
+                </div>
+                <div class="feedback" id="q1Feedback"></div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-box" id="q2Box">
+                <div class="fraction-question">
+                    4/8 <span class="blank"></span> 6/8 <span class="checkmark">✓</span>
+                </div>
+                <div class="answer-buttons">
+                    <button class="answer-btn" onclick="checkAnswer('q2', '<')">&lt;</button>
+                    <button class="answer-btn" onclick="checkAnswer('q2', '=')">=</button>
+                    <button class="answer-btn" onclick="checkAnswer('q2', '>')">&gt;</button>
+                </div>
+                <div class="feedback" id="q2Feedback"></div>
+            </div>
+        </div>
+
+        <!-- Section 2: Pizza Problem -->
+        <div class="section">
+            <h2 class="section-title">🍕 Section 2: Pizza Problem</h2>
+            
+            <div class="question-box" id="q3Box">
+                <div class="word-problem">
+                    George and Iggy each have equal-sized pizzas cut into 8 equal slices.<br><br>
+                    George eats 5 slices.<br>
+                    Iggy eats 6 slices.<br><br>
+                    Write a comparison for the fractions of pizza George and Iggy have eaten.
+                </div>
+
+                <div class="pizza-container">
+                    <div class="pizza-visual">
+                        <div class="pizza-label">George: 5/8</div>
+                        <div class="pizza" id="georgePizza"></div>
+                    </div>
+                    <div class="pizza-visual">
+                        <div class="pizza-label">Iggy: 6/8</div>
+                        <div class="pizza" id="iggyPizza"></div>
+                    </div>
+                </div>
+
+                <button class="choice-btn" onclick="checkPizza('5/8 = 6/8')">5/8 = 6/8</button>
+                <button class="choice-btn" onclick="checkPizza('5/8 > 6/8')">5/8 &gt; 6/8</button>
+                <button class="choice-btn" onclick="checkPizza('6/8 > 5/8')">6/8 &gt; 5/8</button>
+                <button class="choice-btn" onclick="checkPizza('6/8 < 5/8')">6/8 &lt; 5/8</button>
+                
+                <div class="feedback" id="q3Feedback"></div>
+            </div>
+        </div>
+
+        <!-- Section 3: Number Line Compare -->
+        <div class="section">
+            <h2 class="section-title">📏 Section 3: Number Line Compare</h2>
+            
+            <!-- Question 4 -->
+            <div class="question-box" id="q4Box">
+                <div class="fraction-question">
+                    7/5 <span class="blank"></span> 7/4 <span class="checkmark">✓</span>
+                </div>
+                <div class="answer-buttons">
+                    <button class="answer-btn" onclick="checkAnswer('q4', '<')">&lt;</button>
+                    <button class="answer-btn" onclick="checkAnswer('q4', '=')">=</button>
+                    <button class="answer-btn" onclick="checkAnswer('q4', '>')">&gt;</button>
+                </div>
+                <div class="feedback" id="q4Feedback"></div>
+                <div class="number-line-container" id="q4NumberLine">
+                    <div style="font-size: 0.9em; color: #666; margin-bottom: 10px;">📍 Here's where they are on the number line:</div>
+                    <div class="number-line">
+                        <div class="number-marker" style="left: 70%; border-color: #e17055; color: #e17055;">7/5 = 1.4</div>
+                        <div class="number-marker" style="left: 87.5%; border-color: #0984e3; color: #0984e3;">7/4 = 1.75</div>
+                    </div>
+                    <div class="number-line-labels">
+                        <span>0</span>
+                        <span>1</span>
+                        <span>2</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-box" id="q5Box">
+                <div class="fraction-question">
+                    1/3 <span class="blank"></span> 1/6 <span class="checkmark">✓</span>
+                </div>
+                <div class="answer-buttons">
+                    <button class="answer-btn" onclick="checkAnswer('q5', '<')">&lt;</button>
+                    <button class="answer-btn" onclick="checkAnswer('q5', '=')">=</button>
+                    <button class="answer-btn" onclick="checkAnswer('q5', '>')">&gt;</button>
+                </div>
+                <div class="feedback" id="q5Feedback"></div>
+                <div class="number-line-container" id="q5NumberLine">
+                    <div style="font-size: 0.9em; color: #666; margin-bottom: 10px;">📍 Here's where they are on the number line:</div>
+                    <div class="number-line">
+                        <div class="number-marker" style="left: 33.3%; border-color: #e17055; color: #e17055;">1/3 ≈ 0.33</div>
+                        <div class="number-marker" style="left: 16.6%; border-color: #0984e3; color: #0984e3;">1/6 ≈ 0.17</div>
+                    </div>
+                    <div class="number-line-labels">
+                        <span>0</span>
+                        <span>0.5</span>
+                        <span>1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reminder -->
+        <div class="reminder">
+            📝 Write your answers on your homework sheet!
+        </div>
+    </div>
+
+    <script>
+        // Correct answers
+        const answers = {
+            q1: '>',  // 3/6 > 2/6
+            q2: '<',  // 4/8 < 6/8
+            q4: '<',  // 7/5 < 7/4
+            q5: '>'   // 1/3 > 1/6
+        };
+
+        // Track completed questions
+        const completed = {
+            q1: false,
+            q2: false,
+            q3: false,
+            q4: false,
+            q5: false
+        };
+
+        // Encouraging messages
+        const correctMessages = [
+            "⭐ Nice work!",
+            "⭐ You got it!",
+            "⭐ Awesome!",
+            "⭐ Great thinking!"
+        ];
+
+        const tryAgainMessages = [
+            "🌱 Try again — you're close!",
+            "🌱 Almost! Give it another try!",
+            "🌱 Nice thinking! Try once more!"
+        ];
+
+        function getRandomMessage(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // Check answer for comparison questions
+        function checkAnswer(questionId, answer) {
+            if (completed[questionId]) return;
+
+            const feedback = document.getElementById(`${questionId}Feedback`);
+            const box = document.getElementById(`${questionId}Box`);
+            const buttons = box.querySelectorAll('.answer-btn');
+
+            // Reset button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('selected', 'incorrect');
+            });
+
+            // Find clicked button
+            const clickedBtn = Array.from(buttons).find(btn => {
+                if (answer === '<') return btn.textContent === '<';
+                if (answer === '>') return btn.textContent === '>';
+                return btn.textContent === answer;
+            });
+
+            if (answer === answers[questionId]) {
+                // Correct!
+                feedback.textContent = getRandomMessage(correctMessages);
+                feedback.className = 'feedback correct';
+                clickedBtn.classList.add('selected');
+                box.classList.add('completed');
+                completed[questionId] = true;
+
+                // Show number line for q4 and q5
+                if (questionId === 'q4' || questionId === 'q5') {
+                    document.getElementById(`${questionId}NumberLine`).classList.add('show');
+                }
+            } else {
+                // Try again
+                feedback.textContent = getRandomMessage(tryAgainMessages);
+                feedback.className = 'feedback tryagain';
+                clickedBtn.classList.add('incorrect');
+                
+                setTimeout(() => {
+                    clickedBtn.classList.remove('incorrect');
+                }, 500);
+            }
+        }
+
+        // Check pizza problem answer
+        function checkPizza(answer) {
+            if (completed.q3) return;
+
+            const feedback = document.getElementById('q3Feedback');
+            const box = document.getElementById('q3Box');
+            const buttons = box.querySelectorAll('.choice-btn');
+            const correctAnswer = '6/8 > 5/8';
+
+            // Reset button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('selected', 'incorrect');
+            });
+
+            // Find clicked button
+            const clickedBtn = Array.from(buttons).find(btn => 
+                btn.textContent.replace(/\s/g, '').includes(answer.replace(/\s/g, '').replace('>', '>').replace('<', '<'))
+            );
+
+            if (answer === correctAnswer) {
+                // Correct!
+                feedback.textContent = "🎉 You figured it out!";
+                feedback.className = 'feedback correct';
+                if (clickedBtn) clickedBtn.classList.add('selected');
+                box.classList.add('completed');
+                completed.q3 = true;
+            } else {
+                // Try again
+                feedback.textContent = getRandomMessage(tryAgainMessages);
+                feedback.className = 'feedback tryagain';
+                if (clickedBtn) {
+                    clickedBtn.classList.add('incorrect');
+                    setTimeout(() => {
+                        clickedBtn.classList.remove('incorrect');
+                    }, 500);
+                }
+            }
+        }
+
+        // Draw pizzas with slices
+        function drawPizzas() {
+            drawPizza('georgePizza', 5, 8);
+            drawPizza('iggyPizza', 6, 8);
+        }
+
+        function drawPizza(elementId, eaten, total) {
+            const pizza = document.getElementById(elementId);
+            pizza.innerHTML = '';
+            
+            // Create SVG for pizza slices
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '0 0 100 100');
+            svg.style.width = '100%';
+            svg.style.height = '100%';
+
+            for (let i = 0; i < total; i++) {
+                const startAngle = (i / total) * 360 - 90;
+                const endAngle = ((i + 1) / total) * 360 - 90;
+                
+                const x1 = 50 + 45 * Math.cos(startAngle * Math.PI / 180);
+                const y1 = 50 + 45 * Math.sin(startAngle * Math.PI / 180);
+                const x2 = 50 + 45 * Math.cos(endAngle * Math.PI / 180);
+                const y2 = 50 + 45 * Math.sin(endAngle * Math.PI / 180);
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const d = `M 50 50 L ${x1} ${y1} A 45 45 0 0 1 ${x2} ${y2} Z`;
+                path.setAttribute('d', d);
+                
+                if (i < eaten) {
+                    path.setAttribute('fill', '#e17055');
+                    path.setAttribute('stroke', '#d63031');
+                } else {
+                    path.setAttribute('fill', '#ffeaa7');
+                    path.setAttribute('stroke', '#fdcb6e');
+                }
+                path.setAttribute('stroke-width', '1');
+                
+                svg.appendChild(path);
+            }
+
+            pizza.appendChild(svg);
+        }
+
+        // Initialize pizzas on load
+        drawPizzas();
+    </script>
+</body>
+</html>
