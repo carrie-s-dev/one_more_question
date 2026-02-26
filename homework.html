@@ -261,6 +261,49 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
+        /* Gem display */
+        .gem-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 10px 18px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #e17055;
+            box-shadow: 0 4px 15px rgba(225, 112, 85, 0.3);
+        }
+
+        .gem-icon {
+            font-size: 1.2em;
+        }
+
+        .gem-earned {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 20px 40px;
+            border-radius: 20px;
+            font-size: 1.5em;
+            font-weight: 800;
+            color: #e17055;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            animation: gemPopup 1.5s ease forwards;
+        }
+
+        @keyframes gemPopup {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            40% { transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; }
+            100% { opacity: 0; transform: translate(-50%, -70%) scale(0.8); }
+        }
+
         /* Section styling */
         .section {
             background: linear-gradient(135deg, #fff5f8, #fef0ff);
@@ -473,7 +516,15 @@
         }
 
         .number-line-wrapper {
-            margin-bottom: 20px;
+            margin-bottom: 35px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .number-line-wrapper:last-child {
+            margin-bottom: 10px;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
         .number-line-title {
@@ -564,7 +615,14 @@
 </head>
 
 <body>
-    <a href="index.html" class="nav-btn">🏠 Back to One More Question</a>
+    <a href="index.html" class="nav-btn">🏠 Home</a>
+
+    <!-- Gem display -->
+    <div class="gem-display">
+        <span class="gem-icon">💎</span>
+        <span id="gemCount">0</span>
+        <span>gems</span>
+    </div>
 
     <div class="card">
         <h1>📘 Homework Helper</h1>
@@ -796,6 +854,37 @@
     </div>
 
     <script>
+        // Gem system
+        function loadGems() {
+            const saved = localStorage.getItem('gems');
+            return saved ? parseInt(saved) : 0;
+        }
+
+        function saveGems(amount) {
+            localStorage.setItem('gems', amount.toString());
+        }
+
+        function updateGemDisplay() {
+            document.getElementById('gemCount').innerText = loadGems();
+        }
+
+        function awardGems(amount) {
+            const current = loadGems();
+            const newTotal = current + amount;
+            saveGems(newTotal);
+            updateGemDisplay();
+            
+            // Show gem popup
+            const popup = document.createElement('div');
+            popup.className = 'gem-earned';
+            popup.innerHTML = `+${amount} 💎`;
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 1500);
+        }
+
+        // Initialize gems
+        updateGemDisplay();
+
         // Correct answers
         const answers = {
             q1: '>',  // 3/6 > 2/6
@@ -853,11 +942,12 @@
 
             if (answer === answers[questionId]) {
                 // Correct!
-                feedback.textContent = getRandomMessage(correctMessages);
+                feedback.textContent = getRandomMessage(correctMessages) + " +2 💎";
                 feedback.className = 'feedback correct';
                 clickedBtn.classList.add('selected');
                 box.classList.add('completed');
                 completed[questionId] = true;
+                awardGems(2);
             } else {
                 // Try again
                 feedback.textContent = getRandomMessage(tryAgainMessages);
@@ -891,11 +981,12 @@
 
             if (answer === correctAnswer) {
                 // Correct!
-                feedback.textContent = "🎉 You figured it out! Midnight saved you a slice! 🍕";
+                feedback.textContent = "🎉 You figured it out! Midnight saved you a slice! 🍕 +2 💎";
                 feedback.className = 'feedback correct';
                 if (clickedBtn) clickedBtn.classList.add('selected');
                 box.classList.add('completed');
                 completed.q3 = true;
+                awardGems(2);
             } else {
                 // Try again
                 feedback.textContent = getRandomMessage(tryAgainMessages);

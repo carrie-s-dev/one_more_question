@@ -1,51 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- 
-        HEAD SECTION
-        This contains information about the page that doesn't show up directly.
-        - charset: tells the browser what characters to use
-        - viewport: makes it work nicely on phones
-        - title: what shows in the browser tab
-    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One More Question</title>
     
-    <!-- 
-        STYLE SECTION - Modern, fun design!
-    -->
     <style>
-        /* Import a fun font */
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
         * {
             box-sizing: border-box;
         }
 
-        /* Cool gradient background */
         body {
             font-family: 'Nunito', Arial, sans-serif;
-            max-width: 650px;
+            max-width: 500px;
             margin: 0 auto;
             padding: 30px 20px;
             min-height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        /* Main card container */
         .card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
-            padding: 30px;
+            padding: 40px 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
         }
 
-        /* Fun animated title */
         h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             font-weight: 800;
             text-align: center;
             margin: 0 0 10px 0;
@@ -58,770 +47,185 @@
         .subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             font-size: 1.1em;
         }
 
-        /* Input groups */
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 700;
-            color: #444;
-            font-size: 0.95em;
-        }
-
-        /* Styled text input */
-        input[type="text"] {
-            width: 100%;
-            padding: 14px 18px;
-            font-size: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
-        }
-
-        /* Styled dropdowns */
-        select {
-            width: 100%;
-            padding: 14px 18px;
-            font-size: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            background-color: white;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
-        }
-
-        /* Row for dropdowns side by side */
-        .row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .row .input-group {
-            flex: 1;
-        }
-
-        /* Checkbox toggle - cool switch style */
-        .toggle-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            background: linear-gradient(135deg, #e8f4f8, #f0e8ff);
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 28px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.3s;
-            border-radius: 28px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.3s;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        input:checked + .toggle-slider {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(22px);
-        }
-
-        .toggle-label {
-            font-weight: 600;
-            color: #444;
-        }
-
-        /* Main button - gradient and animated */
-        .main-btn {
-            width: 100%;
-            padding: 16px;
-            font-size: 1.2em;
-            font-weight: 700;
-            font-family: inherit;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            cursor: pointer;
-            margin-top: 5px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .main-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        .main-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Secondary buttons */
-        button {
-            padding: 12px 20px;
-            font-size: 0.95em;
-            font-weight: 600;
-            font-family: inherit;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .secondary-btn {
-            display: inline-block;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-
-        .more-btn {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.3);
-        }
-
-        .more-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(17, 153, 142, 0.4);
-        }
-
-        .fart-btn {
-            background: linear-gradient(135deg, #8B7355, #A0522D);
-            box-shadow: 0 4px 12px rgba(139, 115, 85, 0.4);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            padding: 15px 25px 12px 25px;
-            position: relative;
-            border: none;
-        }
-
-        .fart-btn::before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: linear-gradient(135deg, #8B7355, #A0522D);
-            border-radius: 50%;
-            top: 50%;
-            left: -8px;
-            transform: translateY(-50%);
-        }
-
-        .fart-btn::after {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 22px;
-            background: linear-gradient(135deg, #8B7355, #A0522D);
-            border-radius: 50%;
-            top: 50%;
-            right: -10px;
-            transform: translateY(-50%);
-        }
-
-        .fart-btn:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 16px rgba(139, 115, 85, 0.5);
-        }
-
-        .random-btn {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-            box-shadow: 0 4px 12px rgba(240, 147, 251, 0.3);
-            margin-top: 10px;
-        }
-
-        .random-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(240, 147, 251, 0.4);
-        }
-
-        /* Button row */
-        .button-row {
-            margin-top: 15px;
-            display: none;
-        }
-
-        /* Gem counter */
-        .gem-counter {
+        /* Gem display */
+        .gem-display {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             background: linear-gradient(135deg, #ffecd2, #fcb69f);
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
             font-weight: 700;
-            font-size: 1.1em;
-            color: #8b4513;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(252, 182, 159, 0.4);
+            color: #e17055;
+            box-shadow: 0 4px 15px rgba(225, 112, 85, 0.3);
         }
 
         .gem-icon {
             font-size: 1.3em;
         }
 
-        .gem-count {
-            min-width: 30px;
-            text-align: center;
-        }
-
-        /* Power up button */
-        .powerup-btn {
-            background: linear-gradient(135deg, #f5af19, #f12711);
-            box-shadow: 0 4px 12px rgba(245, 175, 25, 0.4);
-        }
-
-        .powerup-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(245, 175, 25, 0.5);
-        }
-
-        /* Coach popup */
-        .coach-popup {
-            display: none;
-            margin-top: 15px;
-            padding: 20px;
-            background: linear-gradient(135deg, #fff0f5, #ffe4ec);
-            border-radius: 16px;
-            border: 3px solid #ff9eb5;
-            position: relative;
-            animation: popIn 0.3s ease-out;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .coach-header {
+        /* Main axolotls */
+        .axolotl-duo {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
         }
 
-        .coach-avatar {
-            font-size: 2.5em;
-            line-height: 1;
+        .axolotl {
+            width: 80px;
+            height: 90px;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
         }
 
-        .coach-name {
-            font-weight: 800;
-            color: #d63384;
-            font-size: 1.1em;
+        .axolotl:nth-child(2) {
+            animation-delay: 0.3s;
         }
 
-        .coach-message {
-            color: #5a4a5a;
-            font-size: 1em;
-            line-height: 1.5;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
-        /* Cute axolotl avatar */
-        .axolotl-avatar {
-            width: 50px;
+        .axolotl .body {
+            width: 65px;
             height: 50px;
-            background: linear-gradient(135deg, #ffb6c1, #ff91a4);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: 0 3px 10px rgba(255, 145, 164, 0.4);
-        }
-
-        .axolotl-face {
-            font-size: 14px;
-            margin-top: 2px;
-        }
-
-        .axolotl-gills {
-            font-size: 20px;
-            color: #ff6b8a;
-            position: absolute;
-            top: -2px;
-            transform: rotate(180deg);
-        }
-
-        /* Building blocks sections */
-        .blocks-section {
-            margin-bottom: 15px;
-        }
-
-        .blocks-section-title {
-            font-size: 0.85em;
-            font-weight: 700;
-            color: #666;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .building-blocks {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .block-btn {
-            padding: 8px 14px;
-            font-size: 0.85em;
-            font-weight: 600;
-            background: linear-gradient(135deg, #a8e6cf, #88d8b0);
-            color: #2d5a45;
-            border: 2px solid #7bc9a0;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin: 0;
-        }
-
-        .block-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(136, 216, 176, 0.4);
-        }
-
-        .block-btn.action {
-            background: linear-gradient(135deg, #ff9ff3, #f368e0);
-            color: #5c1a54;
-            border-color: #e056c7;
-        }
-
-        .block-btn.starter {
-            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-            color: #6d5a00;
-            border-color: #f0c040;
-        }
-
-        .block-btn.topic {
-            background: linear-gradient(135deg, #a8e6cf, #88d8b0);
-            color: #2d5a45;
-            border-color: #7bc9a0;
-        }
-
-        .block-btn.verb {
-            background: linear-gradient(135deg, #ffeaa7, #f9ca24);
-            color: #6d5a00;
-            border-color: #f0c040;
-        }
-
-        .block-btn.style {
-            background: linear-gradient(135deg, #dfe6fd, #b8c5f2);
-            color: #3d4a7a;
-            border-color: #9aa8e0;
-        }
-
-        /* Question preview */
-        .question-preview {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 15px;
-            min-height: 50px;
-            font-size: 1.05em;
-            margin-bottom: 15px;
-        }
-
-        .question-preview:empty:before {
-            content: "Your question will appear here...";
-            color: #aaa;
-        }
-
-        /* Titi button - pink */
-        .titi-btn {
-            background: linear-gradient(135deg, #ff9eb5, #ff6b8a) !important;
-            box-shadow: 0 4px 12px rgba(255, 107, 138, 0.4);
-        }
-
-        .titi-btn:hover {
-            box-shadow: 0 6px 16px rgba(255, 107, 138, 0.5);
-        }
-
-        /* Would You Rather section */
-        .wyr-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, #fff4e6, #ffe8cc);
-            border-radius: 16px;
-            border: 2px solid #ffb366;
-        }
-
-        .wyr-title {
-            margin: 0 0 15px 0;
-            color: #cc6600;
-            text-align: center;
-            font-size: 1.3em;
-        }
-
-        .wyr-options {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .wyr-option {
-            flex: 1;
-            padding: 15px;
-            background: white;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1em;
-            border: 2px solid #ffd699;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .wyr-vs {
-            display: flex;
-            align-items: center;
-            font-weight: 800;
-            color: #cc6600;
-            font-size: 1.2em;
-        }
-
-        .wyr-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .wyr-btn {
-            background: linear-gradient(135deg, #ff9f43, #ee5a24);
-            box-shadow: 0 4px 12px rgba(238, 90, 36, 0.3);
-        }
-
-        .wyr-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(238, 90, 36, 0.4);
-        }
-
-        /* Story button */
-        .story-btn {
-            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-        }
-
-        .story-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
-        }
-
-        .coach-tip {
-            background: white;
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-top: 12px;
-            border-left: 4px solid #ff9eb5;
-        }
-
-        .coach-tip strong {
-            color: #e75480;
-        }
-
-        .gem-reward {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: linear-gradient(135deg, #ffecd2, #fcb69f);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: #8b4513;
-            font-size: 0.9em;
-            margin-left: 8px;
-        }
-
-        .coach-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .coach-btn {
-            padding: 10px 16px;
-            font-size: 0.9em;
-        }
-
-        /* Output area - glassmorphism style */
-        #output {
-            margin-top: 25px;
-            padding: 25px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8f4f8 100%);
-            border: none;
-            border-radius: 16px;
-            min-height: 120px;
-            font-size: 1.05em;
-            line-height: 1.7;
-            color: #333;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        #output em {
-            color: #888;
-        }
-
-        /* Animations */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .thinking {
-            animation: pulse 1.5s infinite;
-        }
-
-        /* Titi the Axolotl Pet */
-        .titi-pet-container {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .titi-pet {
-            width: 120px;
-            height: 140px;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .titi-pet:hover {
-            transform: scale(1.1);
-        }
-
-        /* Axolotl body */
-        .axolotl-body {
-            width: 100px;
-            height: 80px;
-            background: linear-gradient(135deg, #ffb6c1, #ff91a4);
-            border-radius: 50px 50px 40px 40px;
+            border-radius: 30px 30px 25px 25px;
             position: absolute;
             bottom: 0;
-            left: 10px;
-            box-shadow: 0 4px 15px rgba(255, 145, 164, 0.4);
+            left: 7px;
         }
 
-        /* Axolotl head */
-        .axolotl-head {
-            width: 80px;
-            height: 70px;
-            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+        .axolotl .head {
+            width: 55px;
+            height: 48px;
             border-radius: 50%;
             position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 2;
-        }
-
-        /* Axolotl face */
-        .axolotl-eyes {
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 18px;
-            z-index: 3;
-        }
-
-        .axolotl-smile {
-            position: absolute;
-            top: 42px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 10px;
-            border: 3px solid #ff6b8a;
-            border-top: none;
-            border-radius: 0 0 20px 20px;
-            z-index: 3;
-        }
-
-        /* Axolotl gills */
-        .axolotl-gill-left, .axolotl-gill-right {
-            position: absolute;
             top: 10px;
-            font-size: 28px;
-            color: #ff6b8a;
+            left: 12px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .axolotl .gills {
+            position: absolute;
+            top: 5px;
+            font-size: 20px;
             z-index: 1;
         }
 
-        .axolotl-gill-left {
-            left: 0;
-            transform: rotate(-30deg);
-        }
+        .axolotl .gill-left { left: 0; transform: rotate(-30deg); }
+        .axolotl .gill-right { right: 0; transform: rotate(30deg) scaleX(-1); }
 
-        .axolotl-gill-right {
-            right: 0;
-            transform: rotate(30deg) scaleX(-1);
+        .axolotl.titi .body {
+            background: linear-gradient(135deg, #ffb6c1, #ff91a4);
+            box-shadow: 0 4px 15px rgba(255, 145, 164, 0.4);
         }
+        .axolotl.titi .head {
+            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+        }
+        .axolotl.titi .gills { color: #ff6b8a; }
 
-        /* Axolotl feet */
-        .axolotl-feet {
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
+        .axolotl.midnight .body {
+            background: linear-gradient(135deg, #4a4a4a, #2d2d2d);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .axolotl.midnight .head {
+            background: linear-gradient(135deg, #5a5a5a, #3d3d3d);
+        }
+        .axolotl.midnight .gills { color: #6a6a6a; }
+
+        /* Navigation buttons */
+        .nav-buttons {
             display: flex;
-            gap: 30px;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .axolotl-foot {
-            width: 15px;
-            height: 10px;
-            background: #ff91a4;
-            border-radius: 50%;
-        }
-
-        /* Accessory slots */
-        .accessory-hat {
-            position: absolute;
-            top: 0px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 30px;
-            z-index: 10;
-        }
-
-        .accessory-glasses {
-            position: absolute;
-            top: 38px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 22px;
-            z-index: 10;
-        }
-
-        .accessory-neck {
-            position: absolute;
-            top: 75px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 20px;
-            z-index: 10;
-        }
-
-        .accessory-held {
-            position: absolute;
-            bottom: 20px;
-            right: -15px;
-            font-size: 24px;
-            z-index: 10;
-        }
-
-        .treat-reaction {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 20px;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .treat-reaction.show {
-            animation: floatUp 1.5s ease-out forwards;
-        }
-
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(-40px); }
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-10deg); }
-            75% { transform: rotate(10deg); }
-        }
-
-        .titi-pet.happy {
-            animation: wiggle 0.5s ease-in-out 3;
-        }
-
-        /* Shop button */
-        .shop-btn {
-            padding: 8px 16px;
-            font-size: 0.85em;
-            background: linear-gradient(135deg, #ffecd2, #fcb69f);
-            color: #8b4513;
-            border: 2px solid #f0a060;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 700;
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 25px;
+            border-radius: 16px;
             font-family: inherit;
+            font-size: 1.2em;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .nav-btn.question {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .nav-btn.homework {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+        }
+
+        .nav-btn.shop {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+        }
+
+        .nav-btn-icon {
+            font-size: 1.4em;
+        }
+
+        /* Parent Portal */
+        .parent-portal {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .parent-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #f0f0f0;
+            color: #888;
+            border: none;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .shop-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(252, 182, 159, 0.5);
+        .parent-btn:hover {
+            background: #e0e0e0;
+            color: #666;
         }
 
-        /* Shop Modal */
-        .shop-modal {
+        /* PIN Modal */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -829,343 +233,37 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.6);
-            z-index: 2000;
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
 
-        .shop-content {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 400px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .shop-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #888;
-        }
-
-        .shop-title {
-            text-align: center;
-            color: #ff6b8a;
-            margin-bottom: 20px;
-        }
-
-        .shop-gems {
-            text-align: center;
-            background: linear-gradient(135deg, #ffecd2, #fcb69f);
-            padding: 8px 20px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 20px;
-            font-weight: 700;
-            color: #8b4513;
-        }
-
-        .shop-category {
-            margin-bottom: 20px;
-        }
-
-        .shop-category-title {
-            font-weight: 700;
-            color: #666;
-            margin-bottom: 10px;
-            font-size: 0.9em;
-        }
-
-        .shop-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .shop-item {
-            padding: 10px 15px;
-            background: #f5f5f5;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            border: 2px solid transparent;
-        }
-
-        .shop-item:hover {
-            background: #e8e8e8;
-            transform: scale(1.05);
-        }
-
-        .shop-item.owned {
-            border-color: #4ade80;
-            background: #dcfce7;
-        }
-
-        .shop-item.equipped {
-            border-color: #667eea;
-            background: #e0e7ff;
-        }
-
-        .shop-item-emoji {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .shop-item-price {
-            font-size: 0.75em;
-            color: #888;
-        }
-
-        .shop-item.owned .shop-item-price {
-            color: #22c55e;
-        }
-
-        @media (max-width: 768px) {
-            .titi-pet-container {
-                position: relative;
-                right: auto;
-                bottom: auto;
-                margin: 20px auto;
-            }
-        }
-
-        /* Friend axolotls */
-        .friends-container {
-            position: fixed;
-            right: 150px;
-            bottom: 20px;
-            z-index: 999;
-            display: flex;
-            gap: 10px;
-        }
-
-        .friend-axolotl {
-            width: 80px;
-            height: 95px;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .friend-axolotl:hover {
-            transform: scale(1.1);
-        }
-
-        .friend-axolotl .axolotl-body {
-            width: 70px;
-            height: 55px;
-            border-radius: 35px 35px 28px 28px;
-            position: absolute;
-            bottom: 0;
-            left: 5px;
-        }
-
-        .friend-axolotl .axolotl-head {
-            width: 55px;
-            height: 48px;
-            border-radius: 50%;
-            position: absolute;
-            top: 15px;
-            left: 12px;
-            z-index: 2;
-        }
-
-        .friend-axolotl .axolotl-eyes {
-            position: absolute;
-            top: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            z-index: 3;
-        }
-
-        .friend-axolotl .axolotl-smile {
-            position: absolute;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 7px;
-            border: 2px solid;
-            border-top: none;
-            border-radius: 0 0 14px 14px;
-            z-index: 3;
-        }
-
-        .friend-axolotl .axolotl-gill-left,
-        .friend-axolotl .axolotl-gill-right {
-            position: absolute;
-            top: 8px;
-            font-size: 20px;
-            z-index: 1;
-        }
-
-        .friend-axolotl .axolotl-gill-left {
-            left: 0;
-            transform: rotate(-30deg);
-        }
-
-        .friend-axolotl .axolotl-gill-right {
-            right: 0;
-            transform: rotate(30deg) scaleX(-1);
-        }
-
-        .friend-axolotl .axolotl-feet {
-            position: absolute;
-            bottom: -3px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-        }
-
-        .friend-axolotl .axolotl-foot {
-            width: 10px;
-            height: 7px;
-            border-radius: 50%;
-        }
-
-        .friend-name {
-            text-align: center;
-            font-size: 0.7em;
-            font-weight: 700;
-            color: #666;
-            margin-top: 2px;
-        }
-
-        /* Black axolotl colors */
-        .axolotl-black .axolotl-body {
-            background: linear-gradient(135deg, #4a4a4a, #2d2d2d);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .axolotl-black .axolotl-head {
-            background: linear-gradient(135deg, #5a5a5a, #3d3d3d);
-        }
-
-        .axolotl-black .axolotl-gill-left,
-        .axolotl-black .axolotl-gill-right {
-            color: #6a6a6a;
-        }
-
-        .axolotl-black .axolotl-smile {
-            border-color: #888;
-        }
-
-        .axolotl-black .axolotl-foot {
-            background: #3d3d3d;
-        }
-
-        @media (max-width: 768px) {
-            .friends-container {
-                position: relative;
-                right: auto;
-                bottom: auto;
-                justify-content: center;
-                margin: 10px auto;
-            }
-        }
-
-        /* Parent Portal */
-        .parent-portal-btn {
-            display: block;
-            margin: 30px auto 0 auto;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #6c757d, #495057);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 0.9em;
-            font-weight: 600;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-
-        .parent-portal-btn:hover {
-            opacity: 1;
-            transform: translateY(-2px);
-        }
-
-        .portal-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .portal-content {
+        .modal-content {
             background: white;
             border-radius: 20px;
             padding: 30px;
-            max-width: 500px;
             width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-width: 350px;
+            text-align: center;
         }
 
-        .portal-header {
-            text-align: center;
+        .modal-title {
+            font-size: 1.4em;
+            font-weight: 700;
             margin-bottom: 20px;
-        }
-
-        .portal-title {
-            font-size: 1.5em;
-            font-weight: 800;
-            color: #495057;
-            margin: 0 0 5px 0;
-        }
-
-        .portal-date {
-            color: #888;
-            font-size: 0.95em;
-        }
-
-        .portal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            color: #888;
-            background: none;
-            border: none;
-        }
-
-        .pin-input-container {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .pin-input-container h3 {
-            margin: 0 0 20px 0;
-            color: #495057;
+            color: #333;
         }
 
         .pin-input {
-            font-size: 24px;
-            padding: 12px 20px;
-            width: 150px;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.5em;
             text-align: center;
-            border: 2px solid #ddd;
-            border-radius: 10px;
+            letter-spacing: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             font-family: inherit;
-            letter-spacing: 8px;
+            margin-bottom: 20px;
         }
 
         .pin-input:focus {
@@ -1173,1919 +271,162 @@
             border-color: #667eea;
         }
 
-        .pin-error {
-            color: #dc3545;
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-
-        .pin-submit {
-            display: block;
-            margin: 20px auto 0 auto;
+        .modal-btn {
             padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
             border: none;
             border-radius: 10px;
             font-family: inherit;
             font-size: 1em;
             font-weight: 600;
             cursor: pointer;
+            margin: 5px;
         }
 
-        /* User Cards */
-        .user-card {
-            background: #f8f9fa;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
         }
 
-        .user-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .user-avatar.olivia {
-            background: linear-gradient(135deg, #ff9eb5, #ff6b8a);
-        }
-
-        .user-avatar.lucas {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-        }
-
-        .user-name {
-            font-size: 1.3em;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .user-time {
-            font-size: 0.9em;
+        .modal-btn.secondary {
+            background: #f0f0f0;
             color: #666;
         }
 
-        /* Temperature Gauge */
-        .gauge-container {
-            margin: 15px 0;
-        }
-
-        .gauge-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .gauge-track {
-            height: 30px;
-            background: #e9ecef;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .gauge-fill {
-            height: 100%;
-            border-radius: 15px;
-            transition: width 0.5s ease, background 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            min-width: 60px;
-        }
-
-        .gauge-fill.green {
-            background: linear-gradient(90deg, #00b894, #55efc4);
-        }
-
-        .gauge-fill.orange {
-            background: linear-gradient(90deg, #fdcb6e, #e17055);
-        }
-
-        .gauge-fill.red {
-            background: linear-gradient(90deg, #e17055, #d63031);
-        }
-
-        .gauge-time {
-            font-weight: 700;
-            color: white;
+        .pin-error {
+            color: #e74c3c;
             font-size: 0.9em;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-        }
-
-        .gauge-markers {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.7em;
-            color: #aaa;
-            margin-top: 3px;
-            padding: 0 5px;
-        }
-
-        /* Time Controls */
-        .time-controls {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .time-btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.9em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .time-btn.add {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
-        }
-
-        .time-btn.subtract {
-            background: linear-gradient(135deg, #fab1a0, #e17055);
-            color: white;
-        }
-
-        .time-btn.reset {
-            background: #e9ecef;
-            color: #495057;
-        }
-
-        .time-btn:hover {
-            transform: scale(1.05);
+            margin-top: 10px;
+            min-height: 20px;
         }
     </style>
 </head>
 
 <body>
-    <!-- Friend Axolotls Container -->
-    <div class="friends-container" id="friendsContainer"></div>
-
-    <!-- Titi the Axolotl Pet -->
-    <div class="titi-pet-container">
-        <div class="titi-pet" id="titiPet" onclick="openShop()">
-            <div class="accessory-hat" id="hatSlot"></div>
-            <div class="axolotl-gill-left">༄</div>
-            <div class="axolotl-gill-right">༄</div>
-            <div class="axolotl-head">
-                <div class="axolotl-eyes" id="titiEyes">◕ ◕</div>
-                <div class="axolotl-smile" id="titiSmile"></div>
-                <div class="accessory-glasses" id="glassesSlot"></div>
-            </div>
-            <div class="axolotl-body">
-                <div class="accessory-neck" id="neckSlot"></div>
-            </div>
-            <div class="axolotl-feet">
-                <div class="axolotl-foot"></div>
-                <div class="axolotl-foot"></div>
-            </div>
-            <div class="accessory-held" id="heldSlot"></div>
-            <div class="treat-reaction" id="treatReaction"></div>
-        </div>
-        <button class="shop-btn" onclick="openShop()">🛍️ Shop</button>
-    </div>
-
-    <!-- Shop Modal -->
-    <div class="shop-modal" id="shopModal">
-        <div class="shop-content">
-            <span class="shop-close" onclick="closeShop()">✕</span>
-            <h2 class="shop-title">🛍️ Titi's Closet</h2>
-            <div style="text-align: center;">
-                <div class="shop-gems">💎 <span id="shopGems">0</span> gems</div>
-            </div>
-            
-            <div class="shop-category">
-                <div class="shop-category-title">🎩 Hats</div>
-                <div class="shop-items" id="hatItems"></div>
-            </div>
-            
-            <div class="shop-category">
-                <div class="shop-category-title">👓 Glasses</div>
-                <div class="shop-items" id="glassesItems"></div>
-            </div>
-            
-            <div class="shop-category">
-                <div class="shop-category-title">🎀 Neck</div>
-                <div class="shop-items" id="neckItems"></div>
-            </div>
-            
-            <div class="shop-category">
-                <div class="shop-category-title">🎈 Holding</div>
-                <div class="shop-items" id="heldItems"></div>
-            </div>
-            
-            <div class="shop-category">
-                <div class="shop-category-title">🍪 Treats <span style="font-weight: normal; color: #888;">(feed Titi!)</span></div>
-                <div class="shop-items" id="treatsItems"></div>
-            </div>
-            
-            <div class="shop-category">
-                <div class="shop-category-title">🐾 Friends <span style="font-weight: normal; color: #888;">(axolotl buddies!)</span></div>
-                <div class="shop-items" id="friendsItems"></div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 15px; padding: 10px; background: #f0f0f0; border-radius: 10px;">
-                <span style="font-size: 0.85em; color: #888;">🍪 Treats given: <strong id="treatCount">0</strong></span>
-            </div>
-        </div>
-    </div>
-
     <div class="card">
-        <!-- Gem Counter -->
-        <div class="gem-counter">
+        <h1>One More Question</h1>
+        <p class="subtitle">Learning is fun with Titi & Midnight!</p>
+
+        <!-- Gem display -->
+        <div class="gem-display">
             <span class="gem-icon">💎</span>
-            <span class="gem-count" id="gemCount">0</span>
+            <span id="gemCount">0</span>
             <span>gems</span>
         </div>
 
-        <!-- Title -->
-        <h1>One more question!</h1>
-        <p class="subtitle">Build your question with the blocks below!</p>
-
-        <!-- SECTION 1: Action -->
-        <div class="blocks-section">
-            <div class="blocks-section-title">💬 I want you to...</div>
-            <div class="building-blocks">
-                <button class="block-btn action" onclick="addBlock('Tell me ')">Tell me</button>
-                <button class="block-btn action" onclick="addBlock('Explain ')">Explain</button>
+        <!-- Titi and Midnight -->
+        <div class="axolotl-duo">
+            <div class="axolotl titi">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+            </div>
+            <div class="axolotl midnight">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
             </div>
         </div>
 
-        <!-- SECTION 2: Question Starters -->
-        <div class="blocks-section">
-            <div class="blocks-section-title">🚀 Start with...</div>
-            <div class="building-blocks">
-                <button class="block-btn starter" onclick="addBlock('why ')">why</button>
-                <button class="block-btn starter" onclick="addBlock('how ')">how</button>
-                <button class="block-btn starter" onclick="addBlock('what ')">what</button>
-                <button class="block-btn starter" onclick="addBlock('what happens when ')">what happens when</button>
-                <button class="block-btn starter" onclick="addBlock('what if ')">what if</button>
-            </div>
+        <!-- Navigation buttons -->
+        <div class="nav-buttons">
+            <a href="question.html" class="nav-btn question">
+                <span class="nav-btn-icon">❓</span>
+                Question Game
+            </a>
+            <a href="homework.html" class="nav-btn homework">
+                <span class="nav-btn-icon">📚</span>
+                Homework Helper
+            </a>
+            <a href="question.html#shop" class="nav-btn shop" onclick="goToShop()">
+                <span class="nav-btn-icon">🛍️</span>
+                Titi's Shop
+            </a>
         </div>
 
-        <!-- SECTION 3: Topics -->
-        <div class="blocks-section">
-            <div class="blocks-section-title">🎯 Topic... <span style="font-weight: normal; color: #888;">(type your own or pick one)</span></div>
-            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
-                <input type="text" id="customTopic" placeholder="Type any topic..." style="flex: 1; padding: 10px; border-radius: 10px; border: 2px solid #7bc9a0;">
-                <button class="block-btn topic" onclick="addCustomTopic()" style="margin: 0;">+ Add</button>
-            </div>
-            <div class="building-blocks">
-                <button class="block-btn topic" onclick="addBlock('the sun ')">the sun</button>
-                <button class="block-btn topic" onclick="addBlock('dinosaurs ')">dinosaurs</button>
-                <button class="block-btn topic" onclick="addBlock('the ocean ')">the ocean</button>
-                <button class="block-btn topic" onclick="addBlock('robots ')">robots</button>
-                <button class="block-btn topic" onclick="addBlock('animals ')">animals</button>
-                <button class="block-btn topic" onclick="addBlock('space ')">space</button>
-                <button class="block-btn topic" onclick="addBlock('my body ')">my body</button>
-                <button class="block-btn topic" onclick="addBlock('food ')">food</button>
-                <button class="block-btn topic" onclick="addBlock('poop ')">poop 💩</button>
-            </div>
-        </div>
-
-        <!-- SECTION 4: Verb/Action -->
-        <div class="blocks-section">
-            <div class="blocks-section-title">🔧 Does what? <span style="font-weight: normal; color: #888;">(type your own or pick one)</span></div>
-            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
-                <input type="text" id="customVerb" placeholder="Type any action..." style="flex: 1; padding: 10px; border-radius: 10px; border: 2px solid #f0c040;">
-                <button class="block-btn verb" onclick="addCustomVerb()" style="margin: 0;">+ Add</button>
-            </div>
-            <div class="building-blocks">
-                <button class="block-btn verb" onclick="addBlock('works ')">works</button>
-                <button class="block-btn verb" onclick="addBlock('happens ')">happens</button>
-                <button class="block-btn verb" onclick="addBlock('exists ')">exists</button>
-                <button class="block-btn verb" onclick="addBlock('is made ')">is made</button>
-                <button class="block-btn verb" onclick="addBlock('changes ')">changes</button>
-                <button class="block-btn verb" onclick="addBlock('moves ')">moves</button>
-                <button class="block-btn verb" onclick="addBlock('grows ')">grows</button>
-                <button class="block-btn verb" onclick="addBlock('stinks ')">stinks 💩</button>
-            </div>
-        </div>
-
-        <!-- SECTION 5: Style/Ending -->
-        <div class="blocks-section">
-            <div class="blocks-section-title">✨ Make it...</div>
-            <div class="building-blocks">
-                <button class="block-btn style" onclick="addBlock(' in simple words')">in simple words</button>
-                <button class="block-btn style" onclick="addBlock(' with an example')">with an example</button>
-                <button class="block-btn style" onclick="addBlock(' step by step')">step by step</button>
-                <button class="block-btn style" onclick="addBlock(' with a fun fact')">with a fun fact</button>
-            </div>
-        </div>
-
-        <!-- Question Preview -->
-        <div class="input-group">
-            <label for="question">📝 Your Question:</label>
-            <input type="text" id="question" placeholder="Click blocks above or type here...">
-        </div>
-
-        <!-- Age selector -->
-        <div class="input-group">
-            <label for="age">👤 Age</label>
-            <select id="age">
-                <option value="4-6">4–6</option>
-                <option value="7-9">7–9</option>
-                <option value="10-12">10–12</option>
-                <option value="family">Family</option>
-            </select>
-        </div>
-
-        <!-- Buttons row -->
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="main-btn titi-btn" style="flex: 1; min-width: 140px;" onclick="powerUpQuestion()">
-                <span style="display: inline-flex; align-items: center; gap: 6px;">
-                    <span style="background: #ffccd5; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px;">◕‿◕</span>
-                    Titi's Tip
-                </span>
+        <!-- Parent Portal -->
+        <div class="parent-portal">
+            <button class="parent-btn" onclick="openPinModal()">
+                🔒 Parent Portal
             </button>
-            <button class="main-btn" style="flex: 2; min-width: 140px;" onclick="explainIt()">⚡ Answer Me!</button>
-        </div>
-
-        <!-- Coach Popup (hidden by default) -->
-        <div class="coach-popup" id="coachPopup">
-            <div class="coach-header">
-                <div class="axolotl-avatar">
-                    <div class="axolotl-face">◕‿◕</div>
-                    <div class="axolotl-gills">༄</div>
-                </div>
-                <div>
-                    <div class="coach-name">Titi's Tip!</div>
-                </div>
-            </div>
-            <div class="coach-message" id="coachMessage">
-                <!-- Message gets inserted here -->
-            </div>
-            <div class="coach-buttons">
-                <button class="coach-btn" style="background: linear-gradient(135deg, #11998e, #38ef7d);" onclick="applyCoachTip()">💡 I'll try that!</button>
-                <button class="coach-btn" style="background: linear-gradient(135deg, #888, #666);" onclick="hideCoach()">Skip</button>
-            </div>
-        </div>
-
-        <!-- Output area -->
-        <div id="output">
-            <em>Your answer will appear here...</em>
-        </div>
-
-        <!-- Extra buttons -->
-        <div class="button-row" id="buttonRow">
-            <button class="secondary-btn more-btn" onclick="tellMeMore()">🧠 Tell Me More!</button>
-            <button class="secondary-btn story-btn" onclick="tellMeStory()">📖 Tell Me a Story!</button>
-            <button class="secondary-btn fart-btn" onclick="doFart()">💨 Fart Button</button>
-        </div>
-
-        <!-- Surprise Me at bottom -->
-        <div style="text-align: center; margin-top: 20px;">
-            <button class="random-btn" onclick="randomQuestion()">🎲 Surprise Me with a Random Question!</button>
-        </div>
-
-        <!-- Would You Rather Generator (always visible) -->
-        <div class="wyr-section">
-            <h3 class="wyr-title">🤔 Would You Rather?</h3>
-            <div class="wyr-options">
-                <div class="wyr-option" id="wyrOption1">Click "Generate" to start!</div>
-                <div class="wyr-vs">VS</div>
-                <div class="wyr-option" id="wyrOption2">🎲</div>
-            </div>
-            <div class="wyr-buttons">
-                <button class="secondary-btn wyr-btn" onclick="generateWYR()">🎲 Generate!</button>
-            </div>
-        </div>
-
-        <!-- Homework Helper Link -->
-        <a href="homework.html" style="display: block; text-align: center; margin-top: 25px; padding: 14px 24px; background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 1.1em; box-shadow: 0 4px 12px rgba(9, 132, 227, 0.3); transition: all 0.3s ease;">📘 Homework Helper</a>
-
-        <!-- Parent Portal Button -->
-        <button class="parent-portal-btn" onclick="openParentPortal()">🔒 Parent Portal</button>
-    </div>
-
-    <!-- Parent Portal Modal -->
-    <div class="portal-modal" id="portalModal">
-        <div class="portal-content" style="position: relative;">
-            <button class="portal-close" onclick="closeParentPortal()">✕</button>
-            
-            <!-- PIN Entry Screen -->
-            <div id="pinScreen" class="pin-input-container">
-                <h3>🔐 Enter Parent PIN</h3>
-                <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" onkeyup="checkPinEnter(event)">
-                <div id="pinError" class="pin-error"></div>
-                <button class="pin-submit" onclick="submitPin()">Enter</button>
-            </div>
-            
-            <!-- Portal Dashboard (hidden until PIN entered) -->
-            <div id="portalDashboard" style="display: none;">
-                <div class="portal-header">
-                    <h2 class="portal-title">📊 Parent Portal</h2>
-                    <div class="portal-date" id="portalDate"></div>
-                </div>
-                
-                <!-- Olivia's Card -->
-                <div class="user-card">
-                    <div class="user-header">
-                        <div class="user-avatar olivia">👧</div>
-                        <div>
-                            <div class="user-name">Olivia</div>
-                            <div class="user-time">iPad Screen Time</div>
-                        </div>
-                    </div>
-                    <div class="gauge-container">
-                        <div class="gauge-label">
-                            <span>Screen Time</span>
-                            <span id="oliviaTimeText">0h 0m</span>
-                        </div>
-                        <div class="gauge-track">
-                            <div class="gauge-fill green" id="oliviaGauge" style="width: 0%;">
-                                <span class="gauge-time" id="oliviaGaugeTime">0:00</span>
-                            </div>
-                        </div>
-                        <div class="gauge-markers">
-                            <span>0h</span>
-                            <span>1h</span>
-                            <span>2h</span>
-                            <span>3h</span>
-                            <span>4h+</span>
-                        </div>
-                    </div>
-                    <div class="time-controls">
-                        <button class="time-btn add" onclick="addTime('olivia', 5)">+5 min</button>
-                        <button class="time-btn add" onclick="addTime('olivia', 15)">+15 min</button>
-                        <button class="time-btn add" onclick="addTime('olivia', 30)">+30 min</button>
-                        <button class="time-btn subtract" onclick="addTime('olivia', -5)">-5 min</button>
-                        <button class="time-btn reset" onclick="resetTime('olivia')">Reset</button>
-                    </div>
-                </div>
-                
-                <!-- Lucas's Card -->
-                <div class="user-card">
-                    <div class="user-header">
-                        <div class="user-avatar lucas">👦</div>
-                        <div>
-                            <div class="user-name">Lucas</div>
-                            <div class="user-time">iPad Screen Time</div>
-                        </div>
-                    </div>
-                    <div class="gauge-container">
-                        <div class="gauge-label">
-                            <span>Screen Time</span>
-                            <span id="lucasTimeText">0h 0m</span>
-                        </div>
-                        <div class="gauge-track">
-                            <div class="gauge-fill green" id="lucasGauge" style="width: 0%;">
-                                <span class="gauge-time" id="lucasGaugeTime">0:00</span>
-                            </div>
-                        </div>
-                        <div class="gauge-markers">
-                            <span>0h</span>
-                            <span>1h</span>
-                            <span>2h</span>
-                            <span>3h</span>
-                            <span>4h+</span>
-                        </div>
-                    </div>
-                    <div class="time-controls">
-                        <button class="time-btn add" onclick="addTime('lucas', 5)">+5 min</button>
-                        <button class="time-btn add" onclick="addTime('lucas', 15)">+15 min</button>
-                        <button class="time-btn add" onclick="addTime('lucas', 30)">+30 min</button>
-                        <button class="time-btn subtract" onclick="addTime('lucas', -5)">-5 min</button>
-                        <button class="time-btn reset" onclick="resetTime('lucas')">Reset</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- 
-        SCRIPT SECTION
-        JavaScript goes here - this controls what HAPPENS when you click things
-    -->
+    <!-- PIN Modal -->
+    <div class="modal" id="pinModal">
+        <div class="modal-content">
+            <div class="modal-title">🔒 Parent Portal</div>
+            <p style="color: #666; margin-bottom: 15px;">Enter your 4-digit PIN</p>
+            <input type="password" 
+                   id="pinInput" 
+                   class="pin-input" 
+                   maxlength="4" 
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   placeholder="••••"
+                   onkeyup="handlePinKeyup(event)">
+            <div>
+                <button class="modal-btn secondary" onclick="closePinModal()">Cancel</button>
+                <button class="modal-btn primary" onclick="submitPin()">Enter</button>
+            </div>
+            <div class="pin-error" id="pinError"></div>
+        </div>
+    </div>
+
     <script>
-        // Store the last question and answer so we can expand on it
-        let lastQuestion = '';
-        let lastAnswer = '';
-        let lastSettings = {};
-        
-        
-        // Gem system
-        let gems = 0;
-        let currentCoachTip = null;
-        let questionWasPoweredUp = false;
+        const PARENT_PIN = '1234';
 
-        // Update gem display
-        function updateGems(amount) {
-            gems += amount;
-            document.getElementById('gemCount').innerText = gems;
-            // Little animation
-            const counter = document.getElementById('gemCount');
-            counter.style.transform = 'scale(1.3)';
-            setTimeout(() => counter.style.transform = 'scale(1)', 200);
+        function loadGems() {
+            const saved = localStorage.getItem('gems');
+            return saved ? parseInt(saved) : 0;
         }
 
-        // Titi's tips based on question analysis - teaches kids how to prompt better!
-        function analyzeQuestion(question) {
-            const q = question.toLowerCase().trim();
-            const words = q.split(/\s+/);
-            const tips = [];
-            
-            // Helper to check for whole words only
-            function hasWord(text, word) {
-                const regex = new RegExp(`\\b${word}\\b`, 'i');
-                return regex.test(text);
-            }
-            
-            // Check for vague words (whole words only, not parts of other words)
-            const vagueWords = ['thing', 'things', 'stuff', 'something', 'anything'];
-            const foundVague = vagueWords.filter(w => hasWord(q, w));
-            if (foundVague.length > 0) {
-                tips.push({
-                    message: `I noticed "${foundVague[0]}" - that's a bit vague!`,
-                    tip: `Instead of "${foundVague[0]}", try using the <strong>specific name</strong> of what you're asking about!`,
-                    suggestion: `Replace "${foundVague[0]}" with a more specific word`,
-                    reward: 3
-                });
-            }
-            
-            // Very short question
-            if (words.length < 4) {
-                tips.push({
-                    message: "That's a pretty short question!",
-                    tip: "Try adding <strong>more details</strong> - like WHAT specifically you want to know, or WHY you're curious!",
-                    suggestion: "Add more details about what you want to learn",
-                    reward: 3
-                });
-            }
-            
-            // No question word
-            const questionWords = ['why', 'how', 'what', 'when', 'where', 'who', 'which', 'can', 'does', 'do', 'is', 'are', 'will', 'would', 'could'];
-            const hasQuestionWord = questionWords.some(w => hasWord(q, w));
-            if (!hasQuestionWord && words.length > 2) {
-                tips.push({
-                    message: "I don't see a question word!",
-                    tip: "Great questions often start with <strong>Why</strong>, <strong>How</strong>, or <strong>What</strong>!",
-                    suggestion: "Try starting with 'Why...', 'How...', or 'What...'",
-                    reward: 2
-                });
-            }
-            
-            // Could add context about what they already know
-            if (words.length >= 4 && words.length <= 8 && !q.includes('because') && !q.includes('already know')) {
-                tips.push({
-                    message: "Good start! Want an even better answer?",
-                    tip: "Try adding <strong>what you already know</strong> about the topic! Example: 'I know dinosaurs are big, but...'",
-                    suggestion: "Add what you already know about this topic",
-                    reward: 2
-                });
-            }
-            
-            // Could ask for specific format
-            const hasFormat = q.includes('example') || q.includes('step by step') || q.includes('simple') || 
-                             q.includes('list') || q.includes('story') || q.includes('fun fact');
-            if (words.length >= 5 && !hasFormat) {
-                tips.push({
-                    message: "Nice question! Here's a pro tip:",
-                    tip: "Tell me <strong>HOW</strong> you want the answer! Try adding 'with an example' or 'step by step' at the end!",
-                    suggestion: "Add 'with an example' or 'step by step'",
-                    reward: 2
-                });
-            }
-            
-            // Could be more specific about what aspect they want to know
-            if (words.length >= 3 && words.length <= 6) {
-                const topics = ['dinosaurs', 'space', 'animals', 'ocean', 'robots', 'sun', 'moon', 'earth', 'body', 'food'];
-                const hasTopic = topics.some(t => q.includes(t));
-                if (hasTopic && !q.includes('why') && !q.includes('how')) {
-                    tips.push({
-                        message: "You picked a cool topic!",
-                        tip: "Try being more specific: instead of just the topic, ask about <strong>one specific thing</strong> about it! Like 'How did dinosaurs protect themselves?'",
-                        suggestion: "Ask about ONE specific thing about your topic",
-                        reward: 3
-                    });
-                }
-            }
-            
-            // Asking "what is" - could go deeper
-            if (q.startsWith('what is') || q.startsWith('what are')) {
-                tips.push({
-                    message: "'What is' questions are good for definitions!",
-                    tip: "Want to learn MORE? Try asking <strong>'How does... work?'</strong> or <strong>'Why does... happen?'</strong> to go deeper!",
-                    suggestion: "Try changing 'What is' to 'How does... work'",
-                    reward: 2
-                });
-            }
-            
-            // If the question is already good!
-            if (tips.length === 0) {
-                return {
-                    message: "WOW! 🌟 This is a GREAT question!",
-                    tip: "You included good details and were specific! That's how you get awesome answers!",
-                    reward: 5,
-                    isGreat: true
-                };
-            }
-            
-            // Return a random tip from the applicable ones
-            return tips[Math.floor(Math.random() * tips.length)];
+        function updateGemDisplay() {
+            document.getElementById('gemCount').innerText = loadGems();
         }
 
-        // Show the coach with a tip
-        function powerUpQuestion() {
-            const question = document.getElementById('question').value.trim();
-            
-            if (!question) {
-                showCoachMessage("Type a question first, then I can help you make it even better!", "I'm here to help you ask <strong>super questions</strong>!", 0);
-                return;
-            }
-            
-            const analysis = analyzeQuestion(question);
-            currentCoachTip = analysis;
-            
-            if (analysis.isGreat) {
-                showCoachMessage(analysis.message, analysis.tip, analysis.reward);
-                updateGems(analysis.reward);
-                questionWasPoweredUp = true;
-            } else {
-                showCoachMessage(analysis.message, analysis.tip, analysis.reward);
-            }
+        function goToShop() {
+            localStorage.setItem('openShop', 'true');
         }
 
-        // Display coach message
-        function showCoachMessage(message, tip, reward) {
-            const popup = document.getElementById('coachPopup');
-            const msgDiv = document.getElementById('coachMessage');
-            
-            let rewardHTML = reward > 0 ? `<span class="gem-reward">+${reward} 💎</span>` : '';
-            
-            msgDiv.innerHTML = `
-                <p>${message}</p>
-                <div class="coach-tip">
-                    <strong>💡 Titi's Tip:</strong> ${tip} ${rewardHTML}
-                </div>
-            `;
-            
-            popup.style.display = 'block';
-        }
-
-        // Hide coach
-        function hideCoach() {
-            document.getElementById('coachPopup').style.display = 'none';
-        }
-
-        // Apply coach tip (acknowledge, get gems, and help user edit)
-        function applyCoachTip() {
-            if (currentCoachTip && currentCoachTip.reward > 0) {
-                updateGems(currentCoachTip.reward);
-                questionWasPoweredUp = true;
-            }
-            hideCoach();
-            
-            // Focus on the question input so user can apply the tip
-            const questionInput = document.getElementById('question');
-            questionInput.focus();
-            questionInput.select();
-        }
-
-        // Add building block to question
-        let blocksUsed = 0;
-        function addBlock(text) {
-            const input = document.getElementById('question');
-            const cursorPos = input.selectionStart;
-            const currentText = input.value;
-            
-            // Insert at cursor position or append
-            if (text.startsWith(' ')) {
-                // Ending blocks go at the end - avoid double spaces
-                const trimmedText = currentText.trimEnd();
-                input.value = trimmedText + text;
-            } else {
-                // Starting blocks go at cursor or beginning
-                input.value = currentText.slice(0, cursorPos) + text + currentText.slice(cursorPos);
-            }
-            
-            input.focus();
-            
-            // Reward for using blocks!
-            blocksUsed++;
-            if (blocksUsed <= 3) {  // Only reward first 3 per session
-                updateGems(1);
-            }
-        }
-
-        // Add custom topic from text input
-        function addCustomTopic() {
-            const topicInput = document.getElementById('customTopic');
-            const topic = topicInput.value.trim();
-            
-            if (topic) {
-                addBlock(topic + ' ');
-                topicInput.value = ''; // Clear the input
-            }
-        }
-
-        // Add custom verb from text input
-        function addCustomVerb() {
-            const verbInput = document.getElementById('customVerb');
-            const verb = verbInput.value.trim();
-            
-            if (verb) {
-                addBlock(verb + ' ');
-                verbInput.value = ''; // Clear the input
-            }
-        }
-
-        // Random questions kids might ask
-        const randomQuestions = [
-            "Why is the sky blue?",
-            "How do airplanes fly?",
-            "Why do we have to sleep?",
-            "What makes rainbows?",
-            "How do fish breathe underwater?",
-            "Why do dogs bark?",
-            "What are stars made of?",
-            "How does the internet work?",
-            "Why do leaves change color?",
-            "What makes thunder?",
-            "How do magnets work?",
-            "Why do we have eyebrows?",
-            "What are clouds made of?",
-            "How do birds know where to fly?",
-            "Why does the moon change shape?",
-            "What makes popcorn pop?",
-            "How do volcanoes erupt?",
-            "Why do we get hiccups?",
-            "What are dinosaurs?",
-            "How do plants grow?",
-            "Why is water wet?",
-            "What makes a car go?",
-            "Why do cats purr?",
-            "How do rockets work?",
-            "What are germs?",
-            "Why do we have fingerprints?",
-            "How does a phone work?",
-            "What are dreams?",
-            "Why is grass green?",
-            "How do bees make honey?"
-        ];
-
-        // Pick a random question and put it in the input box
-        function randomQuestion() {
-            const randomIndex = Math.floor(Math.random() * randomQuestions.length);
-            document.getElementById('question').value = randomQuestions[randomIndex];
-        }
-
-        // Play robot beep boop sounds
-        function playRobotBeep() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            
-            // Beep 1 - high
-            const osc1 = audioContext.createOscillator();
-            const gain1 = audioContext.createGain();
-            osc1.connect(gain1);
-            gain1.connect(audioContext.destination);
-            osc1.frequency.setValueAtTime(800, audioContext.currentTime);
-            osc1.type = 'square';
-            gain1.gain.setValueAtTime(0.2, audioContext.currentTime);
-            gain1.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            osc1.start(audioContext.currentTime);
-            osc1.stop(audioContext.currentTime + 0.1);
-            
-            // Beep 2 - low (boop)
-            const osc2 = audioContext.createOscillator();
-            const gain2 = audioContext.createGain();
-            osc2.connect(gain2);
-            gain2.connect(audioContext.destination);
-            osc2.frequency.setValueAtTime(400, audioContext.currentTime + 0.15);
-            osc2.type = 'square';
-            gain2.gain.setValueAtTime(0.2, audioContext.currentTime + 0.15);
-            gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.25);
-            osc2.start(audioContext.currentTime + 0.15);
-            osc2.stop(audioContext.currentTime + 0.25);
-            
-            // Beep 3 - higher (beep!)
-            const osc3 = audioContext.createOscillator();
-            const gain3 = audioContext.createGain();
-            osc3.connect(gain3);
-            gain3.connect(audioContext.destination);
-            osc3.frequency.setValueAtTime(1000, audioContext.currentTime + 0.3);
-            osc3.type = 'square';
-            gain3.gain.setValueAtTime(0.2, audioContext.currentTime + 0.3);
-            gain3.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
-            osc3.start(audioContext.currentTime + 0.3);
-            osc3.stop(audioContext.currentTime + 0.4);
-        }
-
-
-        // This function runs when you click the "Explain It" button
-        async function explainIt() {
-            // Get what the user typed/selected
-            const question = document.getElementById('question').value;
-            const age = document.getElementById('age').value;
-
-            // Find the output area and button row
-            const output = document.getElementById('output');
-            const buttonRow = document.getElementById('buttonRow');
-
-            // Hide buttons while loading
-            buttonRow.style.display = 'none';
-
-            // Check if they typed a question
-            if (question.trim() === '') {
-                output.innerHTML = '<em>Please type a question first!</em>';
-                return;
-            }
-
-            // Show loading message while we wait for AI
-            output.innerHTML = '<em>🤔 Thinking...</em>';
-
-            // Save settings for "Tell Me More" later
-            lastQuestion = question;
-            lastSettings = { age };
-
-            // Build the prompt for the AI based on user's choices
-            let prompt = `You are explaining something to `;
-            
-            // Add age-appropriate context
-            if (age === '4-6') {
-                prompt += 'a very young child (4-6 years old). Use extremely simple words, short sentences, and fun comparisons they would understand.';
-            } else if (age === '7-9') {
-                prompt += 'a child (7-9 years old). Use simple language but you can include slightly more detail.';
-            } else if (age === '10-12') {
-                prompt += 'a preteen (10-12 years old). You can use more complex explanations but keep it engaging.';
-            } else {
-                prompt += 'a family with mixed ages. Make it accessible to kids but interesting for adults too.';
-            }
-
-            // Always funny tone!
-            prompt += ' Be funny and use jokes, silly comparisons, and humor throughout!';
-
-            // Keep responses SHORT
-            prompt += ' Keep your answer very short - just 2 sentences maximum. Be clear and fun but super brief.';
-
-            // Add the actual question
-            prompt += `\n\nThe question is: "${question}"\n\nGive your explanation:`;
-
-            try {
-                // Call Ollama's API (running on your computer)
-                const response = await fetch('http://localhost:11434/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'llama3.2',
-                        prompt: prompt,
-                        stream: false
-                    })
-                });
-
-                // Check if the request worked
-                if (!response.ok) {
-                    throw new Error('Ollama request failed');
-                }
-
-                // Get the AI's response
-                const data = await response.json();
-                
-                // Display it (with some basic formatting)
-                let answer = data.response;
-                
-                // Award gems for asking a question!
-                let baseGems = 2;
-                let bonusGems = questionWasPoweredUp ? 3 : 0;
-                let totalGems = baseGems + bonusGems;
-                updateGems(totalGems);
-                
-                // Reset power up tracker
-                questionWasPoweredUp = false;
-                hideCoach();
-                
-                // Build gem reward message
-                let gemMsg = `<div style="text-align: center; margin-bottom: 15px; padding: 8px; background: linear-gradient(135deg, #ffecd2, #fcb69f); border-radius: 10px; font-weight: 600; color: #8b4513;">`;
-                gemMsg += `+${baseGems} 💎 for asking!`;
-                if (bonusGems > 0) {
-                    gemMsg += ` +${bonusGems} 💎 Power Up Bonus!`;
-                }
-                gemMsg += `</div>`;
-                
-                // Save answer and display it
-                lastAnswer = answer;
-                output.innerHTML = gemMsg + answer;
-                
-                // Show the extra buttons
-                buttonRow.style.display = 'block';
-
-            } catch (error) {
-                // If something went wrong, show an error message
-                output.innerHTML = `<em>❌ Oops! Could not connect to Ollama.<br><br>Make sure:<br>1. The Ollama app is running (check for llama icon in menu bar)<br>2. You ran: ollama pull llama3.2</em>`;
-                console.error('Error:', error);
-            }
-        }
-
-        // "Tell Me More" expands on the last answer
-        async function tellMeMore() {
-            const output = document.getElementById('output');
-            
-            if (!lastQuestion || !lastAnswer) {
-                output.innerHTML = '<em>Ask a question first!</em>';
-                return;
-            }
-
-            // Show loading
-            output.innerHTML = lastAnswer + '<br><br><em>🤔 Getting more details...</em>';
-
-            // Build a follow-up prompt
-            let prompt = `You previously gave this short explanation to a ${lastSettings.age} year old about "${lastQuestion}":\n\n"${lastAnswer}"\n\n`;
-            prompt += `Now expand on this with more interesting details, fun facts, or examples. `;
-            prompt += `Keep it funny and engaging! Add 2-3 more paragraphs of interesting information.`;
-
-            try {
-                const response = await fetch('http://localhost:11434/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'llama3.2',
-                        prompt: prompt,
-                        stream: false
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ollama request failed');
-                }
-
-                const data = await response.json();
-                let moreInfo = data.response;
-                
-                // Award gem for curiosity!
-                updateGems(1);
-                
-                // Show original answer plus the expansion
-                output.innerHTML = lastAnswer + '<br><br><div style="display: inline-block; padding: 4px 12px; background: linear-gradient(135deg, #ffecd2, #fcb69f); border-radius: 10px; font-weight: 600; color: #8b4513; font-size: 0.9em;">+1 💎 for being curious!</div><br><br><strong>📚 More details:</strong><br><br>' + moreInfo;
-                lastAnswer = output.innerHTML; // Update so they can't spam "more"
-
-            } catch (error) {
-                output.innerHTML = lastAnswer + '<br><br><em>❌ Could not get more info.</em>';
-                console.error('Error:', error);
-            }
-        }
-
-        // "Tell Me a Story" turns the answer into a fun story
-        async function tellMeStory() {
-            const output = document.getElementById('output');
-            
-            if (!lastQuestion || !lastAnswer) {
-                output.innerHTML = '<em>Ask a question first!</em>';
-                return;
-            }
-
-            // Show loading
-            output.innerHTML = '<em>📖 Once upon a time...</em>';
-
-            // Build a story prompt
-            let prompt = `A ${lastSettings.age} year old asked: "${lastQuestion}"\n\n`;
-            prompt += `Turn this topic into a SHORT, fun, silly story for kids! `;
-            prompt += `Start with "Once upon a time..." and include funny characters, sound effects, and a happy ending. `;
-            prompt += `Keep it to about 4-5 sentences. Make it memorable and giggly!`;
-
-            try {
-                const response = await fetch('http://localhost:11434/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'llama3.2',
-                        prompt: prompt,
-                        stream: false
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ollama request failed');
-                }
-
-                const data = await response.json();
-                let story = data.response;
-                
-                // Award gems for stories!
-                updateGems(2);
-                
-                // Show the story
-                output.innerHTML = `<div style="display: inline-block; padding: 4px 12px; background: linear-gradient(135deg, #e8d4f8, #d4b8f0); border-radius: 10px; font-weight: 600; color: #6b4c8c; font-size: 0.9em;">+2 💎 for story time!</div><br><br><strong>📖 Story Time!</strong><br><br>` + story;
-
-            } catch (error) {
-                output.innerHTML = '<em>❌ Could not create a story right now.</em>';
-                console.error('Error:', error);
-            }
-        }
-
-        // Create noise buffer for realistic fart sounds
-        function createNoiseBuffer(ctx, duration) {
-            const bufferSize = ctx.sampleRate * duration;
-            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-            const output = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                output[i] = Math.random() * 2 - 1;
-            }
-            return buffer;
-        }
-
-        // Create brown noise (deeper, rumbly)
-        function createBrownNoise(ctx, duration) {
-            const bufferSize = ctx.sampleRate * duration;
-            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-            const output = buffer.getChannelData(0);
-            let lastOut = 0;
-            for (let i = 0; i < bufferSize; i++) {
-                const white = Math.random() * 2 - 1;
-                output[i] = (lastOut + (0.02 * white)) / 1.02;
-                lastOut = output[i];
-                output[i] *= 3.5;
-            }
-            return buffer;
-        }
-
-        // Different fart sound generators - realistic versions!
-        const fartSounds = [
-            // Classic rumbly fart with noise
-            function(ctx) {
-                const duration = 0.5 + Math.random() * 0.3;
-                const noise = ctx.createBufferSource();
-                noise.buffer = createBrownNoise(ctx, duration);
-                
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(150, ctx.currentTime);
-                filter.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + duration);
-                filter.Q.value = 10;
-                
-                const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.8, ctx.currentTime);
-                gain.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.05);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-                
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(ctx.destination);
-                noise.start();
-                noise.stop(ctx.currentTime + duration);
-            },
-            
-            // Quick squeaky poot
-            function(ctx) {
-                const duration = 0.15 + Math.random() * 0.1;
-                const noise = ctx.createBufferSource();
-                noise.buffer = createNoiseBuffer(ctx, duration);
-                
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'bandpass';
-                filter.frequency.setValueAtTime(400, ctx.currentTime);
-                filter.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + duration);
-                filter.Q.value = 5;
-                
-                const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.4, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-                
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(ctx.destination);
-                noise.start();
-                noise.stop(ctx.currentTime + duration);
-            },
-            
-            // Long drawn-out rumbler
-            function(ctx) {
-                const duration = 1.0 + Math.random() * 0.5;
-                const noise = ctx.createBufferSource();
-                noise.buffer = createBrownNoise(ctx, duration);
-                
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(120, ctx.currentTime);
-                filter.frequency.setValueAtTime(80, ctx.currentTime + 0.3);
-                filter.frequency.setValueAtTime(100, ctx.currentTime + 0.5);
-                filter.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + duration);
-                filter.Q.value = 15;
-                
-                const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.6, ctx.currentTime);
-                gain.gain.setValueAtTime(0.8, ctx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.5, ctx.currentTime + 0.5);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-                
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(ctx.destination);
-                noise.start();
-                noise.stop(ctx.currentTime + duration);
-            },
-            
-            // Bubbly wet one
-            function(ctx) {
-                const duration = 0.6 + Math.random() * 0.3;
-                const numBubbles = 8 + Math.floor(Math.random() * 8);
-                
-                for (let i = 0; i < numBubbles; i++) {
-                    const startTime = ctx.currentTime + (i * duration / numBubbles) + Math.random() * 0.03;
-                    const bubbleDuration = 0.05 + Math.random() * 0.05;
-                    
-                    const noise = ctx.createBufferSource();
-                    noise.buffer = createBrownNoise(ctx, bubbleDuration);
-                    
-                    const filter = ctx.createBiquadFilter();
-                    filter.type = 'lowpass';
-                    filter.frequency.value = 100 + Math.random() * 100;
-                    filter.Q.value = 8;
-                    
-                    const gain = ctx.createGain();
-                    gain.gain.setValueAtTime(0.3 + Math.random() * 0.3, startTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, startTime + bubbleDuration);
-                    
-                    noise.connect(filter);
-                    filter.connect(gain);
-                    gain.connect(ctx.destination);
-                    noise.start(startTime);
-                    noise.stop(startTime + bubbleDuration);
-                }
-            },
-            
-            // Machine gun putter (realistic)
-            function(ctx) {
-                const numPutts = 4 + Math.floor(Math.random() * 4);
-                const totalDuration = numPutts * 0.1;
-                
-                for (let i = 0; i < numPutts; i++) {
-                    const startTime = ctx.currentTime + (i * 0.08) + Math.random() * 0.02;
-                    const puttDuration = 0.06 + Math.random() * 0.03;
-                    
-                    const noise = ctx.createBufferSource();
-                    noise.buffer = createBrownNoise(ctx, puttDuration);
-                    
-                    const filter = ctx.createBiquadFilter();
-                    filter.type = 'lowpass';
-                    filter.frequency.value = 80 + Math.random() * 60;
-                    filter.Q.value = 12;
-                    
-                    const gain = ctx.createGain();
-                    const vol = 0.5 - (i * 0.08);
-                    gain.gain.setValueAtTime(Math.max(vol, 0.15), startTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, startTime + puttDuration);
-                    
-                    noise.connect(filter);
-                    filter.connect(gain);
-                    gain.connect(ctx.destination);
-                    noise.start(startTime);
-                    noise.stop(startTime + puttDuration);
-                }
-            },
-            
-            // High pitched squeaker
-            function(ctx) {
-                const duration = 0.2 + Math.random() * 0.15;
-                const noise = ctx.createBufferSource();
-                noise.buffer = createNoiseBuffer(ctx, duration);
-                
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'bandpass';
-                filter.frequency.setValueAtTime(600, ctx.currentTime);
-                filter.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + duration);
-                filter.Q.value = 8;
-                
-                const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.25, ctx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + 0.05);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-                
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(ctx.destination);
-                noise.start();
-                noise.stop(ctx.currentTime + duration);
-            },
-            
-            // Thunder rumbler (big one)
-            function(ctx) {
-                const duration = 0.8 + Math.random() * 0.4;
-                const noise = ctx.createBufferSource();
-                noise.buffer = createBrownNoise(ctx, duration);
-                
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(200, ctx.currentTime);
-                filter.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + duration * 0.3);
-                filter.frequency.setValueAtTime(100, ctx.currentTime + duration * 0.5);
-                filter.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + duration);
-                filter.Q.value = 20;
-                
-                const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.9, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-                
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(ctx.destination);
-                noise.start();
-                noise.stop(ctx.currentTime + duration);
-            },
-            
-            // Tiny shy poot
-            function(ctx) {
-                const duration = 0.08 + Math.random() * 0.05;
-                const noise = ctx.createBufferSource();
-                noise.buffer = createBrownNoise(ctx, duration);
-                
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.value = 100;
-                filter.Q.value = 5;
-                
-                const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-                
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(ctx.destination);
-                noise.start();
-                noise.stop(ctx.currentTime + duration);
-            },
-            
-            // Flappy sputtery one
-            function(ctx) {
-                const duration = 0.4 + Math.random() * 0.2;
-                const noise = ctx.createBufferSource();
-                noise.buffer = createBrownNoise(ctx, duration);
-                
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(150, ctx.currentTime);
-                filter.Q.value = 12;
-                
-                // Create flutter effect with LFO
-                const lfo = ctx.createOscillator();
-                const lfoGain = ctx.createGain();
-                lfo.frequency.value = 25 + Math.random() * 15;
-                lfoGain.gain.value = 0.4;
-                lfo.connect(lfoGain);
-                
-                const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.6, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-                lfoGain.connect(gain.gain);
-                
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(ctx.destination);
-                
-                lfo.start();
-                lfo.stop(ctx.currentTime + duration);
-                noise.start();
-                noise.stop(ctx.currentTime + duration);
-            },
-            
-            // Airy pffffff
-            function(ctx) {
-                const duration = 0.5 + Math.random() * 0.3;
-                const noise = ctx.createBufferSource();
-                noise.buffer = createNoiseBuffer(ctx, duration);
-                
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'highpass';
-                filter.frequency.setValueAtTime(200, ctx.currentTime);
-                filter.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + duration);
-                
-                const filter2 = ctx.createBiquadFilter();
-                filter2.type = 'lowpass';
-                filter2.frequency.value = 800;
-                
-                const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-                
-                noise.connect(filter);
-                filter.connect(filter2);
-                filter2.connect(gain);
-                gain.connect(ctx.destination);
-                noise.start();
-                noise.stop(ctx.currentTime + duration);
-            }
-        ];
-
-        // The legendary fart button
-        function doFart() {
-            // Play a random fart sound
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const randomSound = fartSounds[Math.floor(Math.random() * fartSounds.length)];
-            randomSound(audioContext);
-
-            // Show a random funny message
-            const fartMessages = [
-                "💨 PFFFFFTTTTT! Excuse me!",
-                "💨 *BRAAAP* Oops, that one slipped out!",
-                "💨 Toot toot! Who stepped on a duck?",
-                "💨 PRRRRTT! The dog did it!",
-                "💨 *fweeeeep* That was a squeaker!",
-                "💨 BLORP! Was that thunder? Nope!",
-                "💨 PFFF-pff-pff-pffft... the grand finale!",
-                "💨 *TOOT* Pardon my French horn!",
-                "💨 BRAAAAP! 10 points for volume!",
-                "💨 *poot* ...that one was shy"
-            ];
-            
-            const randomMessage = fartMessages[Math.floor(Math.random() * fartMessages.length)];
-            
-            // Add the fart message to the output temporarily
-            const output = document.getElementById('output');
-            const originalContent = output.innerHTML;
-            output.innerHTML = `<div style="font-size: 24px; text-align: center; padding: 20px; background: linear-gradient(135deg, #ffe4b5, #ffcc80); border-radius: 12px; margin-bottom: 15px;">${randomMessage}</div>` + originalContent;
-            
-            // Remove fart message after 2 seconds
-            setTimeout(() => {
-                output.innerHTML = originalContent;
-            }, 2000);
-        }
-
-        // Would You Rather - separate option pools for random mixing
-        const wyrOptionsA = [
-            "be able to fly",
-            "have a pet dinosaur",
-            "live underwater",
-            "eat only pizza forever",
-            "be super strong",
-            "talk to animals",
-            "have a tail",
-            "be a famous singer",
-            "live in a treehouse",
-            "breathe fire",
-            "have spaghetti for hair",
-            "be a wizard",
-            "have a robot best friend",
-            "be invisible",
-            "have super speed",
-            "never have to sleep",
-            "have X-ray vision",
-            "control the weather"
-        ];
-
-        const wyrOptionsB = [
-            "be invisible",
-            "have a pet dragon",
-            "live in space",
-            "eat only ice cream forever",
-            "be super fast",
-            "speak every language",
-            "have wings (that don't work)",
-            "be a famous athlete",
-            "live in a castle",
-            "shoot lasers from your eyes",
-            "sweat maple syrup",
-            "be a superhero",
-            "have a talking pet",
-            "read minds",
-            "teleport anywhere",
-            "never have homework",
-            "breathe underwater",
-            "time travel"
-        ];
-
-        // Generate random Would You Rather
-        function generateWYR() {
-            // Pick random options from each pool
-            const option1 = wyrOptionsA[Math.floor(Math.random() * wyrOptionsA.length)];
-            let option2 = wyrOptionsB[Math.floor(Math.random() * wyrOptionsB.length)];
-            
-            // Make sure they're different
-            while (option2 === option1) {
-                option2 = wyrOptionsB[Math.floor(Math.random() * wyrOptionsB.length)];
-            }
-            
-            document.getElementById('wyrOption1').innerText = option1;
-            document.getElementById('wyrOption2').innerText = option2;
-            
-            // Award a gem for playing!
-            updateGems(1);
-        }
-
-        // ==================== SHOP SYSTEM ====================
-        
-        // Shop items with categories, prices, and emojis
-        const shopItems = {
-            hats: [
-                { id: 'crown', emoji: '👑', name: 'Crown', price: 15 },
-                { id: 'tophat', emoji: '🎩', name: 'Top Hat', price: 10 },
-                { id: 'partyhat', emoji: '🥳', name: 'Party Hat', price: 8 },
-                { id: 'cowboy', emoji: '🤠', name: 'Cowboy', price: 12 },
-                { id: 'cap', emoji: '🧢', name: 'Cap', price: 5 },
-                { id: 'wizard', emoji: '🪄', name: 'Wizard', price: 20 },
-                { id: 'bow', emoji: '🎀', name: 'Bow', price: 6 },
-                { id: 'flower', emoji: '🌸', name: 'Flower', price: 4 },
-                { id: 'antenna', emoji: '📡', name: 'Antenna', price: 14 },
-                { id: 'halo', emoji: '😇', name: 'Halo', price: 18 },
-                { id: 'devil', emoji: '😈', name: 'Devil', price: 18 },
-                { id: 'chef', emoji: '👨‍🍳', name: 'Chef', price: 10 },
-                { id: 'pirate', emoji: '🏴‍☠️', name: 'Pirate', price: 12 },
-                { id: 'unicorn', emoji: '🦄', name: 'Unicorn', price: 25 }
-            ],
-            glasses: [
-                { id: 'cool', emoji: '😎', name: 'Cool', price: 8 },
-                { id: 'nerd', emoji: '🤓', name: 'Nerd', price: 6 },
-                { id: 'star', emoji: '⭐', name: 'Star', price: 10 },
-                { id: 'heart', emoji: '💕', name: 'Hearts', price: 7 },
-                { id: 'monocle', emoji: '🧐', name: 'Monocle', price: 12 },
-                { id: 'threeD', emoji: '🥽', name: '3D', price: 9 },
-                { id: 'mascara', emoji: '💅', name: 'Glam', price: 8 },
-                { id: 'angry', emoji: '😠', name: 'Angry', price: 5 }
-            ],
-            neck: [
-                { id: 'bowtie', emoji: '🎀', name: 'Bow Tie', price: 5 },
-                { id: 'scarf', emoji: '🧣', name: 'Scarf', price: 8 },
-                { id: 'necklace', emoji: '📿', name: 'Beads', price: 6 },
-                { id: 'medal', emoji: '🏅', name: 'Medal', price: 15 },
-                { id: 'tie', emoji: '👔', name: 'Tie', price: 7 },
-                { id: 'cape', emoji: '🦸', name: 'Cape', price: 20 },
-                { id: 'lei', emoji: '🌺', name: 'Lei', price: 6 },
-                { id: 'chain', emoji: '⛓️', name: 'Chain', price: 10 }
-            ],
-            held: [
-                { id: 'balloon', emoji: '🎈', name: 'Balloon', price: 4 },
-                { id: 'wand', emoji: '🪄', name: 'Wand', price: 12 },
-                { id: 'sword', emoji: '⚔️', name: 'Sword', price: 15 },
-                { id: 'flower2', emoji: '🌹', name: 'Rose', price: 5 },
-                { id: 'lollipop', emoji: '🍭', name: 'Lollipop', price: 3 },
-                { id: 'flag', emoji: '🚩', name: 'Flag', price: 4 },
-                { id: 'guitar', emoji: '🎸', name: 'Guitar', price: 18 },
-                { id: 'book', emoji: '📚', name: 'Book', price: 8 }
-            ],
-            treats: [
-                { id: 'cookie', emoji: '🍪', name: 'Cookie', price: 2, consumable: true },
-                { id: 'cupcake', emoji: '🧁', name: 'Cupcake', price: 3, consumable: true },
-                { id: 'pizza', emoji: '🍕', name: 'Pizza', price: 4, consumable: true },
-                { id: 'icecream', emoji: '🍦', name: 'Ice Cream', price: 3, consumable: true },
-                { id: 'donut', emoji: '🍩', name: 'Donut', price: 2, consumable: true },
-                { id: 'candy', emoji: '🍬', name: 'Candy', price: 1, consumable: true },
-                { id: 'cake', emoji: '🎂', name: 'Cake', price: 5, consumable: true },
-                { id: 'taco', emoji: '🌮', name: 'Taco', price: 4, consumable: true },
-                { id: 'watermelon', emoji: '🍉', name: 'Watermelon', price: 3, consumable: true },
-                { id: 'sushi', emoji: '🍣', name: 'Sushi', price: 5, consumable: true }
-            ],
-            friends: [
-                { id: 'midnight', name: 'Midnight', color: 'black', price: 30 }
-            ]
-        };
-
-        // Track owned and equipped items
-        let ownedItems = [];
-        let equippedItems = {
-            hats: null,
-            glasses: null,
-            neck: null,
-            held: null
-        };
-        let treatsGiven = 0;
-        let ownedFriends = [];
-
-        // Open shop
-        function openShop() {
-            document.getElementById('shopModal').style.display = 'flex';
-            document.getElementById('shopGems').innerText = gems;
-            renderShopItems();
-        }
-
-        // Close shop
-        function closeShop() {
-            document.getElementById('shopModal').style.display = 'none';
-        }
-
-        // Render shop items
-        function renderShopItems() {
-            renderCategory('hats', 'hatItems');
-            renderCategory('glasses', 'glassesItems');
-            renderCategory('neck', 'neckItems');
-            renderCategory('held', 'heldItems');
-            renderTreats();
-            renderFriends();
-            document.getElementById('treatCount').innerText = treatsGiven;
-        }
-
-        // Render treats (consumable items)
-        function renderTreats() {
-            const container = document.getElementById('treatsItems');
-            container.innerHTML = '';
-            
-            shopItems.treats.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'shop-item';
-                div.onclick = () => feedTiti(item);
-                
-                div.innerHTML = `
-                    <span class="shop-item-emoji">${item.emoji}</span>
-                    <span class="shop-item-price">${item.price} 💎</span>
-                `;
-                
-                container.appendChild(div);
-            });
-        }
-
-        // Render friends in shop
-        function renderFriends() {
-            const container = document.getElementById('friendsItems');
-            container.innerHTML = '';
-            
-            shopItems.friends.forEach(friend => {
-                const isOwned = ownedFriends.includes(friend.id);
-                
-                const div = document.createElement('div');
-                div.className = 'shop-item' + (isOwned ? ' owned' : '');
-                div.onclick = () => buyFriend(friend);
-                
-                // Create a mini axolotl face preview
-                let bgColor = friend.color === 'black' ? '#3d3d3d' : '#ffb6c1';
-                let priceText = isOwned ? '✓ Owned' : `${friend.price} 💎`;
-                
-                div.innerHTML = `
-                    <div style="
-                        width: 40px;
-                        height: 40px;
-                        background: ${bgColor};
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin: 0 auto 5px auto;
-                        font-size: 14px;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-                    ">◕‿◕</div>
-                    <span style="font-size: 0.8em; font-weight: 600;">${friend.name}</span>
-                    <span class="shop-item-price">${priceText}</span>
-                `;
-                
-                container.appendChild(div);
-            });
-        }
-
-        // Buy a friend
-        function buyFriend(friend) {
-            if (ownedFriends.includes(friend.id)) {
-                return; // Already owned
-            }
-            
-            if (gems >= friend.price) {
-                gems -= friend.price;
-                document.getElementById('gemCount').innerText = gems;
-                document.getElementById('shopGems').innerText = gems;
-                ownedFriends.push(friend.id);
-                renderShopItems();
-                displayFriends();
-                
-                // Celebration!
-                alert(`🎉 ${friend.name} joined your family!`);
-            } else {
-                alert(`Not enough gems! You need ${friend.price} 💎`);
-            }
-        }
-
-        // Display friends on screen
-        function displayFriends() {
-            const container = document.getElementById('friendsContainer');
-            container.innerHTML = '';
-            
-            ownedFriends.forEach(friendId => {
-                const friend = shopItems.friends.find(f => f.id === friendId);
-                if (friend) {
-                    const friendDiv = document.createElement('div');
-                    friendDiv.className = `friend-axolotl axolotl-${friend.color}`;
-                    friendDiv.innerHTML = `
-                        <div class="axolotl-gill-left">༄</div>
-                        <div class="axolotl-gill-right">༄</div>
-                        <div class="axolotl-head">
-                            <div class="axolotl-eyes">◕ ◕</div>
-                            <div class="axolotl-smile"></div>
-                        </div>
-                        <div class="axolotl-body"></div>
-                        <div class="axolotl-feet">
-                            <div class="axolotl-foot"></div>
-                            <div class="axolotl-foot"></div>
-                        </div>
-                        <div class="friend-name">${friend.name}</div>
-                    `;
-                    container.appendChild(friendDiv);
-                }
-            });
-        }
-
-        // Feed Titi a treat!
-        function feedTiti(treat) {
-            if (gems >= treat.price) {
-                gems -= treat.price;
-                document.getElementById('gemCount').innerText = gems;
-                document.getElementById('shopGems').innerText = gems;
-                treatsGiven++;
-                document.getElementById('treatCount').innerText = treatsGiven;
-                
-                // Show happy reaction
-                const reaction = document.getElementById('treatReaction');
-                reaction.innerText = '❤️ ' + treat.emoji + ' 😋';
-                reaction.classList.remove('show');
-                void reaction.offsetWidth; // Trigger reflow
-                reaction.classList.add('show');
-                
-                // Make Titi wiggle happily
-                const titi = document.getElementById('titiPet');
-                titi.classList.remove('happy');
-                void titi.offsetWidth;
-                titi.classList.add('happy');
-                
-                // Change eyes temporarily
-                const eyes = document.getElementById('titiEyes');
-                const originalEyes = eyes.innerText;
-                eyes.innerText = '♥ ♥';
-                setTimeout(() => {
-                    eyes.innerText = originalEyes;
-                    titi.classList.remove('happy');
-                }, 1500);
-                
-            } else {
-                alert(`Not enough gems! You need ${treat.price} 💎`);
-            }
-        }
-
-        function renderCategory(category, containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            
-            shopItems[category].forEach(item => {
-                const isOwned = ownedItems.includes(item.id);
-                const isEquipped = equippedItems[category] === item.id;
-                
-                const div = document.createElement('div');
-                div.className = 'shop-item' + (isOwned ? ' owned' : '') + (isEquipped ? ' equipped' : '');
-                div.onclick = () => handleItemClick(category, item);
-                
-                let priceText = isEquipped ? '✓ Wearing' : (isOwned ? 'Tap to wear' : `${item.price} 💎`);
-                
-                div.innerHTML = `
-                    <span class="shop-item-emoji">${item.emoji}</span>
-                    <span class="shop-item-price">${priceText}</span>
-                `;
-                
-                container.appendChild(div);
-            });
-            
-            // Add "remove" option if something is equipped
-            if (equippedItems[category]) {
-                const removeDiv = document.createElement('div');
-                removeDiv.className = 'shop-item';
-                removeDiv.onclick = () => unequipItem(category);
-                removeDiv.innerHTML = `
-                    <span class="shop-item-emoji">❌</span>
-                    <span class="shop-item-price">Remove</span>
-                `;
-                container.appendChild(removeDiv);
-            }
-        }
-
-        // Handle clicking on an item
-        function handleItemClick(category, item) {
-            const isOwned = ownedItems.includes(item.id);
-            
-            if (isOwned) {
-                // Equip it
-                equipItem(category, item);
-            } else {
-                // Try to buy it
-                buyItem(category, item);
-            }
-        }
-
-        // Buy an item
-        function buyItem(category, item) {
-            if (gems >= item.price) {
-                gems -= item.price;
-                document.getElementById('gemCount').innerText = gems;
-                document.getElementById('shopGems').innerText = gems;
-                ownedItems.push(item.id);
-                equipItem(category, item);
-            } else {
-                alert(`Not enough gems! You need ${item.price} 💎`);
-            }
-        }
-
-        // Equip an item
-        function equipItem(category, item) {
-            equippedItems[category] = item.id;
-            updateTitiAppearance();
-            renderShopItems();
-        }
-
-        // Unequip an item
-        function unequipItem(category) {
-            equippedItems[category] = null;
-            updateTitiAppearance();
-            renderShopItems();
-        }
-
-        // Update Titi's appearance based on equipped items
-        function updateTitiAppearance() {
-            // Update hat
-            const hatSlot = document.getElementById('hatSlot');
-            if (equippedItems.hats) {
-                const hat = shopItems.hats.find(h => h.id === equippedItems.hats);
-                hatSlot.innerText = hat ? hat.emoji : '';
-            } else {
-                hatSlot.innerText = '';
-            }
-            
-            // Update glasses
-            const glassesSlot = document.getElementById('glassesSlot');
-            if (equippedItems.glasses) {
-                const glasses = shopItems.glasses.find(g => g.id === equippedItems.glasses);
-                glassesSlot.innerText = glasses ? glasses.emoji : '';
-            } else {
-                glassesSlot.innerText = '';
-            }
-            
-            // Update neck
-            const neckSlot = document.getElementById('neckSlot');
-            if (equippedItems.neck) {
-                const neck = shopItems.neck.find(n => n.id === equippedItems.neck);
-                neckSlot.innerText = neck ? neck.emoji : '';
-            } else {
-                neckSlot.innerText = '';
-            }
-            
-            // Update held item
-            const heldSlot = document.getElementById('heldSlot');
-            if (equippedItems.held) {
-                const held = shopItems.held.find(h => h.id === equippedItems.held);
-                heldSlot.innerText = held ? held.emoji : '';
-            } else {
-                heldSlot.innerText = '';
-            }
-        }
-
-        // Close shop when clicking outside
-        document.getElementById('shopModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeShop();
-            }
-        });
-
-        // ==================== PARENT PORTAL ====================
-        
-        const PARENT_PIN = '2281';
-        
-        // Screen time tracking (in minutes)
-        let screenTime = {
-            olivia: 0,
-            lucas: 0
-        };
-        
-        // Load saved screen time from localStorage
-        function loadScreenTime() {
-            const saved = localStorage.getItem('screenTime');
-            const savedDate = localStorage.getItem('screenTimeDate');
-            const today = new Date().toDateString();
-            
-            if (saved && savedDate === today) {
-                screenTime = JSON.parse(saved);
-            } else {
-                // Reset for new day
-                screenTime = { olivia: 0, lucas: 0 };
-                saveScreenTime();
-            }
-        }
-        
-        // Save screen time to localStorage
-        function saveScreenTime() {
-            localStorage.setItem('screenTime', JSON.stringify(screenTime));
-            localStorage.setItem('screenTimeDate', new Date().toDateString());
-        }
-        
-        // Open parent portal
-        function openParentPortal() {
-            document.getElementById('portalModal').style.display = 'flex';
-            document.getElementById('pinScreen').style.display = 'block';
-            document.getElementById('portalDashboard').style.display = 'none';
+        function openPinModal() {
+            document.getElementById('pinModal').style.display = 'flex';
             document.getElementById('pinInput').value = '';
-            document.getElementById('pinError').innerText = '';
-            document.getElementById('pinInput').focus();
+            document.getElementById('pinError').textContent = '';
+            setTimeout(() => document.getElementById('pinInput').focus(), 100);
         }
-        
-        // Close parent portal
-        function closeParentPortal() {
-            document.getElementById('portalModal').style.display = 'none';
+
+        function closePinModal() {
+            document.getElementById('pinModal').style.display = 'none';
         }
-        
-        // Check for Enter key on PIN input
-        function checkPinEnter(event) {
+
+        function handlePinKeyup(event) {
             if (event.key === 'Enter') {
                 submitPin();
             }
         }
-        
-        // Submit PIN
+
         function submitPin() {
             const pin = document.getElementById('pinInput').value;
-            
             if (pin === PARENT_PIN) {
-                document.getElementById('pinScreen').style.display = 'none';
-                document.getElementById('portalDashboard').style.display = 'block';
-                loadScreenTime();
-                updatePortalDate();
-                updateGauges();
+                closePinModal();
+                window.location.href = 'question.html#parent';
             } else {
-                document.getElementById('pinError').innerText = 'Incorrect PIN. Try again.';
+                document.getElementById('pinError').textContent = 'Incorrect PIN. Try again!';
                 document.getElementById('pinInput').value = '';
-                document.getElementById('pinInput').focus();
             }
         }
-        
-        // Update portal date display
-        function updatePortalDate() {
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const today = new Date().toLocaleDateString('en-US', options);
-            document.getElementById('portalDate').innerText = today;
-        }
-        
-        // Add time to a user
-        function addTime(user, minutes) {
-            screenTime[user] = Math.max(0, screenTime[user] + minutes);
-            saveScreenTime();
-            updateGauges();
-        }
-        
-        // Reset time for a user
-        function resetTime(user) {
-            screenTime[user] = 0;
-            saveScreenTime();
-            updateGauges();
-        }
-        
-        // Update gauges for both users
-        function updateGauges() {
-            updateUserGauge('olivia');
-            updateUserGauge('lucas');
-        }
-        
-        // Update gauge for a specific user
-        function updateUserGauge(user) {
-            const minutes = screenTime[user];
-            const hours = Math.floor(minutes / 60);
-            const mins = minutes % 60;
-            
-            // Update text display
-            document.getElementById(`${user}TimeText`).innerText = `${hours}h ${mins}m`;
-            document.getElementById(`${user}GaugeTime`).innerText = `${hours}:${mins.toString().padStart(2, '0')}`;
-            
-            // Calculate percentage (max at 4 hours = 240 minutes = 100%)
-            const maxMinutes = 240;
-            const percentage = Math.min((minutes / maxMinutes) * 100, 100);
-            
-            // Determine color based on time
-            const gauge = document.getElementById(`${user}Gauge`);
-            gauge.style.width = Math.max(percentage, 15) + '%'; // Minimum width for visibility
-            
-            // Remove all color classes
-            gauge.classList.remove('green', 'orange', 'red');
-            
-            // Add appropriate color class
-            if (minutes < 120) {
-                gauge.classList.add('green');
-            } else if (minutes < 240) {
-                gauge.classList.add('orange');
-            } else {
-                gauge.classList.add('red');
-            }
-        }
-        
-        // Close portal when clicking outside
-        document.getElementById('portalModal').addEventListener('click', function(e) {
+
+        // Close modal on outside click
+        document.getElementById('pinModal').addEventListener('click', function(e) {
             if (e.target === this) {
-                closeParentPortal();
+                closePinModal();
             }
         });
-        
-        // Initialize screen time on page load
-        loadScreenTime();
+
+        // Initialize
+        updateGemDisplay();
     </script>
 </body>
 </html>
