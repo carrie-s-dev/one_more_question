@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titi's Boutique</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec, #ffecd2);
+            padding: 20px;
+        }
+
+        /* Global Header */
+        .global-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .header-gems {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: #e17055;
+        }
+
+        .gem-icon {
+            font-size: 1.2em;
+        }
+
+        /* Shop Container */
+        .shop-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border: 3px solid #ffb6c1;
+        }
+
+        .shop-title {
+            text-align: center;
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #ff6b8a, #fd79a8, #e84393);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        /* Character Selector */
+        .character-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .char-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border: 3px solid #e0e0e0;
+            border-radius: 16px;
+            background: white;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .char-btn:hover {
+            border-color: #c0c0c0;
+            transform: scale(1.02);
+        }
+
+        .char-btn.active {
+            border-color: #ff6b8a;
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+        }
+
+        .char-preview-mini {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .titi-mini { background: linear-gradient(135deg, #ffb6c1, #ff91a4); }
+        .midnight-mini { background: linear-gradient(135deg, #4a4a4a, #2d2d2d); }
+
+        /* Shop Header with Preview */
+        .shop-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+            border-radius: 20px;
+        }
+
+        .shop-preview {
+            width: 100px;
+            height: 110px;
+            position: relative;
+        }
+
+        .shop-preview .preview-body {
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffb6c1, #ff91a4);
+            border-radius: 40px 40px 30px 30px;
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            box-shadow: 0 4px 15px rgba(255,145,164,0.4);
+        }
+
+        .shop-preview .preview-head {
+            width: 68px;
+            height: 58px;
+            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .shop-preview .preview-gills {
+            position: absolute;
+            top: 5px;
+            font-size: 24px;
+            color: #ff6b8a;
+        }
+
+        .shop-preview .preview-gill-left { left: 0; transform: rotate(-30deg); }
+        .shop-preview .preview-gill-right { right: 0; transform: rotate(30deg) scaleX(-1); }
+
+        .shop-preview .preview-hat { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); font-size: 32px; }
+        .shop-preview .preview-pet { position: absolute; bottom: -5px; right: -35px; font-size: 28px; animation: petBounce 2s ease-in-out infinite; }
+        
+        @keyframes petBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .shop-preview.midnight .preview-body {
+            background: linear-gradient(135deg, #4a4a4a, #2d2d2d) !important;
+        }
+
+        .shop-preview.midnight .preview-head {
+            background: linear-gradient(135deg, #5a5a5a, #3d3d3d) !important;
+        }
+
+        .shop-preview.midnight .preview-gills {
+            color: #6a6a6a !important;
+        }
+
+        .shop-gems-display {
+            text-align: center;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.4em;
+            color: #e17055;
+            box-shadow: 0 4px 15px rgba(225,112,85,0.3);
+        }
+
+        /* Shop Tabs */
+        .shop-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 5px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .shop-tab {
+            padding: 12px 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 14px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .shop-tab:hover {
+            background: #e0e0e0;
+        }
+
+        .shop-tab.active {
+            background: linear-gradient(135deg, #ff6b8a, #fd79a8);
+            color: white;
+        }
+
+        /* Shop Categories */
+        .shop-category {
+            display: none;
+        }
+
+        .shop-category.active {
+            display: block;
+        }
+
+        .shop-category-title {
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Shop Items Grid */
+        .shop-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .shop-item {
+            padding: 15px 10px;
+            background: white;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            border: 3px solid #f0f0f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .shop-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .shop-item.rarity-common { border-color: #a0a0a0; }
+        .shop-item.rarity-rare { border-color: #3b82f6; background: linear-gradient(180deg, #eff6ff, #fff); }
+        .shop-item.rarity-epic { border-color: #a855f7; background: linear-gradient(180deg, #faf5ff, #fff); }
+        .shop-item.rarity-legendary { border-color: #f59e0b; background: linear-gradient(180deg, #fffbeb, #fff); animation: legendaryGlow 2s ease-in-out infinite; }
+
+        @keyframes legendaryGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(245,158,11,0.3); }
+            50% { box-shadow: 0 0 20px rgba(245,158,11,0.5); }
+        }
+
+        .shop-item.owned {
+            border-color: #22c55e;
+            background: linear-gradient(180deg, #dcfce7, #fff);
+        }
+
+        .shop-item.equipped {
+            border-color: #667eea;
+            background: linear-gradient(180deg, #e0e7ff, #fff);
+        }
+
+        .shop-item-emoji {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .shop-item-name {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        .shop-item-price {
+            font-size: 0.9em;
+            color: #e17055;
+            font-weight: 700;
+        }
+
+        .shop-item.owned .shop-item-price {
+            color: #22c55e;
+        }
+
+        .treat-counter {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #92400e;
+        }
+
+        /* Floating gem animation */
+        .gem-float {
+            position: fixed;
+            font-size: 2em;
+            pointer-events: none;
+            z-index: 9999;
+            animation: gemFloatUp 1.5s ease-out forwards;
+        }
+
+        @keyframes gemFloatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            50% { opacity: 1; transform: translateY(-50px) scale(1.3); }
+            100% { opacity: 0; transform: translateY(-120px) scale(0.8); }
+        }
+
+        /* Refund indicator */
+        .refund-indicator {
+            position: fixed;
+            font-size: 1em;
+            font-weight: 700;
+            color: #22c55e;
+            pointer-events: none;
+            z-index: 9999;
+            animation: refundFloat 1s ease-out forwards;
+        }
+
+        @keyframes refundFloat {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-40px); }
+        }
+
+        /* Feeding animations */
+        .feeding-bounce {
+            animation: feedBounce 0.5s ease-in-out 2;
+        }
+
+        @keyframes feedBounce {
+            0%, 100% { transform: scale(1) translateY(0); }
+            25% { transform: scale(1.15) translateY(-8px); }
+            50% { transform: scale(0.95) translateY(0); }
+            75% { transform: scale(1.08) translateY(-4px); }
+        }
+
+        .treat-fly {
+            position: fixed;
+            font-size: 3em;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            animation: treatFly 0.3s ease-out forwards;
+        }
+
+        @keyframes treatFly {
+            0% { opacity: 1; transform: translate(-50%, 100px) scale(1.5); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        }
+
+        .feed-reaction {
+            position: fixed;
+            font-size: 2em;
+            pointer-events: none;
+            z-index: 9999;
+            animation: reactionBurst 1.5s ease-out forwards;
+        }
+
+        @keyframes reactionBurst {
+            0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(0deg); }
+            30% { opacity: 1; transform: translateY(-40px) scale(1.3) rotate(15deg); }
+            100% { opacity: 0; transform: translateY(-120px) scale(0.8) rotate(-10deg); }
+        }
+
+        .feed-banner {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 20px;
+            font-size: 1.4em;
+            font-weight: 700;
+            z-index: 10000;
+            box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4);
+            animation: bannerPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-align: center;
+        }
+
+        .feed-banner.not-enough {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
+        }
+
+        @keyframes bannerPop {
+            0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+            60% { transform: translateX(-50%) scale(1.1); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1); }
+        }
+
+        .feed-banner.fade-out {
+            animation: bannerFade 0.5s ease-out forwards;
+        }
+
+        @keyframes bannerFade {
+            0% { opacity: 1; transform: translateX(-50%) scale(1); }
+            100% { opacity: 0; transform: translateX(-50%) scale(0.8) translateY(-20px); }
+        }
+
+        @media (max-width: 600px) {
+            .shop-container {
+                padding: 20px 15px;
+            }
+            .shop-title {
+                font-size: 1.6em;
+            }
+            .shop-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .shop-items {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .character-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Global Header -->
+    <div class="global-header">
+        <div class="header-left">
+            <a href="index.html" class="header-btn">🏠 Home</a>
+            <a href="question.html" class="header-btn">⬅️ Back</a>
+        </div>
+        <div class="header-gems">
+            <span class="gem-icon">💎</span>
+            <span id="gemCount">0</span>
+        </div>
+    </div>
+
+    <!-- Shop Container -->
+    <div class="shop-container">
+        <h1 class="shop-title">✨ Titi's Boutique ✨</h1>
+        
+        <!-- Character selector -->
+        <div class="character-selector">
+            <button class="char-btn active" id="selectTiti" onclick="selectCharacter('titi')">
+                <span class="char-preview-mini titi-mini"></span>
+                Dress Titi
+            </button>
+            <button class="char-btn" id="selectMidnight" onclick="selectCharacter('midnight')">
+                <span class="char-preview-mini midnight-mini"></span>
+                Dress Midnight
+            </button>
+        </div>
+        
+        <!-- Header with preview and gems -->
+        <div class="shop-header">
+            <div class="shop-preview" id="shopPreviewContainer">
+                <div class="preview-gills preview-gill-left">༄</div>
+                <div class="preview-gills preview-gill-right">༄</div>
+                <div class="preview-head">◕‿◕</div>
+                <div class="preview-body"></div>
+                <div class="preview-hat" id="previewHat"></div>
+                <div class="preview-pet" id="previewPet"></div>
+            </div>
+            <div class="shop-gems-display">💎 <span id="shopGems">0</span></div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="shop-tabs">
+            <button class="shop-tab active" onclick="switchShopTab('hats')">👑 Hats</button>
+            <button class="shop-tab" onclick="switchShopTab('treats')">🍕 Food</button>
+            <button class="shop-tab" onclick="switchShopTab('pets')">🐾 Pets</button>
+        </div>
+        
+        <div class="shop-category active" id="category-hats">
+            <div class="shop-category-title">👑 Crowns & Hats</div>
+            <div class="shop-items" id="hatItems"></div>
+        </div>
+        
+        <div class="shop-category" id="category-treats">
+            <div class="shop-category-title">🍕 Yummy Treats</div>
+            <div class="shop-items" id="treatsItems"></div>
+            <div class="treat-counter">🍪 Treats given: <strong id="treatCount">0</strong></div>
+        </div>
+        
+        <div class="shop-category" id="category-pets">
+            <div class="shop-category-title">🐾 Pet Companions</div>
+            <div class="shop-items" id="petsItems"></div>
+        </div>
+    </div>
+
+    <script>
+        // Gem system
+        function loadGems() {
+            const saved = localStorage.getItem('gems');
+            return saved ? parseInt(saved) : 0;
+        }
+
+        function saveGems(amount) {
+            localStorage.setItem('gems', amount.toString());
+        }
+
+        let gems = loadGems();
+
+        // Shop items with categories, prices, emojis, and rarity
+        const shopItems = {
+            hats: [
+                { id: 'flower', emoji: '🌸', name: 'Flower', price: 3, rarity: 'common' },
+                { id: 'bow', emoji: '🎀', name: 'Pink Bow', price: 4, rarity: 'common' },
+                { id: 'cap', emoji: '🧢', name: 'Cool Cap', price: 5, rarity: 'common' },
+                { id: 'partyhat', emoji: '🎉', name: 'Party Hat', price: 6, rarity: 'common' },
+                { id: 'tophat', emoji: '🎩', name: 'Top Hat', price: 10, rarity: 'rare' },
+                { id: 'helmet', emoji: '🪖', name: 'Helmet', price: 12, rarity: 'rare' },
+                { id: 'sunhat', emoji: '👒', name: 'Sun Hat', price: 10, rarity: 'rare' },
+                { id: 'crown', emoji: '👑', name: 'Royal Crown', price: 20, rarity: 'epic' },
+                { id: 'halo', emoji: '💫', name: 'Sparkle Halo', price: 22, rarity: 'epic' },
+                { id: 'starhat', emoji: '🌟', name: 'Star Crown', price: 35, rarity: 'legendary' },
+                { id: 'rainbow', emoji: '🌈', name: 'Rainbow Crown', price: 50, rarity: 'legendary' }
+            ],
+            treats: [
+                { id: 'candy', emoji: '🍬', name: 'Candy', price: 1, rarity: 'common', consumable: true },
+                { id: 'cookie', emoji: '🍪', name: 'Cookie', price: 2, rarity: 'common', consumable: true },
+                { id: 'donut', emoji: '🍩', name: 'Donut', price: 2, rarity: 'common', consumable: true },
+                { id: 'icecream', emoji: '🍦', name: 'Ice Cream', price: 3, rarity: 'rare', consumable: true },
+                { id: 'cupcake', emoji: '🧁', name: 'Cupcake', price: 3, rarity: 'rare', consumable: true },
+                { id: 'pizza', emoji: '🍕', name: 'Pizza Slice', price: 4, rarity: 'rare', consumable: true },
+                { id: 'taco', emoji: '🌮', name: 'Taco', price: 4, rarity: 'rare', consumable: true },
+                { id: 'sushi', emoji: '🍣', name: 'Sushi', price: 5, rarity: 'epic', consumable: true },
+                { id: 'cake', emoji: '🎂', name: 'Birthday Cake', price: 8, rarity: 'epic', consumable: true },
+                { id: 'rainbow', emoji: '🌈', name: 'Rainbow Treat', price: 15, rarity: 'legendary', consumable: true }
+            ],
+            pets: [
+                { id: 'cat', emoji: '🐱', name: 'Kitty', price: 15, rarity: 'common' },
+                { id: 'dog', emoji: '🐶', name: 'Puppy', price: 15, rarity: 'common' },
+                { id: 'bunny', emoji: '🐰', name: 'Bunny', price: 18, rarity: 'common' },
+                { id: 'hamster', emoji: '🐹', name: 'Hamster', price: 18, rarity: 'common' },
+                { id: 'chick', emoji: '🐥', name: 'Chick', price: 12, rarity: 'common' },
+                { id: 'fox', emoji: '🦊', name: 'Fox', price: 25, rarity: 'rare' },
+                { id: 'panda', emoji: '🐼', name: 'Panda', price: 30, rarity: 'rare' },
+                { id: 'koala', emoji: '🐨', name: 'Koala', price: 28, rarity: 'rare' },
+                { id: 'frog', emoji: '🐸', name: 'Froggy', price: 20, rarity: 'rare' },
+                { id: 'owl', emoji: '🦉', name: 'Owl', price: 35, rarity: 'epic' },
+                { id: 'penguin', emoji: '🐧', name: 'Penguin', price: 35, rarity: 'epic' },
+                { id: 'dragon', emoji: '🐉', name: 'Dragon', price: 50, rarity: 'legendary' },
+                { id: 'unicorn', emoji: '🦄', name: 'Unicorn', price: 50, rarity: 'legendary' }
+            ]
+        };
+
+        // Track owned and equipped items - PER CHARACTER
+        let ownedItems = JSON.parse(localStorage.getItem('ownedItems') || '[]');
+        let equippedItems = JSON.parse(localStorage.getItem('equippedItems') || JSON.stringify({
+            titi: { hats: null, pet: null },
+            midnight: { hats: null, pet: null }
+        }));
+        let treatsGiven = parseInt(localStorage.getItem('treatsGiven') || '0');
+        let ownedPets = JSON.parse(localStorage.getItem('ownedPets') || '[]');
+
+        // Current shop tab and selected character
+        let currentShopTab = 'hats';
+        let selectedCharacter = 'titi';
+
+        // Select character
+        function selectCharacter(char) {
+            selectedCharacter = char;
+            document.getElementById('selectTiti').classList.toggle('active', char === 'titi');
+            document.getElementById('selectMidnight').classList.toggle('active', char === 'midnight');
+            
+            // Update preview appearance
+            const preview = document.getElementById('shopPreviewContainer');
+            preview.classList.toggle('midnight', char === 'midnight');
+            
+            updateShopPreview();
+            renderShopItems();
+        }
+
+        // Save equipped items to localStorage
+        function saveEquippedItems() {
+            localStorage.setItem('equippedItems', JSON.stringify(equippedItems));
+            localStorage.setItem('ownedItems', JSON.stringify(ownedItems));
+            localStorage.setItem('treatsGiven', treatsGiven.toString());
+            localStorage.setItem('ownedPets', JSON.stringify(ownedPets));
+        }
+
+        // Show refund animation
+        function showRefundAnimation(x, y, amount) {
+            const refund = document.createElement('div');
+            refund.className = 'refund-indicator';
+            refund.innerHTML = `+${amount} 💎`;
+            refund.style.left = x + 'px';
+            refund.style.top = y + 'px';
+            document.body.appendChild(refund);
+            setTimeout(() => refund.remove(), 1000);
+        }
+
+        // Switch shop tab
+        function switchShopTab(tab) {
+            currentShopTab = tab;
+            document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.shop-category').forEach(c => c.classList.remove('active'));
+            document.getElementById('category-' + tab).classList.add('active');
+        }
+
+        // Update shop preview for selected character
+        function updateShopPreview() {
+            const charItems = equippedItems[selectedCharacter];
+            const hatSlot = document.getElementById('previewHat');
+            const petSlot = document.getElementById('previewPet');
+            
+            if (charItems.hats) {
+                const hat = shopItems.hats.find(h => h.id === charItems.hats);
+                hatSlot.innerText = hat ? hat.emoji : '';
+            } else { hatSlot.innerText = ''; }
+            
+            if (charItems.pet) {
+                const pet = shopItems.pets.find(p => p.id === charItems.pet);
+                petSlot.innerText = pet ? pet.emoji : '';
+            } else { petSlot.innerText = ''; }
+        }
+
+        // Render shop items
+        function renderShopItems() {
+            renderCategory('hats', 'hatItems');
+            renderTreats();
+            renderPets();
+            document.getElementById('treatCount').innerText = treatsGiven;
+        }
+
+        // Render treats (consumable items)
+        function renderTreats() {
+            const container = document.getElementById('treatsItems');
+            container.innerHTML = '';
+            
+            shopItems.treats.forEach(item => {
+                const rarity = item.rarity || 'common';
+                const div = document.createElement('div');
+                div.className = 'shop-item rarity-' + rarity;
+                div.onclick = () => feedCharacter(item);
+                
+                div.innerHTML = `
+                    <span class="shop-item-emoji">${item.emoji}</span>
+                    <span class="shop-item-name">${item.name}</span>
+                    <span class="shop-item-price">${item.price} 💎</span>
+                `;
+                
+                container.appendChild(div);
+            });
+        }
+
+        // Render pets in shop
+        function renderPets() {
+            const container = document.getElementById('petsItems');
+            container.innerHTML = '';
+            const charItems = equippedItems[selectedCharacter];
+            
+            shopItems.pets.forEach(pet => {
+                const isOwned = ownedPets.includes(pet.id);
+                const isEquipped = charItems.pet === pet.id;
+                const rarity = pet.rarity || 'common';
+                
+                const div = document.createElement('div');
+                div.className = 'shop-item rarity-' + rarity + (isOwned ? ' owned' : '') + (isEquipped ? ' equipped' : '');
+                div.onclick = () => handlePetClick(pet);
+                
+                let priceText = isEquipped ? '✓ Following!' : (isOwned ? 'Tap to select' : `${pet.price} 💎`);
+                
+                div.innerHTML = `
+                    <span class="shop-item-emoji">${pet.emoji}</span>
+                    <span class="shop-item-name">${pet.name}</span>
+                    <span class="shop-item-price">${priceText}</span>
+                `;
+                
+                container.appendChild(div);
+            });
+        }
+
+        // Handle pet click - buy or equip
+        function handlePetClick(pet) {
+            const charItems = equippedItems[selectedCharacter];
+            
+            if (ownedPets.includes(pet.id)) {
+                // Already owned - toggle equip
+                if (charItems.pet === pet.id) {
+                    charItems.pet = null;
+                } else {
+                    charItems.pet = pet.id;
+                }
+                saveEquippedItems();
+                updateShopPreview();
+                renderPets();
+            } else {
+                // Need to buy
+                if (gems >= pet.price) {
+                    gems -= pet.price;
+                    saveGems(gems);
+                    updateGemDisplays();
+                    ownedPets.push(pet.id);
+                    charItems.pet = pet.id;
+                    saveEquippedItems();
+                    updateShopPreview();
+                    renderPets();
+                    showPetAdoptedAnimation(pet);
+                } else {
+                    showNotEnoughGems(pet.price);
+                }
+            }
+        }
+        
+        function showPetAdoptedAnimation(pet) {
+            const banner = document.createElement('div');
+            banner.className = 'feed-banner';
+            banner.innerHTML = `🎉 ${pet.emoji} ${pet.name} joined the family! ${pet.emoji} 🎉`;
+            document.body.appendChild(banner);
+            
+            // Add hearts floating
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'feed-reaction';
+                    heart.innerHTML = ['💖', '💕', '❤️', '🥰', '✨'][Math.floor(Math.random() * 5)];
+                    heart.style.left = (window.innerWidth / 2 + (Math.random() - 0.5) * 150) + 'px';
+                    heart.style.top = '35%';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1500);
+                }, i * 100);
+            }
+            
+            setTimeout(() => {
+                banner.classList.add('fade-out');
+                setTimeout(() => banner.remove(), 500);
+            }, 2000);
+        }
+
+        // Feed selected character a treat!
+        function feedCharacter(treat) {
+            if (gems >= treat.price) {
+                gems -= treat.price;
+                saveGems(gems);
+                updateGemDisplays();
+                treatsGiven++;
+                saveEquippedItems();
+                document.getElementById('treatCount').innerText = treatsGiven;
+                
+                showFeedingAnimation(treat);
+            } else {
+                showNotEnoughGems(treat.price);
+            }
+        }
+        
+        function showFeedingAnimation(treat) {
+            const preview = document.getElementById('shopPreviewContainer');
+            const charName = selectedCharacter === 'titi' ? 'Titi' : 'Midnight';
+            
+            // Happy reactions
+            const reactions = ['😋', '🤤', '😍', '🥰', '😊', '🎉', '⭐', '💖', '✨', '🌟'];
+            const messages = [
+                `YUM! ${charName} loves it!`,
+                `SO TASTY! ${charName} wants more!`,
+                `DELICIOUS! ${charName} is so happy!`,
+                `WOW! ${charName}'s favorite!`,
+                `AMAZING! ${charName} does a happy dance!`,
+                `YUMMY! ${charName} says thank you!`
+            ];
+            
+            // Add bounce animation to preview
+            preview.classList.add('feeding-bounce');
+            
+            // Show treat flying to character
+            const treatFloat = document.createElement('div');
+            treatFloat.className = 'treat-fly';
+            treatFloat.innerHTML = treat.emoji;
+            treatFloat.style.left = '50%';
+            treatFloat.style.top = '50%';
+            document.body.appendChild(treatFloat);
+            
+            // Show reaction emojis bursting out
+            setTimeout(() => {
+                treatFloat.remove();
+                
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => {
+                        const reaction = document.createElement('div');
+                        reaction.className = 'feed-reaction';
+                        reaction.innerHTML = reactions[Math.floor(Math.random() * reactions.length)];
+                        
+                        const previewRect = preview.getBoundingClientRect();
+                        reaction.style.left = (previewRect.left + previewRect.width / 2 + (Math.random() - 0.5) * 80) + 'px';
+                        reaction.style.top = (previewRect.top + 30) + 'px';
+                        document.body.appendChild(reaction);
+                        
+                        setTimeout(() => reaction.remove(), 1500);
+                    }, i * 100);
+                }
+            }, 300);
+            
+            // Show message banner
+            setTimeout(() => {
+                const banner = document.createElement('div');
+                banner.className = 'feed-banner';
+                banner.innerHTML = `${treat.emoji} ${messages[Math.floor(Math.random() * messages.length)]} ${treat.emoji}`;
+                document.body.appendChild(banner);
+                
+                setTimeout(() => {
+                    banner.classList.add('fade-out');
+                    setTimeout(() => banner.remove(), 500);
+                }, 2000);
+            }, 500);
+            
+            // Remove bounce after animation
+            setTimeout(() => {
+                preview.classList.remove('feeding-bounce');
+            }, 1000);
+        }
+        
+        function showNotEnoughGems(needed) {
+            const banner = document.createElement('div');
+            banner.className = 'feed-banner not-enough';
+            banner.innerHTML = `😢 Need ${needed} 💎 gems!`;
+            document.body.appendChild(banner);
+            
+            setTimeout(() => {
+                banner.classList.add('fade-out');
+                setTimeout(() => banner.remove(), 500);
+            }, 1500);
+        }
+
+        function renderCategory(category, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            const charItems = equippedItems[selectedCharacter];
+            
+            shopItems[category].forEach(item => {
+                const isOwned = ownedItems.includes(item.id);
+                const isEquipped = charItems[category] === item.id;
+                const rarity = item.rarity || 'common';
+                
+                const div = document.createElement('div');
+                div.className = 'shop-item rarity-' + rarity + (isOwned ? ' owned' : '') + (isEquipped ? ' equipped' : '');
+                div.onclick = () => handleItemClick(category, item);
+                
+                let priceText = isEquipped ? '✓ Wearing' : (isOwned ? 'Tap to wear' : `${item.price} 💎`);
+                
+                div.innerHTML = `
+                    <span class="shop-item-emoji">${item.emoji}</span>
+                    <span class="shop-item-name">${item.name}</span>
+                    <span class="shop-item-price">${priceText}</span>
+                `;
+                
+                container.appendChild(div);
+            });
+            
+            // Add "remove" option if something is equipped - WITH REFUND
+            if (charItems[category]) {
+                const equippedItem = shopItems[category].find(i => i.id === charItems[category]);
+                const refundAmount = equippedItem ? equippedItem.price : 0;
+                const removeDiv = document.createElement('div');
+                removeDiv.className = 'shop-item';
+                removeDiv.onclick = (e) => unequipItem(category, e);
+                removeDiv.innerHTML = `
+                    <span class="shop-item-emoji">❌</span>
+                    <span class="shop-item-name">Remove</span>
+                    <span class="shop-item-price" style="color: #22c55e;">+${refundAmount} 💎</span>
+                `;
+                container.appendChild(removeDiv);
+            }
+        }
+
+        // Handle clicking on an item
+        function handleItemClick(category, item) {
+            const isOwned = ownedItems.includes(item.id);
+            
+            if (isOwned) {
+                equipItem(category, item);
+            } else {
+                buyItem(category, item);
+            }
+        }
+
+        // Buy an item
+        function buyItem(category, item) {
+            if (gems >= item.price) {
+                gems -= item.price;
+                saveGems(gems);
+                updateGemDisplays();
+                ownedItems.push(item.id);
+                saveEquippedItems();
+                equipItem(category, item);
+            } else {
+                alert(`Not enough gems! You need ${item.price} 💎`);
+            }
+        }
+
+        // Equip an item to selected character
+        function equipItem(category, item) {
+            equippedItems[selectedCharacter][category] = item.id;
+            saveEquippedItems();
+            updateShopPreview();
+            renderShopItems();
+        }
+
+        // Unequip an item with refund
+        function unequipItem(category, event) {
+            const charItems = equippedItems[selectedCharacter];
+            const equippedItem = shopItems[category].find(i => i.id === charItems[category]);
+            
+            if (equippedItem) {
+                gems += equippedItem.price;
+                saveGems(gems);
+                updateGemDisplays();
+                
+                if (event) {
+                    showRefundAnimation(event.clientX, event.clientY, equippedItem.price);
+                }
+            }
+            
+            charItems[category] = null;
+            saveEquippedItems();
+            updateShopPreview();
+            renderShopItems();
+        }
+
+        // Update all gem displays
+        function updateGemDisplays() {
+            document.getElementById('gemCount').innerText = gems;
+            document.getElementById('shopGems').innerText = gems;
+        }
+
+        // Initialize
+        updateGemDisplays();
+        selectCharacter('titi');
+        renderShopItems();
+        updateShopPreview();
+    </script>
+</body>
+</html>

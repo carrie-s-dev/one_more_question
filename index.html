@@ -125,6 +125,15 @@
         }
         .mascot.midnight .m-gills { color: #6a6a6a; }
 
+        /* Mascot accessory slots */
+        .mascot .m-hat { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); font-size: 24px; z-index: 10; }
+        .mascot .m-pet { position: absolute; bottom: -5px; right: -25px; font-size: 20px; z-index: 10; animation: petBounce 2s ease-in-out infinite; }
+        
+        @keyframes petBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
         .card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
@@ -315,12 +324,16 @@
             <div class="m-gills m-gill-right">༄</div>
             <div class="m-head">◕‿◕</div>
             <div class="m-body"></div>
+            <div class="m-hat" id="titiHat"></div>
+            <div class="m-pet" id="titiPet"></div>
         </div>
         <div class="mascot midnight">
             <div class="m-gills m-gill-left">༄</div>
             <div class="m-gills m-gill-right">༄</div>
             <div class="m-head">◕‿◕</div>
             <div class="m-body"></div>
+            <div class="m-hat" id="midnightHat"></div>
+            <div class="m-pet" id="midnightPet"></div>
         </div>
     </div>
 
@@ -346,7 +359,7 @@
                 <span class="nav-btn-icon">📚</span>
                 Homework Helper
             </a>
-            <a href="question.html#shop" class="nav-btn shop" onclick="goToShop()">
+            <a href="shop.html" class="nav-btn shop">
                 <span class="nav-btn-icon">🛍️</span>
                 Titi's Shop
             </a>
@@ -382,7 +395,7 @@
     </div>
 
     <script>
-        const PARENT_PIN = '1234';
+        const PARENT_PIN = '2281';
 
         function loadGems() {
             const saved = localStorage.getItem('gems');
@@ -391,10 +404,6 @@
 
         function updateGemDisplay() {
             document.getElementById('gemCount').innerText = loadGems();
-        }
-
-        function goToShop() {
-            localStorage.setItem('openShop', 'true');
         }
 
         function openPinModal() {
@@ -432,8 +441,54 @@
             }
         });
 
+        // Shop items for displaying accessories
+        const shopItems = {
+            hats: [
+                { id: 'flower', emoji: '🌸' }, { id: 'bow', emoji: '🎀' }, { id: 'cap', emoji: '🧢' },
+                { id: 'partyhat', emoji: '🎉' }, { id: 'tophat', emoji: '🎩' }, { id: 'helmet', emoji: '🪖' },
+                { id: 'sunhat', emoji: '👒' }, { id: 'crown', emoji: '👑' },
+                { id: 'halo', emoji: '💫' }, { id: 'starhat', emoji: '🌟' },
+                { id: 'rainbow', emoji: '🌈' }
+            ],
+            pets: [
+                { id: 'cat', emoji: '🐱' }, { id: 'dog', emoji: '🐶' }, { id: 'bunny', emoji: '🐰' },
+                { id: 'hamster', emoji: '🐹' }, { id: 'chick', emoji: '🐥' }, { id: 'fox', emoji: '🦊' },
+                { id: 'panda', emoji: '🐼' }, { id: 'koala', emoji: '🐨' }, { id: 'frog', emoji: '🐸' },
+                { id: 'owl', emoji: '🦉' }, { id: 'penguin', emoji: '🐧' }, { id: 'dragon', emoji: '🐉' },
+                { id: 'unicorn', emoji: '🦄' }
+            ]
+        };
+
+        // Load and display mascot accessories
+        function updateMascotAppearance() {
+            const equippedItems = JSON.parse(localStorage.getItem('equippedItems') || '{}');
+            updateMascotSlots('titi', equippedItems.titi);
+            updateMascotSlots('midnight', equippedItems.midnight);
+        }
+
+        function updateMascotSlots(character, charItems) {
+            if (!charItems) return;
+            
+            const hatSlot = document.getElementById(character + 'Hat');
+            if (hatSlot && charItems.hats) {
+                const item = shopItems.hats.find(i => i.id === charItems.hats);
+                hatSlot.innerText = item ? item.emoji : '';
+            } else if (hatSlot) {
+                hatSlot.innerText = '';
+            }
+            
+            const petSlot = document.getElementById(character + 'Pet');
+            if (petSlot && charItems.pet) {
+                const pet = shopItems.pets.find(p => p.id === charItems.pet);
+                petSlot.innerText = pet ? pet.emoji : '';
+            } else if (petSlot) {
+                petSlot.innerText = '';
+            }
+        }
+
         // Initialize
         updateGemDisplay();
+        updateMascotAppearance();
     </script>
 </body>
 </html>
