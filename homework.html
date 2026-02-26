@@ -114,16 +114,6 @@
         }
         .mini-axolotl.midnight .gills { color: #6a6a6a; }
 
-        .axolotl-label {
-            text-align: center;
-            font-size: 0.75em;
-            font-weight: 700;
-            margin-top: 2px;
-        }
-
-        .mini-axolotl.titi .axolotl-label { color: #ff6b8a; }
-        .mini-axolotl.midnight .axolotl-label { color: #4a4a4a; }
-
         /* Speech bubble */
         .speech-bubble {
             background: linear-gradient(135deg, #fff0f5, #ffe4ec);
@@ -140,21 +130,114 @@
         .speech-bubble::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            border: 10px solid transparent;
+        }
+
+        .speech-bubble.bubble-up::after {
+            top: -10px;
+            bottom: auto;
             left: 50%;
             transform: translateX(-50%);
-            border: 10px solid transparent;
-            border-top-color: #ff9eb5;
-            border-bottom: 0;
+            border-bottom-color: #ff9eb5;
+            border-top: 0;
         }
 
-        .speech-bubble.midnight-says {
-            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
-            border-color: #666;
+        /* Tiny axolotl saying something in section header */
+        .section-caption {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            margin-bottom: 5px;
         }
 
-        .speech-bubble.midnight-says::after {
-            border-top-color: #666;
+        .tiny-axolotl {
+            width: 30px;
+            height: 32px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .tiny-axolotl .tiny-body {
+            width: 24px;
+            height: 18px;
+            border-radius: 12px 12px 10px 10px;
+            position: absolute;
+            bottom: 0;
+            left: 3px;
+        }
+
+        .tiny-axolotl .tiny-head {
+            width: 20px;
+            height: 18px;
+            border-radius: 50%;
+            position: absolute;
+            top: 4px;
+            left: 5px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6px;
+        }
+
+        .tiny-axolotl .tiny-gills {
+            position: absolute;
+            top: 2px;
+            font-size: 8px;
+            z-index: 1;
+        }
+
+        .tiny-axolotl .tiny-gill-left { left: 0; transform: rotate(-30deg); }
+        .tiny-axolotl .tiny-gill-right { right: 0; transform: rotate(30deg) scaleX(-1); }
+
+        .tiny-axolotl.titi .tiny-body {
+            background: linear-gradient(135deg, #ffb6c1, #ff91a4);
+        }
+        .tiny-axolotl.titi .tiny-head {
+            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+        }
+        .tiny-axolotl.titi .tiny-gills { color: #ff6b8a; }
+
+        .tiny-axolotl.midnight .tiny-body {
+            background: linear-gradient(135deg, #4a4a4a, #2d2d2d);
+        }
+        .tiny-axolotl.midnight .tiny-head {
+            background: linear-gradient(135deg, #5a5a5a, #3d3d3d);
+        }
+        .tiny-axolotl.midnight .tiny-gills { color: #6a6a6a; }
+
+        .tiny-speech {
+            background: white;
+            border-radius: 10px;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: #666;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+
+        .tiny-speech::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 5px solid transparent;
+            border-right-color: #ddd;
+            border-left: 0;
+        }
+
+        .tiny-speech::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 4px solid transparent;
+            border-right-color: white;
+            border-left: 0;
         }
 
         /* Navigation */
@@ -487,6 +570,11 @@
         <h1>📘 Homework Helper</h1>
         <p class="subtitle">Let's make math fun! ✨</p>
 
+        <!-- Speech bubble pointing up to axolotls -->
+        <div class="speech-bubble bubble-up">
+            Hi, we're Titi and Midnight! We're here to help you with your homework! You've got this!
+        </div>
+
         <!-- Titi and Midnight duo -->
         <div class="axolotl-duo">
             <div class="mini-axolotl titi">
@@ -494,24 +582,27 @@
                 <div class="gills gill-right">༄</div>
                 <div class="head">◕‿◕</div>
                 <div class="body"></div>
-                <div class="axolotl-label">Titi</div>
             </div>
             <div class="mini-axolotl midnight">
                 <div class="gills gill-left">༄</div>
                 <div class="gills gill-right">༄</div>
                 <div class="head">◕‿◕</div>
                 <div class="body"></div>
-                <div class="axolotl-label">Midnight</div>
             </div>
-        </div>
-
-        <div class="speech-bubble">
-            ✨ Hi! We're here to help you with math! You've got this! ✨
         </div>
 
         <!-- Section 1: Compare the Fractions - Titi's Section -->
         <div class="section">
-            <h2 class="section-title">📊 Section 1: Compare the Fractions <span style="font-size: 0.8em;">(Titi's favorite!)</span></h2>
+            <h2 class="section-title">Section 1: Compare the Fractions</h2>
+            <div class="section-caption">
+                <div class="tiny-axolotl titi">
+                    <div class="tiny-gills tiny-gill-left">༄</div>
+                    <div class="tiny-gills tiny-gill-right">༄</div>
+                    <div class="tiny-head">◕‿◕</div>
+                    <div class="tiny-body"></div>
+                </div>
+                <div class="tiny-speech">This is my favorite!</div>
+            </div>
             
             <!-- Question 1 -->
             <div class="question-box" id="q1Box">
@@ -542,7 +633,16 @@
 
         <!-- Section 2: Pizza Problem - Midnight's Section -->
         <div class="section midnight-section">
-            <h2 class="section-title">🍕 Section 2: Pizza Problem <span style="font-size: 0.8em;">(Midnight loves pizza!)</span></h2>
+            <h2 class="section-title">Section 2: Pizza Problem</h2>
+            <div class="section-caption">
+                <div class="tiny-axolotl midnight">
+                    <div class="tiny-gills tiny-gill-left">༄</div>
+                    <div class="tiny-gills tiny-gill-right">༄</div>
+                    <div class="tiny-head">◕‿◕</div>
+                    <div class="tiny-body"></div>
+                </div>
+                <div class="tiny-speech">I love pizza!</div>
+            </div>
             
             <div class="question-box" id="q3Box">
                 <div class="word-problem">
@@ -574,30 +674,48 @@
 
         <!-- Section 3: Number Line Compare - Titi's Section -->
         <div class="section">
-            <h2 class="section-title">📏 Section 3: Number Line Compare <span style="font-size: 0.8em;">(Titi made these for you!)</span></h2>
+            <h2 class="section-title">Section 3: Number Line Compare</h2>
+            <div class="section-caption">
+                <div class="tiny-axolotl titi">
+                    <div class="tiny-gills tiny-gill-left">༄</div>
+                    <div class="tiny-gills tiny-gill-right">༄</div>
+                    <div class="tiny-head">◕‿◕</div>
+                    <div class="tiny-body"></div>
+                </div>
+                <div class="tiny-speech">I made these for you!</div>
+            </div>
             
             <!-- Question 4: 7/5 vs 7/4 -->
             <div class="question-box" id="q4Box">
                 <div class="number-line-container">
                     <div class="number-line-wrapper">
-                        <div class="number-line-title">Fifths:</div>
+                        <div class="number-line-title">Fifths (0 to 2):</div>
                         <div class="number-line">
                             <div class="tick" style="left: 0%;"><span class="tick-label">0</span></div>
-                            <div class="tick" style="left: 20%;"><span class="tick-label"><sup>1</sup>/<sub>5</sub></span></div>
-                            <div class="tick" style="left: 40%;"><span class="tick-label"><sup>2</sup>/<sub>5</sub></span></div>
-                            <div class="tick" style="left: 60%;"><span class="tick-label"><sup>3</sup>/<sub>5</sub></span></div>
-                            <div class="tick" style="left: 80%;"><span class="tick-label"><sup>4</sup>/<sub>5</sub></span></div>
-                            <div class="tick" style="left: 100%;"><span class="tick-label">1</span></div>
+                            <div class="tick" style="left: 10%;"><span class="tick-label"><sup>1</sup>/<sub>5</sub></span></div>
+                            <div class="tick" style="left: 20%;"><span class="tick-label"><sup>2</sup>/<sub>5</sub></span></div>
+                            <div class="tick" style="left: 30%;"><span class="tick-label"><sup>3</sup>/<sub>5</sub></span></div>
+                            <div class="tick" style="left: 40%;"><span class="tick-label"><sup>4</sup>/<sub>5</sub></span></div>
+                            <div class="tick" style="left: 50%;"><span class="tick-label">1</span></div>
+                            <div class="tick" style="left: 60%;"><span class="tick-label"><sup>6</sup>/<sub>5</sub></span></div>
+                            <div class="tick" style="left: 70%;"><span class="tick-label" style="color: #d63384; font-weight: 800;"><sup>7</sup>/<sub>5</sub></span></div>
+                            <div class="tick" style="left: 80%;"><span class="tick-label"><sup>8</sup>/<sub>5</sub></span></div>
+                            <div class="tick" style="left: 90%;"><span class="tick-label"><sup>9</sup>/<sub>5</sub></span></div>
+                            <div class="tick" style="left: 100%;"><span class="tick-label">2</span></div>
                         </div>
                     </div>
                     <div class="number-line-wrapper">
-                        <div class="number-line-title">Fourths:</div>
+                        <div class="number-line-title">Fourths (0 to 2):</div>
                         <div class="number-line">
                             <div class="tick" style="left: 0%;"><span class="tick-label">0</span></div>
-                            <div class="tick" style="left: 25%;"><span class="tick-label"><sup>1</sup>/<sub>4</sub></span></div>
-                            <div class="tick" style="left: 50%;"><span class="tick-label"><sup>2</sup>/<sub>4</sub></span></div>
-                            <div class="tick" style="left: 75%;"><span class="tick-label"><sup>3</sup>/<sub>4</sub></span></div>
-                            <div class="tick" style="left: 100%;"><span class="tick-label">1</span></div>
+                            <div class="tick" style="left: 12.5%;"><span class="tick-label"><sup>1</sup>/<sub>4</sub></span></div>
+                            <div class="tick" style="left: 25%;"><span class="tick-label"><sup>2</sup>/<sub>4</sub></span></div>
+                            <div class="tick" style="left: 37.5%;"><span class="tick-label"><sup>3</sup>/<sub>4</sub></span></div>
+                            <div class="tick" style="left: 50%;"><span class="tick-label">1</span></div>
+                            <div class="tick" style="left: 62.5%;"><span class="tick-label"><sup>5</sup>/<sub>4</sub></span></div>
+                            <div class="tick" style="left: 75%;"><span class="tick-label"><sup>6</sup>/<sub>4</sub></span></div>
+                            <div class="tick" style="left: 87.5%;"><span class="tick-label" style="color: #d63384; font-weight: 800;"><sup>7</sup>/<sub>4</sub></span></div>
+                            <div class="tick" style="left: 100%;"><span class="tick-label">2</span></div>
                         </div>
                     </div>
                 </div>
@@ -655,8 +773,22 @@
         </div>
 
         <!-- Ending encouragement -->
-        <div class="speech-bubble" style="margin-top: 20px; margin-bottom: 0;">
-            🌟 Great job working on your homework! Titi & Midnight are proud of you! 🌟
+        <div class="axolotl-duo" style="margin-top: 20px; margin-bottom: 10px;">
+            <div class="mini-axolotl titi">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+            </div>
+            <div class="mini-axolotl midnight">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+            </div>
+        </div>
+        <div class="speech-bubble bubble-up" style="margin-bottom: 0;">
+            Great job working on your homework! We're so proud of you!
         </div>
     </div>
 
