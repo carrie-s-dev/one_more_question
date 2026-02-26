@@ -18,7 +18,7 @@
             margin: 0 auto;
             padding: 30px 20px;
             min-height: 100vh;
-            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #6c5ce7 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             background-attachment: fixed;
         }
 
@@ -36,7 +36,7 @@
             font-weight: 800;
             text-align: center;
             margin: 0 0 10px 0;
-            background: linear-gradient(135deg, #0984e3, #6c5ce7);
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -47,6 +47,114 @@
             color: #666;
             margin-bottom: 25px;
             font-size: 1.1em;
+        }
+
+        /* Axolotl helpers */
+        .axolotl-duo {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .mini-axolotl {
+            width: 60px;
+            height: 70px;
+            position: relative;
+        }
+
+        .mini-axolotl .body {
+            width: 50px;
+            height: 40px;
+            border-radius: 25px 25px 20px 20px;
+            position: absolute;
+            bottom: 0;
+            left: 5px;
+        }
+
+        .mini-axolotl .head {
+            width: 40px;
+            height: 35px;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .mini-axolotl .gills {
+            position: absolute;
+            top: 5px;
+            font-size: 14px;
+            z-index: 1;
+        }
+
+        .mini-axolotl .gill-left { left: 0; transform: rotate(-30deg); }
+        .mini-axolotl .gill-right { right: 0; transform: rotate(30deg) scaleX(-1); }
+
+        .mini-axolotl.titi .body {
+            background: linear-gradient(135deg, #ffb6c1, #ff91a4);
+            box-shadow: 0 3px 10px rgba(255, 145, 164, 0.4);
+        }
+        .mini-axolotl.titi .head {
+            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+        }
+        .mini-axolotl.titi .gills { color: #ff6b8a; }
+
+        .mini-axolotl.midnight .body {
+            background: linear-gradient(135deg, #4a4a4a, #2d2d2d);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        .mini-axolotl.midnight .head {
+            background: linear-gradient(135deg, #5a5a5a, #3d3d3d);
+        }
+        .mini-axolotl.midnight .gills { color: #6a6a6a; }
+
+        .axolotl-label {
+            text-align: center;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .mini-axolotl.titi .axolotl-label { color: #ff6b8a; }
+        .mini-axolotl.midnight .axolotl-label { color: #4a4a4a; }
+
+        /* Speech bubble */
+        .speech-bubble {
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+            border: 2px solid #ff9eb5;
+            border-radius: 15px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            position: relative;
+            text-align: center;
+            font-weight: 600;
+            color: #d63384;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 10px solid transparent;
+            border-top-color: #ff9eb5;
+            border-bottom: 0;
+        }
+
+        .speech-bubble.midnight-says {
+            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+            border-color: #666;
+        }
+
+        .speech-bubble.midnight-says::after {
+            border-top-color: #666;
         }
 
         /* Navigation */
@@ -72,20 +180,30 @@
 
         /* Section styling */
         .section {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #fff5f8, #fef0ff);
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 20px;
+            border: 2px solid #f0d0e0;
+        }
+
+        .section.midnight-section {
+            background: linear-gradient(135deg, #f5f5f5, #ebebeb);
+            border-color: #d0d0d0;
         }
 
         .section-title {
             font-size: 1.2em;
             font-weight: 700;
-            color: #0984e3;
+            color: #d63384;
             margin: 0 0 15px 0;
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .section.midnight-section .section-title {
+            color: #4a4a4a;
         }
 
         /* Question styling */
@@ -130,14 +248,14 @@
             border-radius: 15px;
             cursor: pointer;
             transition: all 0.2s ease;
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            background: linear-gradient(135deg, #ff9eb5, #ff6b8a);
             color: white;
-            box-shadow: 0 4px 12px rgba(9, 132, 227, 0.3);
+            box-shadow: 0 4px 12px rgba(255, 107, 138, 0.3);
         }
 
         .answer-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(9, 132, 227, 0.4);
+            box-shadow: 0 6px 16px rgba(255, 107, 138, 0.4);
         }
 
         .answer-btn:active {
@@ -199,8 +317,8 @@
         }
 
         .choice-btn:hover {
-            border-color: #0984e3;
-            background: #f0f7ff;
+            border-color: #d63384;
+            background: #fff0f5;
         }
 
         .choice-btn.selected {
@@ -222,7 +340,7 @@
             padding: 15px;
             background: #fff;
             border-radius: 10px;
-            border-left: 4px solid #0984e3;
+            border-left: 4px solid #ff6b8a;
             margin-bottom: 20px;
         }
 
@@ -369,9 +487,31 @@
         <h1>📘 Homework Helper</h1>
         <p class="subtitle">Let's make math fun! ✨</p>
 
-        <!-- Section 1: Compare the Fractions -->
+        <!-- Titi and Midnight duo -->
+        <div class="axolotl-duo">
+            <div class="mini-axolotl titi">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+                <div class="axolotl-label">Titi</div>
+            </div>
+            <div class="mini-axolotl midnight">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+                <div class="axolotl-label">Midnight</div>
+            </div>
+        </div>
+
+        <div class="speech-bubble">
+            ✨ Hi! We're here to help you with math! You've got this! ✨
+        </div>
+
+        <!-- Section 1: Compare the Fractions - Titi's Section -->
         <div class="section">
-            <h2 class="section-title">📊 Section 1: Compare the Fractions</h2>
+            <h2 class="section-title">📊 Section 1: Compare the Fractions <span style="font-size: 0.8em;">(Titi's favorite!)</span></h2>
             
             <!-- Question 1 -->
             <div class="question-box" id="q1Box">
@@ -400,9 +540,9 @@
             </div>
         </div>
 
-        <!-- Section 2: Pizza Problem -->
-        <div class="section">
-            <h2 class="section-title">🍕 Section 2: Pizza Problem</h2>
+        <!-- Section 2: Pizza Problem - Midnight's Section -->
+        <div class="section midnight-section">
+            <h2 class="section-title">🍕 Section 2: Pizza Problem <span style="font-size: 0.8em;">(Midnight loves pizza!)</span></h2>
             
             <div class="question-box" id="q3Box">
                 <div class="word-problem">
@@ -432,9 +572,9 @@
             </div>
         </div>
 
-        <!-- Section 3: Number Line Compare -->
+        <!-- Section 3: Number Line Compare - Titi's Section -->
         <div class="section">
-            <h2 class="section-title">📏 Section 3: Number Line Compare</h2>
+            <h2 class="section-title">📏 Section 3: Number Line Compare <span style="font-size: 0.8em;">(Titi made these for you!)</span></h2>
             
             <!-- Question 4: 7/5 vs 7/4 -->
             <div class="question-box" id="q4Box">
@@ -513,6 +653,11 @@
         <div class="reminder">
             📝 Write your answers on your homework sheet!
         </div>
+
+        <!-- Ending encouragement -->
+        <div class="speech-bubble" style="margin-top: 20px; margin-bottom: 0;">
+            🌟 Great job working on your homework! Titi & Midnight are proud of you! 🌟
+        </div>
     </div>
 
     <script>
@@ -533,18 +678,18 @@
             q5: false
         };
 
-        // Encouraging messages
+        // Encouraging messages with Titi and Midnight
         const correctMessages = [
-            "⭐ Nice work!",
-            "⭐ You got it!",
-            "⭐ Awesome!",
-            "⭐ Great thinking!"
+            "⭐ Nice work! Titi is doing a happy dance!",
+            "⭐ You got it! Midnight says 'cool!'",
+            "⭐ Awesome! Titi & Midnight high-five!",
+            "⭐ Great thinking! You're a math star!"
         ];
 
         const tryAgainMessages = [
-            "🌱 Try again — you're close!",
-            "🌱 Almost! Give it another try!",
-            "🌱 Nice thinking! Try once more!"
+            "🌱 Try again — Titi believes in you!",
+            "🌱 Almost! Midnight says keep going!",
+            "🌱 So close! Give it another try!"
         ];
 
         function getRandomMessage(arr) {
@@ -611,7 +756,7 @@
 
             if (answer === correctAnswer) {
                 // Correct!
-                feedback.textContent = "🎉 You figured it out!";
+                feedback.textContent = "🎉 You figured it out! Midnight saved you a slice! 🍕";
                 feedback.className = 'feedback correct';
                 if (clickedBtn) clickedBtn.classList.add('selected');
                 box.classList.add('completed');
