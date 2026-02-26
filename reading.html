@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Homework - Titi & Midnight</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', Arial, sans-serif;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%);
+            background-attachment: fixed;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-weight: 800;
+            text-align: center;
+            margin: 0 0 10px 0;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        /* Navigation */
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Axolotl helpers */
+        .axolotl-duo {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .mini-axolotl {
+            width: 60px;
+            height: 70px;
+            position: relative;
+        }
+
+        .mini-axolotl .body {
+            width: 50px;
+            height: 40px;
+            border-radius: 25px 25px 20px 20px;
+            position: absolute;
+            bottom: 0;
+            left: 5px;
+        }
+
+        .mini-axolotl .head {
+            width: 40px;
+            height: 35px;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .mini-axolotl .gills {
+            position: absolute;
+            top: 5px;
+            font-size: 14px;
+            z-index: 1;
+        }
+
+        .mini-axolotl .gill-left { left: 0; transform: rotate(-30deg); }
+        .mini-axolotl .gill-right { right: 0; transform: rotate(30deg) scaleX(-1); }
+
+        .mini-axolotl.titi .body {
+            background: linear-gradient(135deg, #ffb6c1, #ff91a4);
+            box-shadow: 0 3px 10px rgba(255, 145, 164, 0.4);
+        }
+        .mini-axolotl.titi .head {
+            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+        }
+        .mini-axolotl.titi .gills { color: #ff6b8a; }
+
+        .mini-axolotl.midnight .body {
+            background: linear-gradient(135deg, #4a4a4a, #2d2d2d);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        .mini-axolotl.midnight .head {
+            background: linear-gradient(135deg, #5a5a5a, #3d3d3d);
+        }
+        .mini-axolotl.midnight .gills { color: #6a6a6a; }
+
+        /* Tiny axolotl for captions */
+        .section-caption {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            margin-bottom: 10px;
+        }
+
+        .tiny-axolotl {
+            width: 30px;
+            height: 32px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .tiny-axolotl .tiny-body {
+            width: 24px;
+            height: 18px;
+            border-radius: 12px 12px 10px 10px;
+            position: absolute;
+            bottom: 0;
+            left: 3px;
+        }
+
+        .tiny-axolotl .tiny-head {
+            width: 20px;
+            height: 18px;
+            border-radius: 50%;
+            position: absolute;
+            top: 4px;
+            left: 5px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6px;
+        }
+
+        .tiny-axolotl .tiny-gills {
+            position: absolute;
+            top: 2px;
+            font-size: 8px;
+            z-index: 1;
+        }
+
+        .tiny-axolotl .tiny-gill-left { left: 0; transform: rotate(-30deg); }
+        .tiny-axolotl .tiny-gill-right { right: 0; transform: rotate(30deg) scaleX(-1); }
+
+        .tiny-axolotl.titi .tiny-body {
+            background: linear-gradient(135deg, #ffb6c1, #ff91a4);
+        }
+        .tiny-axolotl.titi .tiny-head {
+            background: linear-gradient(135deg, #ffccd5, #ffb6c1);
+        }
+        .tiny-axolotl.titi .tiny-gills { color: #ff6b8a; }
+
+        .tiny-axolotl.midnight .tiny-body {
+            background: linear-gradient(135deg, #4a4a4a, #2d2d2d);
+        }
+        .tiny-axolotl.midnight .tiny-head {
+            background: linear-gradient(135deg, #5a5a5a, #3d3d3d);
+        }
+        .tiny-axolotl.midnight .tiny-gills { color: #6a6a6a; }
+
+        .tiny-speech {
+            background: white;
+            border-radius: 10px;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: #666;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+
+        .tiny-speech::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 5px solid transparent;
+            border-right-color: #ddd;
+            border-left: 0;
+        }
+
+        .tiny-speech::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 4px solid transparent;
+            border-right-color: white;
+            border-left: 0;
+        }
+
+        /* Section styling */
+        .section {
+            background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #d4c4f0;
+        }
+
+        .section.passage-section {
+            background: linear-gradient(135deg, #fff5f8, #fef0ff);
+            border-color: #f0d0e0;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #7c3aed;
+            margin: 0 0 15px 0;
+        }
+
+        .day-label {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .passage-label {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* Passage styling */
+        .passage-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .passage-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .poem-line {
+            margin: 3px 0;
+            line-height: 1.6;
+        }
+
+        .line-number {
+            display: inline-block;
+            width: 25px;
+            color: #999;
+            font-size: 0.85em;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .stanza-break {
+            height: 15px;
+        }
+
+        /* Question styling */
+        .question-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .question-box.completed {
+            border-color: #00b894;
+            background: #f0fff4;
+        }
+
+        .question-number {
+            font-weight: 800;
+            color: #7c3aed;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .quote-box {
+            background: #f8f9fa;
+            border-left: 4px solid #8b5cf6;
+            padding: 10px 15px;
+            margin: 10px 0 15px 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Checkbox options */
+        .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-option:hover {
+            background: #f0e6ff;
+        }
+
+        .checkbox-option.selected {
+            background: #e8ffe8;
+            border-color: #00b894;
+        }
+
+        .checkbox-option.incorrect {
+            background: #fff3cd;
+            animation: shake 0.5s ease;
+        }
+
+        .checkbox-box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+            color: transparent;
+        }
+
+        .checkbox-option.selected .checkbox-box {
+            background: #00b894;
+            border-color: #00b894;
+            color: white;
+        }
+
+        /* Radio options */
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .radio-option:hover {
+            background: #f0e6ff;
+        }
+
+        .radio-option.selected {
+            background: #e8ffe8;
+            border-color: #00b894;
+        }
+
+        .radio-option.incorrect {
+            background: #fff3cd;
+            animation: shake 0.5s ease;
+        }
+
+        .radio-circle {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .radio-circle::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .radio-option.selected .radio-circle {
+            border-color: #00b894;
+        }
+
+        .radio-option.selected .radio-circle::after {
+            background: #00b894;
+        }
+
+        /* Table for question 3 */
+        .table-question {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .table-question th, .table-question td {
+            border: 2px solid #e0e0e0;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .table-question th {
+            background: #f0e6ff;
+            font-weight: 700;
+            color: #7c3aed;
+        }
+
+        .table-question td:first-child {
+            text-align: left;
+            font-size: 0.95em;
+        }
+
+        .table-bubble {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .table-bubble:hover {
+            border-color: #8b5cf6;
+            background: #f0e6ff;
+        }
+
+        .table-bubble.selected {
+            background: #00b894;
+            border-color: #00b894;
+        }
+
+        .table-bubble.incorrect {
+            background: #ffc107;
+            border-color: #ffc107;
+            animation: shake 0.5s ease;
+        }
+
+        /* Feedback */
+        .feedback {
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 700;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 10px;
+            min-height: 40px;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+        }
+
+        .feedback.tryagain {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            color: #856404;
+        }
+
+        .checkmark {
+            display: none;
+            color: #00b894;
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+
+        .question-box.completed .checkmark {
+            display: inline;
+        }
+
+        /* Reminder */
+        .reminder {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #f0e6ff, #e4d4ff);
+            border-radius: 12px;
+            font-weight: 600;
+            color: #7c3aed;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Check button */
+        .check-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .check-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="homework.html" class="nav-btn">⬅️ Back to Math Homework</a>
+
+    <div class="card">
+        <h1>📖 Reading Homework</h1>
+
+        <!-- Titi and Midnight -->
+        <div class="axolotl-duo">
+            <div class="mini-axolotl titi">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+            </div>
+            <div class="mini-axolotl midnight">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+            </div>
+        </div>
+        <p class="subtitle">Titi and Midnight love reading with you!</p>
+
+        <!-- ========== PASSAGE 1 ========== -->
+        <div class="section passage-section">
+            <div class="passage-label">Passage 1</div>
+            <h2 class="section-title">Number Dance</h2>
+            <div class="section-caption">
+                <div class="tiny-axolotl titi">
+                    <div class="tiny-gills tiny-gill-left">༄</div>
+                    <div class="tiny-gills tiny-gill-right">༄</div>
+                    <div class="tiny-head">◕‿◕</div>
+                    <div class="tiny-body"></div>
+                </div>
+                <div class="tiny-speech">I love this poem!</div>
+            </div>
+            
+            <div class="passage-box">
+                <div class="poem-line">I know that I can add well—</div>
+                <div class="poem-line">That two plus four is six.</div>
+                <div class="poem-line">But when I try to multiply,</div>
+                <div class="poem-line">My mind starts playing tricks.</div>
+                <div class="stanza-break"></div>
+                
+                <div class="poem-line"><span class="line-number">5</span>The numbers all escape me</div>
+                <div class="poem-line">Like fireflies at night</div>
+                <div class="poem-line">And even if I try my best,</div>
+                <div class="poem-line">I still can't do it right!</div>
+                <div class="stanza-break"></div>
+                
+                <div class="poem-line">I multiply by one just fine,</div>
+                <div class="poem-line"><span class="line-number">10</span>But then I try by two.</div>
+                <div class="poem-line">My brain is like a scrambled egg—</div>
+                <div class="poem-line">It's just so hard to do!</div>
+                <div class="stanza-break"></div>
+                
+                <div class="poem-line">Now, two times two is four, I think.</div>
+                <div class="poem-line">But what is two times three?</div>
+                <div class="poem-line"><span class="line-number">15</span>The answer slips away just like</div>
+                <div class="poem-line">A squirrel runs up a tree.</div>
+                <div class="stanza-break"></div>
+                
+                <div class="poem-line">The numbers all start whirling</div>
+                <div class="poem-line">Like dancers on a stage.</div>
+                <div class="poem-line">They jump and spin and won't stay put.</div>
+                <div class="poem-line"><span class="line-number">20</span>They leap right off the page!</div>
+                <div class="stanza-break"></div>
+                
+                <div class="poem-line">"Practice, Mark," my teacher says.</div>
+                <div class="poem-line">"It's really just the same</div>
+                <div class="poem-line">As if you were a pitcher</div>
+                <div class="poem-line">Preparing for a game."</div>
+                <div class="stanza-break"></div>
+                
+                <div class="poem-line"><span class="line-number">25</span>I get my team together—</div>
+                <div class="poem-line">Miguel, Nick, Jane, and me.</div>
+                <div class="poem-line">We start with two times two and then</div>
+                <div class="poem-line">Go on to two times three.</div>
+                <div class="stanza-break"></div>
+                
+                <div class="poem-line">We've got the threes and fours done.</div>
+                <div class="poem-line"><span class="line-number">30</span>We've learned six, seven, eight—</div>
+                <div class="poem-line">Team Number's going down now,</div>
+                <div class="poem-line">Team Kid is doing great!</div>
+                <div class="stanza-break"></div>
+                
+                <div class="poem-line">We practice hard together</div>
+                <div class="poem-line">And memorize them all,</div>
+                <div class="poem-line"><span class="line-number">35</span>Until at last I multiply</div>
+                <div class="poem-line">As well as I play ball.</div>
+            </div>
+        </div>
+
+        <!-- MONDAY QUESTIONS -->
+        <div class="section">
+            <div class="day-label">Monday</div>
+            <div class="passage-label">Passage 1</div>
+
+            <!-- Question 1 -->
+            <div class="question-box" id="q1Box">
+                <div class="question-number">1) Select <strong>two</strong> lines that rhyme in the poem. <span class="checkmark">✓</span></div>
+                <div class="checkbox-option" data-q="q1" data-value="a" onclick="toggleCheckbox(this, 'q1')">
+                    <div class="checkbox-box">✓</div>
+                    <span>The numbers all escape me</span>
+                </div>
+                <div class="checkbox-option" data-q="q1" data-value="b" onclick="toggleCheckbox(this, 'q1')">
+                    <div class="checkbox-box">✓</div>
+                    <span>Like fireflies at night</span>
+                </div>
+                <div class="checkbox-option" data-q="q1" data-value="c" onclick="toggleCheckbox(this, 'q1')">
+                    <div class="checkbox-box">✓</div>
+                    <span>And even if I try my best,</span>
+                </div>
+                <div class="checkbox-option" data-q="q1" data-value="d" onclick="toggleCheckbox(this, 'q1')">
+                    <div class="checkbox-box">✓</div>
+                    <span>I still can't do it right!</span>
+                </div>
+                <div class="checkbox-option" data-q="q1" data-value="e" onclick="toggleCheckbox(this, 'q1')">
+                    <div class="checkbox-box">✓</div>
+                    <span>I multiply by one just fine,</span>
+                </div>
+                <div class="checkbox-option" data-q="q1" data-value="f" onclick="toggleCheckbox(this, 'q1')">
+                    <div class="checkbox-box">✓</div>
+                    <span>But then I try by two. (lines 5-10)</span>
+                </div>
+                <button class="check-btn" onclick="checkQ1()">Check Answer</button>
+                <div class="feedback" id="q1Feedback"></div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-box" id="q2Box">
+                <div class="question-number">2) Read this line from the poem. <span class="checkmark">✓</span></div>
+                <div class="quote-box">"My brain is like a scrambled egg—" (line 11)</div>
+                <div class="question-text">How does the speaker feel in this line from the poem?</div>
+                <div class="radio-option" data-q="q2" data-value="a" onclick="selectRadio(this, 'q2')">
+                    <div class="radio-circle"></div>
+                    <span>confused</span>
+                </div>
+                <div class="radio-option" data-q="q2" data-value="b" onclick="selectRadio(this, 'q2')">
+                    <div class="radio-circle"></div>
+                    <span>excited</span>
+                </div>
+                <div class="radio-option" data-q="q2" data-value="c" onclick="selectRadio(this, 'q2')">
+                    <div class="radio-circle"></div>
+                    <span>hungry</span>
+                </div>
+                <div class="radio-option" data-q="q2" data-value="d" onclick="selectRadio(this, 'q2')">
+                    <div class="radio-circle"></div>
+                    <span>upset</span>
+                </div>
+                <button class="check-btn" onclick="checkRadio('q2', 'a')">Check Answer</button>
+                <div class="feedback" id="q2Feedback"></div>
+            </div>
+        </div>
+
+        <!-- TUESDAY QUESTIONS -->
+        <div class="section">
+            <div class="day-label">Tuesday</div>
+            <div class="passage-label">Passage 1</div>
+
+            <!-- Question 3 -->
+            <div class="question-box" id="q3Box">
+                <div class="question-number">3) Click on the bubbles to show how Mark feels about math. <span class="checkmark">✓</span></div>
+                <table class="table-question">
+                    <tr>
+                        <th></th>
+                        <th>Mark feels good about math.</th>
+                        <th>Mark feels bad about math.</th>
+                    </tr>
+                    <tr>
+                        <td>"I still can't do it right!" (line 8)</td>
+                        <td><div class="table-bubble" data-row="r1" data-col="good" onclick="selectTableBubble(this, 'r1')"></div></td>
+                        <td><div class="table-bubble" data-row="r1" data-col="bad" onclick="selectTableBubble(this, 'r1')"></div></td>
+                    </tr>
+                    <tr>
+                        <td>"The numbers all start whirling" (line 17)</td>
+                        <td><div class="table-bubble" data-row="r2" data-col="good" onclick="selectTableBubble(this, 'r2')"></div></td>
+                        <td><div class="table-bubble" data-row="r2" data-col="bad" onclick="selectTableBubble(this, 'r2')"></div></td>
+                    </tr>
+                    <tr>
+                        <td>"Team Kid is doing great!" (line 32)</td>
+                        <td><div class="table-bubble" data-row="r3" data-col="good" onclick="selectTableBubble(this, 'r3')"></div></td>
+                        <td><div class="table-bubble" data-row="r3" data-col="bad" onclick="selectTableBubble(this, 'r3')"></div></td>
+                    </tr>
+                </table>
+                <button class="check-btn" onclick="checkQ3()">Check Answer</button>
+                <div class="feedback" id="q3Feedback"></div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-box" id="q4Box">
+                <div class="question-number">4) Select <strong>two</strong> statements with which Mark would agree. <span class="checkmark">✓</span></div>
+                <div class="checkbox-option" data-q="q4" data-value="a" onclick="toggleCheckbox(this, 'q4')">
+                    <div class="checkbox-box">✓</div>
+                    <span>Multiplying confuses everyone.</span>
+                </div>
+                <div class="checkbox-option" data-q="q4" data-value="b" onclick="toggleCheckbox(this, 'q4')">
+                    <div class="checkbox-box">✓</div>
+                    <span>Practicing can help you multiply well.</span>
+                </div>
+                <div class="checkbox-option" data-q="q4" data-value="c" onclick="toggleCheckbox(this, 'q4')">
+                    <div class="checkbox-box">✓</div>
+                    <span>Multiplying is more fun than baseball.</span>
+                </div>
+                <div class="checkbox-option" data-q="q4" data-value="d" onclick="toggleCheckbox(this, 'q4')">
+                    <div class="checkbox-box">✓</div>
+                    <span>Baseball players always have to multiply.</span>
+                </div>
+                <div class="checkbox-option" data-q="q4" data-value="e" onclick="toggleCheckbox(this, 'q4')">
+                    <div class="checkbox-box">✓</div>
+                    <span>Teachers can help students understand math.</span>
+                </div>
+                <button class="check-btn" onclick="checkQ4()">Check Answer</button>
+                <div class="feedback" id="q4Feedback"></div>
+            </div>
+        </div>
+
+        <!-- WEDNESDAY QUESTIONS -->
+        <div class="section">
+            <div class="day-label">Wednesday</div>
+            <div class="passage-label">Passage 1</div>
+
+            <!-- Question 5 -->
+            <div class="question-box" id="q5Box">
+                <div class="question-number">5) What is true about the lines in each stanza of the poem? <span class="checkmark">✓</span></div>
+                <div class="radio-option" data-q="q5" data-value="a" onclick="selectRadio(this, 'q5')">
+                    <div class="radio-circle"></div>
+                    <span>All the lines rhyme.</span>
+                </div>
+                <div class="radio-option" data-q="q5" data-value="b" onclick="selectRadio(this, 'q5')">
+                    <div class="radio-circle"></div>
+                    <span>None of the lines rhyme.</span>
+                </div>
+                <div class="radio-option" data-q="q5" data-value="c" onclick="selectRadio(this, 'q5')">
+                    <div class="radio-circle"></div>
+                    <span>The first and third lines rhyme.</span>
+                </div>
+                <div class="radio-option" data-q="q5" data-value="d" onclick="selectRadio(this, 'q5')">
+                    <div class="radio-circle"></div>
+                    <span>The second and fourth lines rhyme.</span>
+                </div>
+                <button class="check-btn" onclick="checkRadio('q5', 'd')">Check Answer</button>
+                <div class="feedback" id="q5Feedback"></div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-box" id="q6Box">
+                <div class="question-number">6) Read these lines from the poem. <span class="checkmark">✓</span></div>
+                <div class="quote-box">
+                    "'It's really just the same<br>
+                    As if you were a pitcher<br>
+                    Preparing for a game.'" (lines 22-24)
+                </div>
+                <div class="question-text">Why does the teacher compare multiplying to preparing for a baseball game?</div>
+                <div class="radio-option" data-q="q6" data-value="a" onclick="selectRadio(this, 'q6')">
+                    <div class="radio-circle"></div>
+                    <span>to show that multiplication is used a lot in baseball</span>
+                </div>
+                <div class="radio-option" data-q="q6" data-value="b" onclick="selectRadio(this, 'q6')">
+                    <div class="radio-circle"></div>
+                    <span>to show that multiplying is harder than playing baseball</span>
+                </div>
+                <div class="radio-option" data-q="q6" data-value="c" onclick="selectRadio(this, 'q6')">
+                    <div class="radio-circle"></div>
+                    <span>to show that both multiplying and pitching take practice</span>
+                </div>
+                <div class="radio-option" data-q="q6" data-value="d" onclick="selectRadio(this, 'q6')">
+                    <div class="radio-circle"></div>
+                    <span>to show that all baseball pitchers are good at multiplying</span>
+                </div>
+                <button class="check-btn" onclick="checkRadio('q6', 'c')">Check Answer</button>
+                <div class="feedback" id="q6Feedback"></div>
+            </div>
+        </div>
+
+        <!-- ========== PASSAGE 2 ========== -->
+        <div class="section passage-section">
+            <div class="passage-label">Passage 2</div>
+            <h2 class="section-title">A Girl Named Louise</h2>
+            <div class="section-caption">
+                <div class="tiny-axolotl midnight">
+                    <div class="tiny-gills tiny-gill-left">༄</div>
+                    <div class="tiny-gills tiny-gill-right">༄</div>
+                    <div class="tiny-head">◕‿◕</div>
+                    <div class="tiny-body"></div>
+                </div>
+                <div class="tiny-speech">This one's short and sweet!</div>
+            </div>
+            
+            <div class="passage-box">
+                <div class="poem-line">There once was a girl named Louise</div>
+                <div class="poem-line">Who forgot to make mac and cheese.</div>
+                <div class="poem-line">Her brain was a fog.</div>
+                <div class="poem-line">She sat like a log,</div>
+                <div class="poem-line"><span class="line-number">5</span>Remembering after a sneeze!</div>
+            </div>
+        </div>
+
+        <!-- THURSDAY QUESTIONS -->
+        <div class="section">
+            <div class="day-label">Thursday</div>
+            <div class="passage-label">Passage 2</div>
+
+            <!-- Question 7A -->
+            <div class="question-box" id="q7aBox">
+                <div class="question-number">7A) What does "Her brain was a fog" mean as it is used in the poem? <span class="checkmark">✓</span></div>
+                <div class="radio-option" data-q="q7a" data-value="a" onclick="selectRadio(this, 'q7a')">
+                    <div class="radio-circle"></div>
+                    <span>Louise feels cold.</span>
+                </div>
+                <div class="radio-option" data-q="q7a" data-value="b" onclick="selectRadio(this, 'q7a')">
+                    <div class="radio-circle"></div>
+                    <span>Louise cannot think clearly.</span>
+                </div>
+                <div class="radio-option" data-q="q7a" data-value="c" onclick="selectRadio(this, 'q7a')">
+                    <div class="radio-circle"></div>
+                    <span>Louise cannot see anything.</span>
+                </div>
+                <div class="radio-option" data-q="q7a" data-value="d" onclick="selectRadio(this, 'q7a')">
+                    <div class="radio-circle"></div>
+                    <span>Louise thinks about the rain.</span>
+                </div>
+                <button class="check-btn" onclick="checkRadio('q7a', 'b')">Check Answer</button>
+                <div class="feedback" id="q7aFeedback"></div>
+            </div>
+
+            <!-- Question 7B -->
+            <div class="question-box" id="q7bBox">
+                <div class="question-number">7B) Which detail from the poem supports your answer in Part A? <span class="checkmark">✓</span></div>
+                <div class="radio-option" data-q="q7b" data-value="a" onclick="selectRadio(this, 'q7b')">
+                    <div class="radio-circle"></div>
+                    <span>Louise is able to cook.</span>
+                </div>
+                <div class="radio-option" data-q="q7b" data-value="b" onclick="selectRadio(this, 'q7b')">
+                    <div class="radio-circle"></div>
+                    <span>Louise tries to get help.</span>
+                </div>
+                <div class="radio-option" data-q="q7b" data-value="c" onclick="selectRadio(this, 'q7b')">
+                    <div class="radio-circle"></div>
+                    <span>Louise forgets to do something.</span>
+                </div>
+                <div class="radio-option" data-q="q7b" data-value="d" onclick="selectRadio(this, 'q7b')">
+                    <div class="radio-circle"></div>
+                    <span>Louise is supposed to make something.</span>
+                </div>
+                <button class="check-btn" onclick="checkRadio('q7b', 'c')">Check Answer</button>
+                <div class="feedback" id="q7bFeedback"></div>
+            </div>
+        </div>
+
+        <!-- Reminder -->
+        <div class="reminder">
+            📝 Write your answers on your homework sheet!
+        </div>
+
+        <!-- Ending -->
+        <div class="axolotl-duo" style="margin-top: 20px; margin-bottom: 10px;">
+            <div class="mini-axolotl titi">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+            </div>
+            <div class="mini-axolotl midnight">
+                <div class="gills gill-left">༄</div>
+                <div class="gills gill-right">༄</div>
+                <div class="head">◕‿◕</div>
+                <div class="body"></div>
+            </div>
+        </div>
+        <p class="subtitle" style="margin-bottom: 0;">Great reading! We're so proud of you!</p>
+    </div>
+
+    <script>
+        // Track completed questions
+        const completed = {};
+
+        // Encouraging messages
+        const correctMessages = [
+            "⭐ Nice work! Titi is doing a happy dance!",
+            "⭐ You got it! Midnight says 'awesome!'",
+            "⭐ Perfect! Titi & Midnight high-five!",
+            "⭐ Great reading skills!"
+        ];
+
+        const tryAgainMessages = [
+            "🌱 Try again — Titi believes in you!",
+            "🌱 Almost! Midnight says keep going!",
+            "🌱 So close! Read the passage again!"
+        ];
+
+        function getRandomMessage(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // Checkbox selection (for multi-select questions)
+        function toggleCheckbox(element, questionId) {
+            if (completed[questionId]) return;
+            element.classList.toggle('selected');
+        }
+
+        // Radio selection (for single-select questions)
+        function selectRadio(element, questionId) {
+            if (completed[questionId]) return;
+            
+            const options = document.querySelectorAll(`.radio-option[data-q="${questionId}"]`);
+            options.forEach(opt => opt.classList.remove('selected', 'incorrect'));
+            element.classList.add('selected');
+        }
+
+        // Table bubble selection
+        function selectTableBubble(element, row) {
+            if (completed['q3']) return;
+            
+            const bubbles = document.querySelectorAll(`.table-bubble[data-row="${row}"]`);
+            bubbles.forEach(b => b.classList.remove('selected', 'incorrect'));
+            element.classList.add('selected');
+        }
+
+        // Check Question 1 (select two rhyming lines: b and d - "night" and "right")
+        function checkQ1() {
+            if (completed['q1']) return;
+            
+            const selected = document.querySelectorAll('.checkbox-option[data-q="q1"].selected');
+            const values = Array.from(selected).map(el => el.dataset.value);
+            
+            const feedback = document.getElementById('q1Feedback');
+            const box = document.getElementById('q1Box');
+            
+            // Correct answers: b (fireflies at night) and d (do it right) - they rhyme!
+            if (values.length === 2 && values.includes('b') && values.includes('d')) {
+                feedback.textContent = getRandomMessage(correctMessages);
+                feedback.className = 'feedback correct';
+                box.classList.add('completed');
+                completed['q1'] = true;
+            } else {
+                feedback.textContent = getRandomMessage(tryAgainMessages);
+                feedback.className = 'feedback tryagain';
+                selected.forEach(s => {
+                    s.classList.add('incorrect');
+                    setTimeout(() => s.classList.remove('incorrect', 'selected'), 500);
+                });
+            }
+        }
+
+        // Check radio questions
+        function checkRadio(questionId, correctAnswer) {
+            if (completed[questionId]) return;
+            
+            const selected = document.querySelector(`.radio-option[data-q="${questionId}"].selected`);
+            const feedback = document.getElementById(`${questionId}Feedback`);
+            const box = document.getElementById(`${questionId}Box`);
+            
+            if (!selected) {
+                feedback.textContent = "Please select an answer!";
+                feedback.className = 'feedback tryagain';
+                return;
+            }
+            
+            if (selected.dataset.value === correctAnswer) {
+                feedback.textContent = getRandomMessage(correctMessages);
+                feedback.className = 'feedback correct';
+                box.classList.add('completed');
+                completed[questionId] = true;
+            } else {
+                feedback.textContent = getRandomMessage(tryAgainMessages);
+                feedback.className = 'feedback tryagain';
+                selected.classList.add('incorrect');
+                setTimeout(() => selected.classList.remove('incorrect', 'selected'), 500);
+            }
+        }
+
+        // Check Question 3 (table question)
+        function checkQ3() {
+            if (completed['q3']) return;
+            
+            const r1 = document.querySelector('.table-bubble[data-row="r1"].selected');
+            const r2 = document.querySelector('.table-bubble[data-row="r2"].selected');
+            const r3 = document.querySelector('.table-bubble[data-row="r3"].selected');
+            
+            const feedback = document.getElementById('q3Feedback');
+            const box = document.getElementById('q3Box');
+            
+            if (!r1 || !r2 || !r3) {
+                feedback.textContent = "Please select an answer for each row!";
+                feedback.className = 'feedback tryagain';
+                return;
+            }
+            
+            // Correct: r1=bad, r2=bad, r3=good
+            const r1Correct = r1.dataset.col === 'bad';
+            const r2Correct = r2.dataset.col === 'bad';
+            const r3Correct = r3.dataset.col === 'good';
+            
+            if (r1Correct && r2Correct && r3Correct) {
+                feedback.textContent = getRandomMessage(correctMessages);
+                feedback.className = 'feedback correct';
+                box.classList.add('completed');
+                completed['q3'] = true;
+            } else {
+                feedback.textContent = getRandomMessage(tryAgainMessages);
+                feedback.className = 'feedback tryagain';
+                
+                if (!r1Correct) { r1.classList.add('incorrect'); setTimeout(() => r1.classList.remove('incorrect', 'selected'), 500); }
+                if (!r2Correct) { r2.classList.add('incorrect'); setTimeout(() => r2.classList.remove('incorrect', 'selected'), 500); }
+                if (!r3Correct) { r3.classList.add('incorrect'); setTimeout(() => r3.classList.remove('incorrect', 'selected'), 500); }
+            }
+        }
+
+        // Check Question 4 (select two: b and e)
+        function checkQ4() {
+            if (completed['q4']) return;
+            
+            const selected = document.querySelectorAll('.checkbox-option[data-q="q4"].selected');
+            const values = Array.from(selected).map(el => el.dataset.value);
+            
+            const feedback = document.getElementById('q4Feedback');
+            const box = document.getElementById('q4Box');
+            
+            // Correct answers: b (Practicing can help) and e (Teachers can help)
+            if (values.length === 2 && values.includes('b') && values.includes('e')) {
+                feedback.textContent = getRandomMessage(correctMessages);
+                feedback.className = 'feedback correct';
+                box.classList.add('completed');
+                completed['q4'] = true;
+            } else {
+                feedback.textContent = getRandomMessage(tryAgainMessages);
+                feedback.className = 'feedback tryagain';
+                selected.forEach(s => {
+                    s.classList.add('incorrect');
+                    setTimeout(() => s.classList.remove('incorrect', 'selected'), 500);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
