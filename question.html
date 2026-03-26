@@ -1428,6 +1428,30 @@
         .time-btn:hover {
             transform: scale(1.05);
         }
+
+        /* Kid Explainer setup hint (GitHub Pages needs a proxy URL) */
+        .kid-explainer-banner {
+            background: linear-gradient(135deg, #e8f4fd, #dcecff);
+            border: 2px solid #6b8cce;
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            font-size: 0.95em;
+            line-height: 1.45;
+            color: #2d4a7c;
+        }
+        .kid-explainer-banner strong { color: #1a3558; }
+        .kid-explainer-banner button {
+            margin-top: 10px;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+        }
     </style>
 </head>
 
@@ -1461,6 +1485,16 @@
         <div class="header-gems">
             <span class="gem-icon">💎</span>
             <span id="gemCount">0</span>
+        </div>
+    </div>
+
+    <div id="kidExplainerSetupBanner" class="kid-explainer-banner" style="display: none;" role="status">
+        <strong>Kid Explainer needs one quick setup</strong> on this site (GitHub can’t reach Ollama on your Mac by itself).
+        Open <strong>Parent Portal</strong> (your PIN) → <strong>Kid Explainer (AI)</strong>, paste your proxy URL ending in <code>/api</code>, then <strong>Save</strong> and <strong>Test</strong>.
+        Or run the app locally — see the <em>Easy Mac setup</em> note in that same box.
+        <div>
+            <button type="button" onclick="openParentPortal(); document.getElementById('kidExplainerSetupBanner').style.display='none';">Open Parent Portal</button>
+            <button type="button" onclick="document.getElementById('kidExplainerSetupBanner').style.display='none'" style="background:#e9ecef;color:#495057;margin-left:8px;">Dismiss</button>
         </div>
     </div>
 
@@ -1717,9 +1751,11 @@
                 <div class="user-card" style="background: linear-gradient(135deg, #eef6ff, #dcecff); border: 2px solid #6b8cce;">
                     <h3 style="margin: 0 0 8px 0; color: #2d4a7c;">🧠 Kid Explainer (AI)</h3>
                     <p style="margin: 0 0 12px 0; color: #555; font-size: 0.9em; line-height: 1.4;">
-                        On GitHub Pages, answers need a small server on your Mac that talks to Ollama.
-                        Run <code style="background: #fff; padding: 2px 6px; border-radius: 4px;">python3 server.py</code> in the <code style="background: #fff; padding: 2px 6px; border-radius: 4px;">backend</code> folder,
-                        then paste your public URL (ngrok) below — must end with <strong>/api</strong>.
+                        <strong>Easy Mac (no ngrok):</strong> from the project folder run <code style="background:#fff;padding:2px 6px;border-radius:4px;">python3 -m http.server 8080</code>,
+                        open <code style="background:#fff;padding:2px 6px;border-radius:4px;">http://localhost:8080/question.html</code>, start Ollama, then <code style="background:#fff;padding:2px 6px;border-radius:4px;">python3 server.py</code> in <code style="background:#fff;padding:2px 6px;border-radius:4px;">backend</code>.
+                        <br><br>
+                        <strong>This github.io site:</strong> same <code>python3 server.py</code> plus a public URL (e.g. ngrok) — paste below, must end with <strong>/api</strong>.
+                        Optional one-liner: add <code style="background:#fff;padding:2px 6px;border-radius:4px;">?api=https://your-url.ngrok-free.app/api</code> to this page’s address once.
                     </p>
                     <input type="url" id="omqApiBaseInput" placeholder="https://abcd-1234.ngrok-free.app/api"
                         style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 1px solid #aac; font-size: 0.95em; margin-bottom: 10px;">
@@ -1758,6 +1794,27 @@
         JavaScript goes here - this controls what HAPPENS when you click things
     -->
     <script>
+        // One-time: ?api=https://your-tunnel.example.com/api (or /api only with ngrok host in full)
+        (function applyOmqApiFromQuery() {
+            try {
+                const p = new URLSearchParams(window.location.search);
+                let v = p.get('api') || p.get('ollama_proxy');
+                if (!v) return;
+                v = decodeURIComponent(v).trim().replace(/\/$/, '');
+                if (v.indexOf('://') === -1 && v.length > 0 && v[0] !== '/') {
+                    v = 'https://' + v;
+                }
+                if (v && !v.endsWith('/api')) v += '/api';
+                if (v) {
+                    localStorage.setItem('omqApiBase', v);
+                    const u = new URL(window.location.href);
+                    u.searchParams.delete('api');
+                    u.searchParams.delete('ollama_proxy');
+                    history.replaceState({}, '', u.pathname + u.search + u.hash);
+                }
+            } catch (_) { /* ignore */ }
+        })();
+
         // Store the last question and answer so we can expand on it
         let lastQuestion = '';
         let lastAnswer = '';
@@ -2089,9 +2146,16 @@
         }
 
 
-        // Backend for LLM: re-read localStorage each time so Parent Portal saves apply without reload.
+        // Kid Explainer API base: no bogus /api on GitHub Pages (that path does not exist here).
         function getOmqApiBase() {
-            return (window.OMQ_API_BASE || localStorage.getItem('omqApiBase') || '/api').replace(/\/$/, '');
+            if (window.OMQ_API_BASE) return String(window.OMQ_API_BASE).replace(/\/$/, '');
+            const saved = localStorage.getItem('omqApiBase');
+            if (saved) return saved.replace(/\/$/, '');
+            const h = window.location.hostname;
+            if (h === 'localhost' || h === '127.0.0.1') {
+                return 'http://127.0.0.1:3000/api';
+            }
+            return '';
         }
 
         function syncOmqApiBaseToPortalForm() {
@@ -2099,12 +2163,34 @@
             if (el) el.value = localStorage.getItem('omqApiBase') || '';
         }
 
+        function showKidExplainerBannerIfNeeded() {
+            const h = window.location.hostname;
+            const hosted = h.endsWith('github.io');
+            if (!hosted) return;
+            if (localStorage.getItem('omqApiBase') || window.OMQ_API_BASE) return;
+            const ban = document.getElementById('kidExplainerSetupBanner');
+            if (ban) ban.style.display = 'block';
+        }
+
+        function kidExplainerErrorHtml(err) {
+            if (err && err.message === 'KID_EXPLAINER_NOT_CONFIGURED') {
+                return `<em>❌ <strong>Kid Explainer isn’t connected yet.</strong><br><br>
+                This page is on GitHub — use <strong>Parent Portal</strong> (PIN) → <strong>Kid Explainer (AI)</strong> and paste your Mac proxy URL ending in <code>/api</code>.<br><br>
+                <strong>Easy Mac (no tunnel):</strong> in the project folder run <code>python3 -m http.server 8080</code>, open <code>http://localhost:8080/question.html</code>, start Ollama and <code>python3 backend/server.py</code> — answers use your Mac automatically.</em>`;
+            }
+            const base = getOmqApiBase() || '(not set)';
+            return `<em>❌ Could not reach Kid Explainer at <strong>${base}/ask</strong>.<br><br>
+            ${base ? 'Check Ollama, then <code>python3 server.py</code> in <strong>backend</strong>, or fix the URL in Parent Portal.' : 'Open Parent Portal → Kid Explainer (AI) and save your URL (<code>…/api</code>).'}<br><br>
+            <strong>Hosted site:</strong> use ngrok (or similar): <code>ngrok http 3000</code> → paste <code>https://…/api</code> in Parent Portal.</em>`;
+        }
+
         function saveOmqApiBaseFromPortal() {
             const raw = document.getElementById('omqApiBaseInput').value.trim().replace(/\/$/, '');
             const status = document.getElementById('omqApiStatus');
             if (!raw) {
                 localStorage.removeItem('omqApiBase');
-                if (status) status.textContent = 'Cleared saved URL (will try /api only — not valid on GitHub Pages).';
+                if (status) status.textContent = 'Cleared. On github.io you must add a URL again, or use http://localhost:8080/question.html with Ollama + backend.';
+                showKidExplainerBannerIfNeeded();
                 return;
             }
             if (!raw.endsWith('/api')) {
@@ -2113,11 +2199,17 @@
             }
             localStorage.setItem('omqApiBase', raw);
             if (status) status.textContent = 'Saved. Try “Answer Me!” or Test connection.';
+            const ban = document.getElementById('kidExplainerSetupBanner');
+            if (ban) ban.style.display = 'none';
         }
 
         async function testOmqApiBaseFromPortal() {
             const status = document.getElementById('omqApiStatus');
             const base = getOmqApiBase();
+            if (!base) {
+                if (status) status.textContent = 'On this site, paste your proxy URL (ends with /api) and Save — or open question.html via http://localhost.';
+                return;
+            }
             if (status) status.textContent = 'Testing…';
             try {
                 const response = await fetch(base + '/ask', {
@@ -2137,30 +2229,71 @@
         }
 
         async function callKidExplainer(prompt) {
-            const response = await fetch(`${getOmqApiBase()}/ask`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    prompt: prompt,
-                    model: 'llama3.2'
-                })
-            });
+            const model = 'llama3.2';
 
-            if (!response.ok) {
-                let message = 'LLM request failed';
-                try {
-                    const err = await response.json();
-                    message = err.error || message;
-                } catch (_) {
-                    // Ignore JSON parse errors and use generic message.
+            async function fromProxy(base) {
+                const b = base.replace(/\/$/, '');
+                const response = await fetch(`${b}/ask`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt, model })
+                });
+                if (!response.ok) {
+                    let message = 'LLM request failed';
+                    try {
+                        const err = await response.json();
+                        message = err.error || message;
+                    } catch (_) { /* ignore */ }
+                    throw new Error(message);
                 }
-                throw new Error(message);
+                const data = await response.json();
+                return data.response || '';
             }
 
-            const data = await response.json();
-            return data.response || '';
+            async function fromOllamaDirect() {
+                const response = await fetch('http://127.0.0.1:11434/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model, prompt, stream: false })
+                });
+                if (!response.ok) throw new Error('Ollama request failed');
+                const data = await response.json();
+                return data.response || '';
+            }
+
+            const h = window.location.hostname;
+            const isLocalPage = h === 'localhost' || h === '127.0.0.1';
+
+            const primary = getOmqApiBase();
+            const tryBases = [];
+            if (primary) tryBases.push(primary);
+            if (isLocalPage) {
+                const localProxy = 'http://127.0.0.1:3000/api';
+                if (tryBases.indexOf(localProxy) === -1) tryBases.push(localProxy);
+            }
+
+            let lastErr = null;
+            for (let i = 0; i < tryBases.length; i++) {
+                try {
+                    return await fromProxy(tryBases[i]);
+                } catch (e) {
+                    lastErr = e;
+                }
+            }
+
+            if (isLocalPage) {
+                try {
+                    return await fromOllamaDirect();
+                } catch (e) {
+                    lastErr = e;
+                }
+            }
+
+            if (!primary && !isLocalPage) {
+                throw new Error('KID_EXPLAINER_NOT_CONFIGURED');
+            }
+
+            throw lastErr || new Error('Kid Explainer unreachable');
         }
 
         // This function runs when you click the "Explain It" button
@@ -2242,8 +2375,7 @@
                 buttonRow.style.display = 'block';
 
             } catch (error) {
-                // If something went wrong, show an error message
-                output.innerHTML = `<em>❌ Could not reach the AI backend at <strong>${getOmqApiBase()}/ask</strong>.<br><br>Open Parent Portal (PIN) → <strong>Kid Explainer (AI)</strong> → paste your URL (ends with <strong>/api</strong>) → Save → Test.<br><br>On your Mac: run Ollama, then in the <strong>backend</strong> folder run <code>python3 server.py</code>, then <code>ngrok http 3000</code> and use <code>https://…/api</code>.</em>`;
+                output.innerHTML = kidExplainerErrorHtml(error);
                 console.error('Error:', error);
             }
         }
@@ -2960,6 +3092,8 @@
         
         // Initialize mascot appearances from saved items
         updateMascotAppearance();
+
+        showKidExplainerBannerIfNeeded();
 
         // Check if we should open parent portal (from home page link)
         if (window.location.hash === '#parent') {
