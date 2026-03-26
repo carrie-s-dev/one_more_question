@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: one-more-question-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: OLLAMA_BASE_URL
+        value: http://127.0.0.1:11434
+      - key: OLLAMA_MODEL
+        value: llama3.2
+      - key: FRONTEND_ORIGIN
+        value: https://carrie-s-dev.github.io

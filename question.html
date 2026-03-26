@@ -2072,6 +2072,38 @@
         }
 
 
+        // Backend endpoint for LLM requests.
+        // Set this in browser console if needed:
+        // localStorage.setItem('omqApiBase', 'https://your-backend-url')
+        const API_BASE = (window.OMQ_API_BASE || localStorage.getItem('omqApiBase') || '/api').replace(/\/$/, '');
+
+        async function callKidExplainer(prompt) {
+            const response = await fetch(`${API_BASE}/ask`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: prompt,
+                    model: 'llama3.2'
+                })
+            });
+
+            if (!response.ok) {
+                let message = 'LLM request failed';
+                try {
+                    const err = await response.json();
+                    message = err.error || message;
+                } catch (_) {
+                    // Ignore JSON parse errors and use generic message.
+                }
+                throw new Error(message);
+            }
+
+            const data = await response.json();
+            return data.response || '';
+        }
+
         // This function runs when you click the "Explain It" button
         async function explainIt() {
             // Get what the user typed/selected
@@ -2122,29 +2154,8 @@
             prompt += `\n\nThe question is: "${question}"\n\nGive your explanation:`;
 
             try {
-                // Call Ollama's API (running on your computer)
-                const response = await fetch('http://localhost:11434/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'llama3.2',
-                        prompt: prompt,
-                        stream: false
-                    })
-                });
-
-                // Check if the request worked
-                if (!response.ok) {
-                    throw new Error('Ollama request failed');
-                }
-
-                // Get the AI's response
-                const data = await response.json();
-                
-                // Display it (with some basic formatting)
-                let answer = data.response;
+                // Get answer from deployed backend proxy
+                let answer = await callKidExplainer(prompt);
                 
                 // Award gems for asking a question!
                 let baseGems = 2;
@@ -2173,7 +2184,7 @@
 
             } catch (error) {
                 // If something went wrong, show an error message
-                output.innerHTML = `<em>❌ Oops! Could not connect to Ollama.<br><br>Make sure:<br>1. The Ollama app is running (check for llama icon in menu bar)<br>2. You ran: ollama pull llama3.2</em>`;
+                output.innerHTML = `<em>❌ Oops! Could not connect to the AI backend.<br><br>Make sure:<br>1. Your backend is deployed and running<br>2. It can reach Ollama<br>3. API base is set in localStorage as "omqApiBase" if needed</em>`;
                 console.error('Error:', error);
             }
         }
@@ -2196,24 +2207,7 @@
             prompt += `Keep it funny and engaging! Add 2-3 more paragraphs of interesting information.`;
 
             try {
-                const response = await fetch('http://localhost:11434/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'llama3.2',
-                        prompt: prompt,
-                        stream: false
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ollama request failed');
-                }
-
-                const data = await response.json();
-                let moreInfo = data.response;
+                let moreInfo = await callKidExplainer(prompt);
                 
                 // Award gem for curiosity!
                 updateGems(1);
@@ -2247,24 +2241,7 @@
             prompt += `Keep it to about 4-5 sentences. Make it memorable and giggly!`;
 
             try {
-                const response = await fetch('http://localhost:11434/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'llama3.2',
-                        prompt: prompt,
-                        stream: false
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ollama request failed');
-                }
-
-                const data = await response.json();
-                let story = data.response;
+                let story = await callKidExplainer(prompt);
                 
                 // Award gems for stories!
                 updateGems(2);
