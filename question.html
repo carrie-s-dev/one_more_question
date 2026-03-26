@@ -1713,6 +1713,23 @@
                     </div>
                 </div>
                 
+                <!-- Kid Explainer / Ollama proxy (hosted site needs a backend URL) -->
+                <div class="user-card" style="background: linear-gradient(135deg, #eef6ff, #dcecff); border: 2px solid #6b8cce;">
+                    <h3 style="margin: 0 0 8px 0; color: #2d4a7c;">🧠 Kid Explainer (AI)</h3>
+                    <p style="margin: 0 0 12px 0; color: #555; font-size: 0.9em; line-height: 1.4;">
+                        On GitHub Pages, answers need a small server on your Mac that talks to Ollama.
+                        Run <code style="background: #fff; padding: 2px 6px; border-radius: 4px;">python3 server.py</code> in the <code style="background: #fff; padding: 2px 6px; border-radius: 4px;">backend</code> folder,
+                        then paste your public URL (ngrok) below — must end with <strong>/api</strong>.
+                    </p>
+                    <input type="url" id="omqApiBaseInput" placeholder="https://abcd-1234.ngrok-free.app/api"
+                        style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 1px solid #aac; font-size: 0.95em; margin-bottom: 10px;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                        <button type="button" class="time-btn add" onclick="saveOmqApiBaseFromPortal()">Save URL</button>
+                        <button type="button" class="time-btn add" onclick="testOmqApiBaseFromPortal()">Test connection</button>
+                    </div>
+                    <p id="omqApiStatus" style="margin: 10px 0 0 0; font-size: 0.85em; color: #444; min-height: 1.2em;"></p>
+                </div>
+
                 <!-- Gem Rewards Section -->
                 <div class="user-card" style="background: linear-gradient(135deg, #fff4e6, #ffe8cc); border: 2px solid #ffb366;">
                     <div class="portal-header" style="margin-bottom: 15px;">
@@ -2072,13 +2089,55 @@
         }
 
 
-        // Backend endpoint for LLM requests.
-        // Set this in browser console if needed:
-        // localStorage.setItem('omqApiBase', 'https://your-backend-url')
-        const API_BASE = (window.OMQ_API_BASE || localStorage.getItem('omqApiBase') || '/api').replace(/\/$/, '');
+        // Backend for LLM: re-read localStorage each time so Parent Portal saves apply without reload.
+        function getOmqApiBase() {
+            return (window.OMQ_API_BASE || localStorage.getItem('omqApiBase') || '/api').replace(/\/$/, '');
+        }
+
+        function syncOmqApiBaseToPortalForm() {
+            const el = document.getElementById('omqApiBaseInput');
+            if (el) el.value = localStorage.getItem('omqApiBase') || '';
+        }
+
+        function saveOmqApiBaseFromPortal() {
+            const raw = document.getElementById('omqApiBaseInput').value.trim().replace(/\/$/, '');
+            const status = document.getElementById('omqApiStatus');
+            if (!raw) {
+                localStorage.removeItem('omqApiBase');
+                if (status) status.textContent = 'Cleared saved URL (will try /api only — not valid on GitHub Pages).';
+                return;
+            }
+            if (!raw.endsWith('/api')) {
+                if (status) status.textContent = 'URL should end with /api (example: https://yours.ngrok-free.app/api)';
+                return;
+            }
+            localStorage.setItem('omqApiBase', raw);
+            if (status) status.textContent = 'Saved. Try “Answer Me!” or Test connection.';
+        }
+
+        async function testOmqApiBaseFromPortal() {
+            const status = document.getElementById('omqApiStatus');
+            const base = getOmqApiBase();
+            if (status) status.textContent = 'Testing…';
+            try {
+                const response = await fetch(base + '/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: 'Reply with exactly the word OK.', model: 'llama3.2' })
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    if (status) status.textContent = 'Failed: ' + (data.error || response.statusText || response.status);
+                    return;
+                }
+                if (status) status.textContent = 'OK — backend answered: ' + String(data.response || '').slice(0, 120);
+            } catch (e) {
+                if (status) status.textContent = 'Failed: ' + (e.message || 'network error');
+            }
+        }
 
         async function callKidExplainer(prompt) {
-            const response = await fetch(`${API_BASE}/ask`, {
+            const response = await fetch(`${getOmqApiBase()}/ask`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2184,7 +2243,7 @@
 
             } catch (error) {
                 // If something went wrong, show an error message
-                output.innerHTML = `<em>❌ Oops! Could not connect to the AI backend.<br><br>Make sure:<br>1. Your backend is deployed and running<br>2. It can reach Ollama<br>3. API base is set in localStorage as "omqApiBase" if needed</em>`;
+                output.innerHTML = `<em>❌ Could not reach the AI backend at <strong>${getOmqApiBase()}/ask</strong>.<br><br>Open Parent Portal (PIN) → <strong>Kid Explainer (AI)</strong> → paste your URL (ends with <strong>/api</strong>) → Save → Test.<br><br>On your Mac: run Ollama, then in the <strong>backend</strong> folder run <code>python3 server.py</code>, then <code>ngrok http 3000</code> and use <code>https://…/api</code>.</em>`;
                 console.error('Error:', error);
             }
         }
@@ -2804,6 +2863,7 @@
             if (pin === PARENT_PIN) {
                 document.getElementById('pinScreen').style.display = 'none';
                 document.getElementById('portalDashboard').style.display = 'block';
+                syncOmqApiBaseToPortalForm();
                 loadScreenTime();
                 updatePortalDate();
                 updateGauges();

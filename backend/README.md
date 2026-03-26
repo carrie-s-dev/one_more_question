@@ -1,15 +1,37 @@
 # One More Question Backend
 
-Small proxy server that lets `question.html` call Ollama safely from a hosted site.
+Small proxy server so `question.html` on GitHub Pages can call Ollama on your Mac (via a public URL such as ngrok).
 
-## Environment Variables
+## Easiest: Python (macOS has this already)
 
-- `PORT` - Provided by host (default `3000`)
-- `OLLAMA_BASE_URL` - URL for Ollama API (default `http://127.0.0.1:11434`)
-- `OLLAMA_MODEL` - Model name (default `llama3.2`)
-- `FRONTEND_ORIGIN` - Allowed CORS origins, comma-separated, or `*`
+```bash
+cd backend
+python3 server.py
+```
 
-## Local Run
+Health check:
+
+```bash
+curl http://127.0.0.1:3000/health
+```
+
+Ask:
+
+```bash
+curl -X POST http://127.0.0.1:3000/api/ask \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"Say hi to a kid in one sentence","model":"llama3.2"}'
+```
+
+Then expose port 3000 (example):
+
+```bash
+ngrok http 3000
+```
+
+On the live site: **Parent Portal** → **Kid Explainer (AI)** → paste `https://YOUR-NGROK-HOST/api` → **Save** → **Test connection**.
+
+## Alternative: Node
 
 ```bash
 cd backend
@@ -17,26 +39,15 @@ npm install
 npm start
 ```
 
-Health check:
+(Same `/health` and `/api/ask` paths.)
 
-```bash
-curl http://localhost:3000/health
-```
+## Environment Variables
 
-Ask endpoint:
+- `PORT` - default `3000`
+- `OLLAMA_BASE_URL` - default `http://127.0.0.1:11434`
+- `OLLAMA_MODEL` - default `llama3.2`
+- `FRONTEND_ORIGIN` - CORS: `*` or comma-separated origins (e.g. `https://carrie-s-dev.github.io`)
 
-```bash
-curl -X POST http://localhost:3000/api/ask \
-  -H "Content-Type: application/json" \
-  -d '{"prompt":"Explain rainbows for kids","model":"llama3.2"}'
-```
+## Frontend config
 
-## Point Frontend To Backend
-
-In browser console on your deployed site:
-
-```js
-localStorage.setItem('omqApiBase', 'https://YOUR-BACKEND-URL')
-```
-
-Then refresh.
+The question page reads `localStorage.omqApiBase`. It must end with **`/api`** (e.g. `https://abc.ngrok-free.app/api`). You can set this in **Parent Portal** without using the console.
